@@ -104,8 +104,100 @@ root@ankou:/home/thomas/perso/tryhackme# /usr/localsbin/openvpn --data-ciphers A
 
 - On a rajouté l'option --data-ciphers pour que autoriser l'utilisation de AES-256-CBC
 
-# structure des paquets, canal de données
+# structure générale des paquets
 
-Le canal de données utilise encrypt-then-mac :
+```
++----------------+-------------------------+
+| opcode + keyID | reste du paquet OpenVPN |
++----------------+-------------------------+
+<----1 octet---->
 
-plaintext -> hmac | iv | ciphertext 
+```
+
+- L'opcode occupe les 5 premiers bits du premier octet, le keyID les 3 suivants.
+
+- Visiblement le keyID indexe la session SSL/TLS utilisée pour négocier les clés.
+
+## tableau des opcodes existants
+
+```
++------+--------------------------------+-----------------------------------------+
+| 0x01 | P_CONTROL_HARD_RESET_CLIENT_V1 | paquet client de réinitialisation - v1  |
++------+--------------------------------+-----------------------------------------+
+| 0x02 | P_CONTROL_HARD_RESET_SERVER_V1 | paquet serveur de réinitialisation - v1 |
++------+--------------------------------+-----------------------------------------+
+| 0x03 | P_CONTROL_SOFT_RESET_V1        | nouvelle clé, sorte de CCS OpenVPN      |
++------+--------------------------------+-----------------------------------------+
+| 0x04 | P_CONTROL_V1                   | paquet du canal de contrôle             |
++------+--------------------------------+-----------------------------------------+
+| 0x05 | P_ACK_V1                       | paquet d'acquittement                   |
++------+--------------------------------+-----------------------------------------+
+| 0x06 | P_DATA_V1                      | paquet du canal de données - v1         |
++------+--------------------------------+-----------------------------------------+
+| 0x07 | P_CONTROL_HARD_RESET_CLIENT_V2 | paquet client de réinitialisation - v2  |
++------+--------------------------------+-----------------------------------------+
+| 0x08 | P_CONTROL_HARD_RESET_SERVER_V2 | paquet serveur de réinitialisation - v2 |
++------+--------------------------------+-----------------------------------------+
+| 0x09 | P_DATA_V2                      | paquet du canal de données - v2         |
++------+--------------------------------+-----------------------------------------+
+| 0x0A | P_CONTROL_HARD_RESET_CLIENT_V3 | paquet client de réinitialisation - v3  |
++------+--------------------------------+-----------------------------------------+
+```
+- Dans la version 2 d'OpenVPN, les paquets 0x01 et 0x02 sont invalides.
+
+## structure des paquets, canal de données
+
+- On parle des paquets P_DATA_V2
+
+```
++----------------+----------+-------------+-----------------------------+-----------------+-------------+-----------+-----------+
+| opcode + keyID | Peer ID  |    HMAC     | Vecteur d'initialisation IV | Sequence Number | Compression | plaintext |  padding  |
++----------------+----------+-------------+-----------------------------+-----------------+-------------+-----------+-----------+
+<----1 octet-----><-1 octet-><- variable -><- variable -- 8/16 octets --><--- 4 octets ---><- 1 octet --><-variable-><-variable->
+                            <------------------------------------------- authentifié ------------------------------------------->
+                                                                        <------------------------ chiffré ---------------------->
+```
+- Le sequence number est incrémenté à chaque paquet
+
+- L'octet de compression indique l'algorithme de compression utilisé (0xfa = pas de compression)
+
+- Le padding est un padding PKCS#5 (\x03\x03\x03)
+
+## structure des paquets, canal de contrôle
+
+- P_CONTROL_HARD_RESET_CLIENT_V2 : 
+
+```
++----------------+------------+------+-----------+----------+--------------------------------+-------------------+
+| opcode + keyID | Session ID | HMAC | Packet ID | Net Time | Message Packet-ID Array Length | Message Packet-ID |
++----------------+------------+------+-----------+----------+--------------------------------+-------------------+
+        1              8                   4          4                     1
+```
+
+- Le P_CONTROL_HARD_RESET_SERVER_V2 a une structure similaire, mais contient un Packet-ID Array embarquant le Session ID du client
+
+- P_ACK_V1 : structure similaire
+
+- P_CONTROL_V1 : structure similaire, mais avec des data après l'en-tête. Des paquets TLS en l'occurrence !
+
+# cinématique
+
+```
+client                                   serveur
+  | --- P_CONTROL_HARD_RESET_CLIENT_V2 ---> |
+  | <-- P_CONTROL_HARD_RESET_SERVER_V2 ---- |
+  | -------------- P_ACK_V1 --------------> |
+  <------------ handshake TLS -------------->
+  | <---------- P_CONTROL_V1 -------------- |
+  | ----------------- P_ACK_V1 -----------> |
+  | -------------- P_DATA_V2 -------------> |
+  | <------------- P_DATA_V1 -------------- |
+  
+```
+
+# Génération des clés
+
+<tls-auth> : "HMAC-firewall", visiblement utilisé pour empêcher le déni de service/prise d'empreinte sur le serveur.
+Cette PSK est juste découpée en morceau sans autre mécanisme de dérivation : Les clés utilisées sont donc fixe d'une session à l'autre.
+
+# Handshake TLS
