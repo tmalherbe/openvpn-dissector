@@ -302,19 +302,29 @@ def dissect_openvpn_hard_reset_server_v2(openvpn_payload):
 
 def dissect_openvpn_control_v1(openvpn_payload):
 
-	openvpn_pkt_type = (openvpn_payload[0]).to_bytes(1, 'big')
-	openvpn_packet_session_id = openvpn_payload[1 : 9]
-	openvpn_packet_hmac = openvpn_payload[9 : 73]
-	openvpn_packet_id = openvpn_payload[73 : 77]
-	openvpn_packet_time = openvpn_payload[77 : 81]
-	openvpn_packet_id_array = openvpn_payload[81 : 86]
+	offset = 0
+
+	openvpn_pkt_type = (openvpn_payload[offset]).to_bytes(1, 'big')
+	offset += 1
+	openvpn_packet_session_id = openvpn_payload[offset : offset + 8]
+	offset += 8
+	openvpn_packet_hmac = openvpn_payload[offset : offset + 64]
+	offset += 64
+	openvpn_packet_id = openvpn_payload[offset : offset + 4]
+	offset += 4
+	openvpn_packet_time = openvpn_payload[offset : offset + 4]
+	offset += 4
+	openvpn_packet_id_array_len = openvpn_payload[offset]
+	offset += 1
+	openvpn_packet_id_array = openvpn_payload[offset : offset + 4 * openvpn_packet_id_array_len]
+	offset += 4 * openvpn_packet_id_array_len
+	if openvpn_packet_id_array_len != 0:
+		openvpn_remote_session_id = openvpn_payload[offset : offset + 8]
+		offset += 8
+	openvpn_msg_packet_id = openvpn_payload[offset : offset + 4]
+	offset += 4
 	
-	if dissector_globals.is_from_client == True:
-		openvpn_tls_payload = openvpn_payload[86 : ]
-	else:
-		openvpn_remote_session_id = openvpn_payload[86 : 94]
-		openvpn_msg_packet_id = openvpn_payload[94 : 98]
-		openvpn_tls_payload = openvpn_payload[98 : ]
+	openvpn_tls_payload = openvpn_payload[offset : ]
 
 	print(" openvpn_payload : %r" % binascii.hexlify(openvpn_payload))
 	print(" openvpn_pkt_type : %r" % binascii.hexlify(openvpn_pkt_type))
@@ -322,45 +332,42 @@ def dissect_openvpn_control_v1(openvpn_payload):
 	print(" openvpn_hmac : %r" % binascii.hexlify(openvpn_packet_hmac))
 	print(" openvpn pkt_id : %r" % binascii.hexlify(openvpn_packet_id))
 	print(" openvpn time : %r" % binascii.hexlify(openvpn_packet_time))
-	print(" openvpn_packet_id_array : %r" % binascii.hexlify(openvpn_packet_id_array))	
-	if dissector_globals.is_from_client == False:
+	print(" openvpn_packet_id_array_len : %r" % openvpn_packet_id_array_len)
+	if openvpn_packet_id_array_len != 0:
+		print(" openvpn_packet_id_array : %r" % binascii.hexlify(openvpn_packet_id_array))
 		print(" openvpn_remote_session_id : %r" % binascii.hexlify(openvpn_remote_session_id))
-		print(" openvpn_msg_packet_id : %r" % binascii.hexlify(openvpn_msg_packet_id))
+	print(" openvpn_msg_packet_id : %r" % binascii.hexlify(openvpn_msg_packet_id))
 	print(" openvpn_tls_payload : %r" % binascii.hexlify(openvpn_tls_payload))
 
 	hmac_input = b''
 
 	if openvpn_handshake_finished == False:
-		if dissector_globals.is_from_client == True and psk_hmac_client != None:
-			hmac_input += openvpn_packet_id
-			hmac_input += openvpn_packet_time
-			hmac_input += openvpn_pkt_type
-			hmac_input += openvpn_packet_session_id
-			hmac_input += openvpn_packet_id_array
-			hmac_input += openvpn_tls_payload
-			
-			h = hmac.new(key = psk_hmac_client, digestmod = SHA512)
-			h.update(hmac_input)
-			openvpn_computed_hmac = h.digest()
-
-		elif psk_hmac_server != None:
-			hmac_input += openvpn_packet_id
-			hmac_input += openvpn_packet_time
-			hmac_input += openvpn_pkt_type
-			hmac_input += openvpn_packet_session_id
+		hmac_input += openvpn_packet_id
+		hmac_input += openvpn_packet_time
+		hmac_input += openvpn_pkt_type
+		hmac_input += openvpn_packet_session_id
+		hmac_input += openvpn_packet_id_array_len.to_bytes(1, 'big')
+		if openvpn_packet_id_array_len != 0:
 			hmac_input += openvpn_packet_id_array
 			hmac_input += openvpn_remote_session_id
-			hmac_input += openvpn_msg_packet_id
-			hmac_input += openvpn_tls_payload
-			
-			h = hmac.new(key = psk_hmac_server, digestmod = SHA512)
-			h.update(hmac_input)
-			openvpn_computed_hmac = h.digest()
+		hmac_input += openvpn_msg_packet_id
+		hmac_input += openvpn_tls_payload
 
-		if openvpn_computed_hmac == openvpn_packet_hmac:
-			print(" control_v1 HMAC is correct :-)")
-		else:
-			print(" control_v1 HMAC is not correct :-(")
+		if psk_hmac_client != None and psk_hmac_server != None:
+			if dissector_globals.is_from_client == True:
+				h = hmac.new(key = psk_hmac_client, digestmod = SHA512)
+				h.update(hmac_input)
+				openvpn_computed_hmac = h.digest()
+
+			elif dissector_globals.is_from_client == False:
+				h = hmac.new(key = psk_hmac_server, digestmod = SHA512)
+				h.update(hmac_input)
+				openvpn_computed_hmac = h.digest()
+
+			if openvpn_computed_hmac == openvpn_packet_hmac:
+				print(" control_v1 HMAC is correct :-)")
+			else:
+				print(" control_v1 HMAC is not correct :-(")
 
 	tls_pseudo_packet = add_tcp_ip_layer(openvpn_tls_payload)
 	tls13_dissector.dissect_tls_packet(tls_pseudo_packet, 0)
