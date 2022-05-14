@@ -1,0 +1,461 @@
+root@ankou:/home/thomas# LD_PRELOAD=/home/thomas/bordels/openssl/build/lib/libssl.so:/home/thomas/bordels/openssl/build/lib/libcrypto.so /usr/local/sbin/openvpn --config /home/thomas/perso/tryhackme/klook.ovpn --data-ciphers AES-256-CBC 
+2022-05-14 12:06:35 OpenVPN 2.6_git [git:master/976e6caf0e161d3c+] x86_64-pc-linux-gnu [SSL (OpenSSL)] [LZO] [LZ4] [EPOLL] [MH/PKTINFO] [AEAD] built on May 13 2022
+2022-05-14 12:06:35 library versions: OpenSSL 1.1.1o-dev  xx XXX xxxx, LZO 2.10
+openvpn_main, case MODE_POINT_TO_POINT, appel de tunnel_point_to_point() 
+fichier crypto.c func crypto_read_openvpn_key ligne 1170 
+key_file : "#
+# 2048 bit OpenVPN static key
+#
+-----BEGIN OpenVPN Static key V1-----
+e12b30d00f1d39c7732816b3ceb99947
+3408832df4a75533b69e9a1f09fdf78e
+788fd73520f1d5dca09bff5e20bf08c9
+d14b43a92c9c1114353457758c6f0317
+d0208f682ef7ca86aa5bed6fc666d672
+cca1dc556ef9f287fa90ea079ed934d1
+03192acb8f723bd3c1b07613707376f1
+493af507e1cdfa37db0fb10f38ea3161
+9fabe24ee76f901cdb200c7d600460d5
+624e1e70dd3a60b62dc13114771e3dc6
+6641b8bc66fd423a52d582550cab1d26
+22a2036e6839541102472566b4492197
+5577d9f0eb92520a89d72a122f25a6aa
+3da481f5740c855fd30090f8bb3d2148
+280573b113a30a7b43d263dc05466e7b
+b004f92b321b8ca895409487c8aec016
+-----END OpenVPN Static key V1-----
+" 
+crypto.c entree dans init_key_ctx_bi ligne 909 name : "Control Channel Authentication" direction : 2
+jeu de clefs n°1 (client) : buffer 1-a : 
+9fabe24ee76f901cdb200c7d600460d5624e1e70dd3a60b62dc13114771e3dc6
+
+jeu de clefs n°1 (client) : buffer 1-b : 
+5577d9f0eb92520a89d72a122f25a6aa3da481f5740c855fd30090f8bb3d2148
+280573b113a30a7b43d263dc05466e7bb004f92b321b8ca895409487c8aec016
+
+jeu de clefs n°2 (serveur) : buffer 2-a : 
+e12b30d00f1d39c7732816b3ceb999473408832df4a75533b69e9a1f09fdf78e
+
+jeu de clefs n°2 (serveur) : buffer 2-b : 
+d0208f682ef7ca86aa5bed6fc666d672cca1dc556ef9f287fa90ea079ed934d1
+03192acb8f723bd3c1b07613707376f1493af507e1cdfa37db0fb10f38ea3161
+
+entree dans hmac_ctx_init passage n°0
+mdname : SHA512
+buffer hmac key : 
+5577d9f0eb92520a89d72a122f25a6aa3da481f5740c855fd30090f8bb3d2148
+280573b113a30a7b43d263dc05466e7bb004f92b321b8ca895409487c8aec016
+
+2022-05-14 12:06:35 Outgoing Control Channel Authentication: Using 512 bit message hash 'SHA512' for HMAC authentication
+entree dans hmac_ctx_init passage n°1
+mdname : SHA512
+buffer hmac key : 
+d0208f682ef7ca86aa5bed6fc666d672cca1dc556ef9f287fa90ea079ed934d1
+03192acb8f723bd3c1b07613707376f1493af507e1cdfa37db0fb10f38ea3161
+
+2022-05-14 12:06:35 Incoming Control Channel Authentication: Using 512 bit message hash 'SHA512' for HMAC authentication
+2022-05-14 12:06:35 TCP/UDP: Preserving recently used remote address: [AF_INET]54.76.30.11:1194
+2022-05-14 12:06:35 Socket Buffers: R=[212992->425984] S=[212992->425984]
+2022-05-14 12:06:35 UDP link local: (not bound)
+2022-05-14 12:06:35 UDP link remote: [AF_INET]54.76.30.11:1194
+fichier ssl.c func tls_multi_process ligne 3100 
+fichier ssl.c fonction write_control_auth ligne 1452 
+opcode : 7 
+dumping P_CONTROL_HARD_RESET_CLIENT_V2 packet, start : 
+
+buf 101bbb30
+buf->len : 4
+buf->offset : 122
+buf->capacity : 1628
+buf->data : 
+\x00\x00\x00\x00
+
+dumping P_CONTROL_HARD_RESET_CLIENT_V2 packet, juste avant session_id_write_prepend : 
+
+buf 101bbb30
+buf->len : 5
+buf->offset : 121
+buf->capacity : 1628
+buf->data : 
+\x00\x00\x00\x00\x00
+
+dumping P_CONTROL_HARD_RESET_CLIENT_V2 packet, juste avant openvpn_encrypt : 
+
+buf 101bbb30
+buf->len : 14
+buf->offset : 112
+buf->capacity : 1628
+buf->data : 
+\x38\x61\xa4\xa4\x23\x37\x62\x42\x55\x00\x00\x00\x00\x00
+
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 284 ctx->cipher false 
+dumping P_CONTROL_HARD_RESET_CLIENT_V2 packet, juste apres openvpn_encrypt : 
+
+buf 101bbb30
+buf->len : 86
+buf->offset : 40
+buf->capacity : 1628
+buf->data : 
+\x38\x61\xa4\xa4\x23\x37\x62\x42\x55\x6d\x6a\x31\x8d\xf7\xfb\xa2
+\xf4\x65\xa4\x18\xaf\x1c\xf3\xd3\x96\xd4\x26\x70\x76\x26\xd0\x39
+\x68\xd7\x44\x20\xe4\xb6\xab\x0d\xd2\xb2\xdf\x3c\x08\x40\xcc\x22
+\x4e\xf9\xbc\x69\x61\x2c\xeb\xe5\xd9\x34\x6e\xae\x76\x00\x6f\x76
+\xde\x94\x9c\x0e\x4d\xf2\x29\xc2\x63\x00\x00\x00\x01\x62\x7f\x7f
+\x2b\x00\x00\x00\x00\x00
+
+dumping P_CONTROL_HARD_RESET_CLIENT_V2 packet, end : 
+
+buf 101bbb30
+buf->len : 86
+buf->offset : 40
+buf->capacity : 1628
+buf->data : 
+\x38\x61\xa4\xa4\x23\x37\x62\x42\x55\x6d\x6a\x31\x8d\xf7\xfb\xa2
+\xf4\x65\xa4\x18\xaf\x1c\xf3\xd3\x96\xd4\x26\x70\x76\x26\xd0\x39
+\x68\xd7\x44\x20\xe4\xb6\xab\x0d\xd2\xb2\xdf\x3c\x08\x40\xcc\x22
+\x4e\xf9\xbc\x69\x61\x2c\xeb\xe5\xd9\x34\x6e\xae\x76\x00\x6f\x76
+\xde\x94\x9c\x0e\x4d\xf2\x29\xc2\x63\x00\x00\x00\x01\x62\x7f\x7f
+\x2b\x00\x00\x00\x00\x00
+
+fichier ssl.c func tls_multi_process ligne 3100 
+2022-05-14 12:06:35 TLS: Initial packet from [AF_INET]54.76.30.11:1194, sid=6c2ee6e4 92b0c865
+read_control_auth ligne 1554, opcode = P_CONTROL_HARD_RESET_SERVER_V2 
+openvpn_decrypt_v1
+fichier ssl.c func tls_multi_process ligne 3100 
+fichier ssl.c fonction write_control_auth ligne 1452 
+opcode : 5 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 284 ctx->cipher false 
+fichier ssl.c func tls_multi_process ligne 3100 
+fichier ssl.c fonction write_control_auth ligne 1452 
+opcode : 4 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 284 ctx->cipher false 
+fichier ssl.c func tls_multi_process ligne 3100 
+openvpn_decrypt_v1
+fichier ssl.c func tls_multi_process ligne 3100 
+# SSL/TLS secrets log file, generated by OpenSSL
+SERVER_HANDSHAKE_TRAFFIC_SECRET bbb a994d0a491ddab4d77a7a54255f8c5b44e85dd33b5a2272b8aa1f90a51ad4b3642d8b7dff1f3b6de6967370a528dbc8a
+fichier ssl.c fonction write_control_auth ligne 1452 
+opcode : 5 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 284 ctx->cipher false 
+fichier ssl.c func tls_multi_process ligne 3100 
+openvpn_decrypt_v1
+fichier ssl.c func tls_multi_process ligne 3100 
+2022-05-14 12:06:36 VERIFY OK: depth=1, CN=ChangeMe
+2022-05-14 12:06:36 VERIFY KU OK
+2022-05-14 12:06:36 Validating certificate extended key usage
+2022-05-14 12:06:36 ++ Certificate has EKU (str) TLS Web Server Authentication, expects TLS Web Server Authentication
+2022-05-14 12:06:36 VERIFY EKU OK
+2022-05-14 12:06:36 VERIFY OK: depth=0, CN=server
+fichier ssl.c fonction write_control_auth ligne 1452 
+opcode : 5 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 284 ctx->cipher false 
+fichier ssl.c func tls_multi_process ligne 3100 
+openvpn_decrypt_v1
+fichier ssl.c func tls_multi_process ligne 3100 
+SERVER_TRAFFIC_SECRET_0 ccc 07c3ff04a48c717793c428a03128f9d08bda8ab6225bd17f888797db0d93400c944664528a4cb856bae989420f27f0ea
+EXPORTER_SECRET eee d5b6abc1ac80293e0d8f71308ab2bf48a36f686d122e54a8aa0cbf29813e8c95d6bac77381771517b8da0a70b56190a0
+CLIENT_HANDSHAKE_TRAFFIC_SECRET aaa f1bb4d9ff1eff5c4ad58f2dd41f54fbf0b7569317dbd6dcc3ad10f63bd653634dfd9fd787e807809e4b2a3f8e782d021
+CLIENT_TRAFFIC_SECRET_0 ddd adf6987c65a704f094dd33ee26ea01b22bd11873163d071586dbacb027067683592f97b6fc0f8f5e261158a28ac1576f
+fichier ssl.c fonction write_control_auth ligne 1452 
+opcode : 4 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 284 ctx->cipher false 
+fichier ssl.c func tls_multi_process ligne 3100 
+fichier ssl.c fonction write_control_auth ligne 1452 
+opcode : 4 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 284 ctx->cipher false 
+fichier ssl.c func tls_multi_process ligne 3100 
+fichier ssl.c fonction write_control_auth ligne 1452 
+opcode : 4 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 284 ctx->cipher false 
+fichier ssl.c func tls_multi_process ligne 3100 
+openvpn_decrypt_v1
+fichier ssl.c func tls_multi_process ligne 3100 
+openvpn_decrypt_v1
+fichier ssl.c func tls_multi_process ligne 3100 
+fichier ssl.c fonction write_control_auth ligne 1452 
+opcode : 5 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 284 ctx->cipher false 
+fichier ssl.c func tls_multi_process ligne 3100 
+openvpn_decrypt_v1
+fichier ssl.c func tls_multi_process ligne 3100 
+2022-05-14 12:06:36 WARNING: 'link-mtu' is used inconsistently, local='link-mtu 1601', remote='link-mtu 1602'
+2022-05-14 12:06:36 WARNING: 'comp-lzo' is present in remote config but missing in local config, remote='comp-lzo'
+fichier ssl.c fonction write_control_auth ligne 1452 
+opcode : 5 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 284 ctx->cipher false 
+fichier ssl.c func tls_multi_process ligne 3100 
+2022-05-14 12:06:36 Control Channel: TLSv1.3, cipher TLSv1.3 TLS_AES_256_GCM_SHA384, peer certificate: 2048 bit RSA, signature: RSA-SHA256
+2022-05-14 12:06:36 [server] Peer Connection Initiated with [AF_INET]54.76.30.11:1194
+2022-05-14 12:06:37 SENT CONTROL [server]: 'PUSH_REQUEST' (status=1)
+fichier ssl.c func tls_multi_process ligne 3100 
+fichier ssl.c fonction write_control_auth ligne 1452 
+opcode : 4 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 284 ctx->cipher false 
+fichier ssl.c func tls_multi_process ligne 3100 
+openvpn_decrypt_v1
+fichier ssl.c func tls_multi_process ligne 3100 
+openvpn_decrypt_v1
+fichier ssl.c func tls_multi_process ligne 3100 
+fichier ssl.c fonction write_control_auth ligne 1452 
+opcode : 5 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 284 ctx->cipher false 
+2022-05-14 12:06:37 PUSH: Received control message: 'PUSH_REPLY,route 10.10.0.0 255.255.0.0,route-metric 1000,comp-lzo no,route-gateway 10.9.0.1,topology subnet,ping 5,ping-restart 120,ifconfig 10.9.2.201 255.255.0.0,peer-id 142'
+2022-05-14 12:06:37 OPTIONS IMPORT: timers and/or timeouts modified
+2022-05-14 12:06:37 OPTIONS IMPORT: compression parms modified
+2022-05-14 12:06:37 OPTIONS IMPORT: --ifconfig/up options modified
+2022-05-14 12:06:37 OPTIONS IMPORT: route options modified
+2022-05-14 12:06:37 OPTIONS IMPORT: route-related options modified
+2022-05-14 12:06:37 OPTIONS IMPORT: peer-id set
+2022-05-14 12:06:37 Using peer cipher 'AES-256-CBC'
+fichier ssl.c func tls_session_update_crypto_params_do_work ligne 1921 
+fichier ssl.c func tls_session_generate_data_channel_keys ligne 1887 
+fichier ssl.c func generate_key_expansion ligne 1813 
+BBB generate_key_expansion ligne 1834 CO_USE_TLS_KEY_MATERIAL_EXPORT baissé BBB 
+openvpn_PRF
+buffer secret  : 
+8c5af957163052856bb4522c0679d3974edc7713643ea59dfbc9faa0f05b28cc
+0d61d169390f80edf1ad267544f90172
+label : "OpenVPN master secret"
+buffer client_seed  : 
+daf15ff7d6286480d29715ff21ec5c7f9e9b61013d22c02582422f38bb74f9ce
+
+buffer server_seed  : 
+6337d3df0c3a1bf63e73b7ec6823bd89969f1927af0e28eaef9770477801329c
+
+ssl_tls1_PRF ligne 1413 
+buffer seed  : 
+4f70656e56504e206d617374657220736563726574daf15ff7d6286480d29715
+ff21ec5c7f9e9b61013d22c02582422f38bb74f9ce6337d3df0c3a1bf63e73b7
+ec6823bd89969f1927af0e28eaef9770477801329c
+buffer secret  : 
+8c5af957163052856bb4522c0679d3974edc7713643ea59dfbc9faa0f05b28cc
+0d61d169390f80edf1ad267544f90172
+buffer output  : 
+80f16059b8b66cd2c7b96d137957705c6e0d57ddf20f901cbbdf8ad2d8ddc1cb
+434cc2471e1e4459c24b7bad998cadf4
+openvpn_PRF
+buffer secret  : 
+80f16059b8b66cd2c7b96d137957705c6e0d57ddf20f901cbbdf8ad2d8ddc1cb
+434cc2471e1e4459c24b7bad998cadf4
+label : "OpenVPN key expansion"
+buffer client_seed  : 
+80164cc218659a5ae0796481d3b93dd78ebbc7ecba54103737b40de4e1d95d13
+
+buffer server_seed  : 
+ddb8845e47ee3f759e8fa2e244f92b926a6136031e1f44f028d20ed81e93985a
+
+ssl_tls1_PRF ligne 1413 
+buffer seed  : 
+4f70656e56504e206b657920657870616e73696f6e80164cc218659a5ae07964
+81d3b93dd78ebbc7ecba54103737b40de4e1d95d13ddb8845e47ee3f759e8fa2
+e244f92b926a6136031e1f44f028d20ed81e93985a61a4a423376242556c2ee6
+e492b0c865
+buffer secret  : 
+80f16059b8b66cd2c7b96d137957705c6e0d57ddf20f901cbbdf8ad2d8ddc1cb434cc2471e1e4459c24b7bad998cadf4
+buffer output  : 
+b4568c1b54bff2cd174a1504cd376d3e66557b946c1c84b81f4ac291f3be3b30
+6d6fce2c819fdf89dbf81724f1b7f672310facc3e9a29549c0d6b32a6be84a6a
+791e82f35244b870b63f523ff21f5afb9f4897f30deaf8fa80dcf029dde1de13
+afcc8ccbb55e4d801f8b8e71bce587cf20b019d27a85510ee83dc135d19b3237
+3a47fb10ad4dd187b13970b7a03aa47c385b06a9484c77ae0158ec2e9f9465f5
+8ce09738f7b7514bb82d25f970a4fade58f3d9a7671b44834bd3af137c570311
+40c9a6d06bfe6d2cb0322c398f6052b11596b424b9e3a808f579a610975a0480
+21e7e3f1830536af8df3bc5b8e0abf212a38554c04e5965556533e63ff07d33f
+
+Master Encrypt (cipher): b4568c1b 54bff2cd 174a1504 cd376d3e 66557b94 6c1c84b8 1f4ac291 f3be3b30Master Encrypt (hmac): 791e82f3 5244b870 b63f523f f21f5afb 9f4897f3 0deaf8fa 80dcf029 dde1de13 afcc8ccb b55e4d80 1f8b8e71 bce587cf 20b019d2 7a85510e e83dc135 d19b3237Master Decrypt (cipher): 3a47fb10 ad4dd187 b13970b7 a03aa47c 385b06a9 484c77ae 0158ec2e 9f9465f5Master Decrypt (hmac): 40c9a6d0 6bfe6d2c b0322c39 8f6052b1 1596b424 b9e3a808 f579a610 975a0480 21e7e3f1 830536af 8df3bc5b 8e0abf21 2a38554c 04e59655 56533e63 ff07d33ffichier ssl.c fonction init_key_contexts ligne 1724 
+crypto.c entree dans init_key_ctx_bi ligne 909 name : "Data Channel" direction : 1
+jeu de clefs n°1 (client) : buffer 1-a : 
+b4568c1b54bff2cd174a1504cd376d3e66557b946c1c84b81f4ac291f3be3b30
+
+jeu de clefs n°1 (client) : buffer 1-b : 
+791e82f35244b870b63f523ff21f5afb9f4897f30deaf8fa80dcf029dde1de13
+afcc8ccbb55e4d801f8b8e71bce587cf20b019d27a85510ee83dc135d19b3237
+
+jeu de clefs n°2 (serveur) : buffer 2-a : 
+3a47fb10ad4dd187b13970b7a03aa47c385b06a9484c77ae0158ec2e9f9465f5
+
+jeu de clefs n°2 (serveur) : buffer 2-b : 
+40c9a6d06bfe6d2cb0322c398f6052b11596b424b9e3a808f579a610975a0480
+21e7e3f1830536af8df3bc5b8e0abf212a38554c04e5965556533e63ff07d33f
+
+entree dans cipher_ctx_init, passage n° 0
+ciphername : AES-256-CBC
+buffer cipher key : 
+b4568c1b54bff2cd174a1504cd376d3e66557b946c1c84b81f4ac291f3be3b30
+
+2022-05-14 12:06:37 Outgoing Data Channel: Cipher 'AES-256-CBC' initialized with 256 bit key
+entree dans hmac_ctx_init passage n°2
+mdname : SHA512
+buffer hmac key : 
+791e82f35244b870b63f523ff21f5afb9f4897f30deaf8fa80dcf029dde1de13
+afcc8ccbb55e4d801f8b8e71bce587cf20b019d27a85510ee83dc135d19b3237
+
+2022-05-14 12:06:37 Outgoing Data Channel: Using 512 bit message hash 'SHA512' for HMAC authentication
+entree dans cipher_ctx_init, passage n° 1
+ciphername : AES-256-CBC
+buffer cipher key : 
+3a47fb10ad4dd187b13970b7a03aa47c385b06a9484c77ae0158ec2e9f9465f5
+
+2022-05-14 12:06:37 Incoming Data Channel: Cipher 'AES-256-CBC' initialized with 256 bit key
+entree dans hmac_ctx_init passage n°3
+mdname : SHA512
+buffer hmac key : 
+40c9a6d06bfe6d2cb0322c398f6052b11596b424b9e3a808f579a610975a0480
+21e7e3f1830536af8df3bc5b8e0abf212a38554c04e5965556533e63ff07d33f
+
+2022-05-14 12:06:37 Incoming Data Channel: Using 512 bit message hash 'SHA512' for HMAC authentication
+2022-05-14 12:06:37 net_route_v4_best_gw query: dst 0.0.0.0
+2022-05-14 12:06:37 net_route_v4_best_gw result: via 192.168.0.254 dev wlp2s0
+2022-05-14 12:06:37 ROUTE_GATEWAY 192.168.0.254/255.255.255.0 IFACE=wlp2s0 HWADDR=a4:34:d9:f8:27:a8
+2022-05-14 12:06:37 TUN/TAP device tun0 opened
+2022-05-14 12:06:37 net_iface_mtu_set: mtu 1500 for tun0
+2022-05-14 12:06:37 net_iface_up: set tun0 up
+2022-05-14 12:06:37 net_addr_v4_add: 10.9.2.201/16 dev tun0
+2022-05-14 12:06:37 net_route_v4_add: 10.10.0.0/16 via 10.9.0.1 dev [NULL] table 0 metric 1000
+2022-05-14 12:06:37 WARNING: this configuration may cache passwords in memory -- use the auth-nocache option to prevent this
+2022-05-14 12:06:37 Initialization Sequence Completed
+fichier ssl.c func tls_multi_process ligne 3100 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+fichier ssl.c func tls_multi_process ligne 3100 
+fichier ssl.c func tls_multi_process ligne 3100 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+fichier ssl.c func tls_multi_process ligne 3100 
+fichier ssl.c func tls_multi_process ligne 3100 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+fichier ssl.c func tls_multi_process ligne 3100 
+fichier ssl.c func tls_multi_process ligne 3100 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+fichier ssl.c func tls_multi_process ligne 3100 
+fichier ssl.c func tls_multi_process ligne 3100 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+fichier ssl.c func tls_multi_process ligne 3100 
+fichier ssl.c func tls_multi_process ligne 3100 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+fichier ssl.c func tls_multi_process ligne 3100 
+fichier ssl.c func tls_multi_process ligne 3100 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+fichier ssl.c func tls_multi_process ligne 3100 
+fichier ssl.c func tls_multi_process ligne 3100 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+fichier ssl.c func tls_multi_process ligne 3100 
+fichier ssl.c func tls_multi_process ligne 3100 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_decrypt_v1
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_decrypt_v1
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_decrypt_v1
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+fichier ssl.c func tls_multi_process ligne 3100 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_decrypt_v1
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+openvpn_decrypt_v1
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+^C2022-05-14 12:07:04 event_wait : Interrupted system call (fd=-1,code=4)
+2022-05-14 12:07:04 SIGTERM received, sending exit notification to peer
+openvpn_encrypt, calling openvpn_encrypt_v1
+openvpn_encrypt_v1, 203 ctx->cipher 
+^C2022-05-14 12:07:04 event_wait : Interrupted system call (fd=-1,code=4)
+2022-05-14 12:07:04 net_route_v4_del: 10.10.0.0/16 via 10.9.0.1 dev [NULL] table 0 metric 1000
+2022-05-14 12:07:04 Closing TUN/TAP interface
+2022-05-14 12:07:04 net_addr_v4_del: 10.9.2.201 dev tun0
+openvpn_main, case MODE_POINT_TO_POINT, apres tunnel_point_to_point()
+2022-05-14 12:07:05 SIGINT[hard,] received, process exiting
