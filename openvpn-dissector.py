@@ -7,15 +7,25 @@ from Cryptodome.Cipher import AES
 from Cryptodome.Hash import HMAC as hmac, SHA512
 from scapy.all import *
 
-#from tls_dissector import *
-
 from dissector_const import *
 from dissector_globals import *
 from dissector_utils import *
- 
-import tls13_dissector# import as tls13_dissector
+
+import tls_dissector
+import tls13_dissector
 
 openvpn_handshake_finished = False
+
+client_secret = None
+client_seed_1 = None
+client_seed_2 = None
+server_seed_1 = None
+server_seed_2 = None
+
+client_data_cipher_key = None
+client_data_hmac_key = None
+server_data_cipher_key = None
+server_data_hmac_key = None
 
 def add_tcp_ip_layer(openvpn_payload):
 
@@ -40,6 +50,9 @@ psk_end_tag = "-----END OpenVPN Static key V1-----"
 
 psk_hmac_client = None
 psk_hmac_server = None
+
+session_id_client = None
+session_id_server = None
 
 def parse_openvpn_file(ovpn_path):
 
@@ -139,6 +152,11 @@ def dissect_openvpn_plaintext(plaintext, index):
 
 def dissect_openvpn_data_packet(openvpn_payload, index, k_enc = b'', k_auth = b''):
 
+	global client_data_cipher_key
+	global client_data_hmac_key
+	global server_data_cipher_key
+	global server_data_hmac_key
+
 	global openvpn_handshake_finished
 	if openvpn_handshake_finished == False:
 		openvpn_handshake_finished = True
@@ -154,16 +172,31 @@ def dissect_openvpn_data_packet(openvpn_payload, index, k_enc = b'', k_auth = b'
 	ciphertext = data[80:]
 	
 	print("Peer ID : %r" % hex(peer_id))
-	#print("Data : %r" % data)
 	
 	print("Packet HMAC : %r" % mac)
 	print("Packet IV : %r" % iv)
 	print("Packet ciphertext : %r" % ciphertext)
 
+	if k_enc != None:
+		k_enc = binascii.unhexlify(k_enc)
+	elif client_secret != None:
+		if dissector_globals.is_from_client == True:
+			k_enc = client_data_cipher_key
+		else:
+			k_enc = server_data_cipher_key
+
+	if k_auth != None:
+		k_auth = binascii.unhexlify(k_auth)
+	elif client_secret != None:
+		if dissector_globals.is_from_client == True:
+			k_auth = client_data_hmac_key
+		else:
+			k_auth = server_data_hmac_key
+
 	if k_auth != None:
 
 		hmac_input = data[64:]
-		h = hmac.new(binascii.unhexlify(k_auth), digestmod = SHA512)
+		h = hmac.new(k_auth, digestmod = SHA512)
 		h.update(hmac_input)
 
 		if h.digest() == mac:
@@ -175,7 +208,7 @@ def dissect_openvpn_data_packet(openvpn_payload, index, k_enc = b'', k_auth = b'
 
 	if k_enc != None and (k_auth == None or is_authenticated == True):
 	
-		cipher = AES.new(binascii.unhexlify(k_enc), AES.MODE_CBC, iv = iv)
+		cipher = AES.new(k_enc, AES.MODE_CBC, iv = iv)
 		plaintext = cipher.decrypt(ciphertext)
 		print("Packet plaintext : %r" % plaintext)
 		
@@ -185,15 +218,22 @@ def dissect_openvpn_data_packet(openvpn_payload, index, k_enc = b'', k_auth = b'
 
 def dissect_openvpn_ack_v1(openvpn_payload):
 
-	global psk_hmac_client
+	offset = 0
 
-	openvpn_pkt_type = (openvpn_payload[0]).to_bytes(1, 'big')
-	openvpn_packet_session_id = openvpn_payload[1 : 9]
-	openvpn_packet_hmac = openvpn_payload[9 : 73]
-	openvpn_packet_id = openvpn_payload[73 : 77]
-	openvpn_packet_time = openvpn_payload[77 : 81]
-	openvpn_packet_id_array = openvpn_payload[81 : 86]
-	openvpn_remote_session_id = openvpn_payload[86 : 94]
+	openvpn_pkt_type = (openvpn_payload[offset]).to_bytes(1, 'big')
+	offset += 1
+	openvpn_packet_session_id = openvpn_payload[offset : offset + 8]
+	offset += 8
+	openvpn_packet_hmac = openvpn_payload[offset : offset + 64]
+	offset += 64
+	openvpn_packet_id = openvpn_payload[offset : offset + 4]
+	offset += 4
+	openvpn_packet_time = openvpn_payload[offset : offset + 4]
+	offset += 4
+	openvpn_packet_id_array = openvpn_payload[offset : offset + 5]
+	offset += 5
+	openvpn_remote_session_id = openvpn_payload[offset : offset + 8]
+	offset += 8
 
 	print(" openvpn_payload : %r" % binascii.hexlify(openvpn_payload))
 	print(" openvpn_pkt_type : %r" % binascii.hexlify(openvpn_pkt_type))
@@ -213,7 +253,11 @@ def dissect_openvpn_ack_v1(openvpn_payload):
 		hmac_input += openvpn_packet_id_array
 		hmac_input += openvpn_remote_session_id
 
-		h = hmac.new(key = psk_hmac_client, digestmod = SHA512)
+
+		if dissector_globals.is_from_client == True:
+			h = hmac.new(key = psk_hmac_client, digestmod = SHA512)
+		else:
+			h = hmac.new(key = psk_hmac_server, digestmod = SHA512)
 		h.update(hmac_input)
 		openvpn_computed_hmac = h.digest()
 
@@ -260,6 +304,8 @@ def dissect_openvpn_hard_reset_client_v2(openvpn_payload):
 
 def dissect_openvpn_hard_reset_server_v2(openvpn_payload):
 
+	global session_id_client
+	global session_id_server
 	global psk_hmac_server
 
 	openvpn_pkt_type = (openvpn_payload[0]).to_bytes(1, 'big')
@@ -281,6 +327,9 @@ def dissect_openvpn_hard_reset_server_v2(openvpn_payload):
 	print(" openvpn_remote_session_id : %r" % binascii.hexlify(openvpn_remote_session_id))
 	print(" openvpn trailer : %r" % binascii.hexlify(openvpn_packet_trailer))
 
+	session_id_server = openvpn_packet_session_id
+	session_id_client = openvpn_remote_session_id
+
 	if psk_hmac_client != None:
 		hmac_input = b''
 		hmac_input += openvpn_packet_id
@@ -299,6 +348,72 @@ def dissect_openvpn_hard_reset_server_v2(openvpn_payload):
 			print(" hard_reset_server_v2 HMAC is correct :-)")
 		else:
 			print(" hard_reset_server_v2 HMAC is not correct :-(")
+
+def derivate_openvpn_crypto_material():
+
+	global client_data_cipher_key
+	global client_data_hmac_key
+	global server_data_cipher_key
+	global server_data_hmac_key
+
+	print("going to derivate crypto key for data packets !")
+
+	seed = client_seed_1 + server_seed_1
+	label = b'OpenVPN master secret'
+
+	tls_dissector.selected_version = 0x0302
+
+	openvpn_master_secret = tls_dissector.PRF(client_secret, label, seed)
+	openvpn_master_secret = openvpn_master_secret[:48]
+	print("openvpn_master_secret : %r" % binascii.hexlify(openvpn_master_secret) )
+
+	seed = client_seed_2 + server_seed_2 + session_id_client + session_id_server#+ binascii.unhexlify('61a4a423376242556c2ee6e492b0c865')
+	label = b'OpenVPN key expansion'
+
+	openvpn_keys = tls_dissector.PRF(openvpn_master_secret, label, seed)
+	print("openvpn_keys : %r" % binascii.hexlify(openvpn_keys) )
+
+	tls_dissector.selected_version = None
+
+	client_data_cipher_key = openvpn_keys[ : 32]
+	client_data_hmac_key = openvpn_keys[64 : 128]
+	server_data_cipher_key = openvpn_keys[128 : 160]
+	server_data_hmac_key = openvpn_keys[192 : 256]
+
+	print("client_data_cipher_key : %r" % binascii.hexlify(client_data_cipher_key))
+	print("client_data_hmac_key : %r" % binascii.hexlify(client_data_hmac_key))
+	print("server_data_cipher_key : %r" % binascii.hexlify(server_data_cipher_key))
+	print("server_data_hmac_key : %r" % binascii.hexlify(server_data_hmac_key))
+
+def parse_tls_control_payload(tls_payload):
+	if tls_payload == None:
+		return
+
+	global client_secret
+	global client_seed_1
+	global client_seed_2
+	global server_seed_1
+	global server_seed_2
+
+	if tls_payload.find(b'tls-client') != -1:
+
+		client_secret = tls_payload[5 : 5 + 48]
+		client_seed_1 = tls_payload[5 + 48 : 5 + 48 + 32]
+		client_seed_2 = tls_payload[5 + 48 + 32 : 5 + 48 + 32 + 32]
+
+		print("client_secret : %r" % binascii.hexlify(client_secret))
+		print("client_seed_1 : %r" % binascii.hexlify(client_seed_1))
+		print("client_seed_2 : %r" % binascii.hexlify(client_seed_2))
+
+	if tls_payload.find(b'tls-server') != -1:
+
+		server_seed_1 = tls_payload[5 : 5 +32]
+		server_seed_2 = tls_payload[5 + 32 : 5 + 32 + 32]
+
+		print("server_seed_1 : %r" % binascii.hexlify(server_seed_1))
+		print("server_seed_2 : %r" % binascii.hexlify(server_seed_2))
+
+		derivate_openvpn_crypto_material()
 
 def dissect_openvpn_control_v1(openvpn_payload):
 
@@ -372,7 +487,9 @@ def dissect_openvpn_control_v1(openvpn_payload):
 	tls_pseudo_packet = add_tcp_ip_layer(openvpn_tls_payload)
 	tls13_dissector.dissect_tls_packet(tls_pseudo_packet, 0)
 
-def dissect_openvpn_control_packet(openvpn_payload, index, k_enc = b'', k_auth = b''):
+	parse_tls_control_payload(tls13_dissector.current_plaintext)
+
+def dissect_openvpn_control_packet(openvpn_payload, index):
 
 	openvpn_packet_type = openvpn_payload[0]
 	openvpn_packet_opcode = openvpn_packet_type >> 3
@@ -411,7 +528,7 @@ def dissect_openvpn_packet(packet, index, k_enc_client = b'', k_auth_client = b'
 	if openvpn_packet_opcode == 9:
 		dissect_openvpn_data_packet(openvpn_payload, index, k_enc, k_auth)
 	else:
-		dissect_openvpn_control_packet(openvpn_payload, index, k_enc, k_auth)
+		dissect_openvpn_control_packet(openvpn_payload, index)
 
 def main():
 
