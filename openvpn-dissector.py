@@ -1,10 +1,10 @@
-#!/usr/bin/python3.9
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 import argparse
 import binascii
 from Cryptodome.Cipher import AES
-from Cryptodome.Hash import HMAC as hmac, SHA512
+from Cryptodome.Hash import HMAC as hmac, SHA512, SHA256, SHA1
 from scapy.all import *
 
 from dissector_const import *
@@ -14,19 +14,78 @@ from dissector_utils import *
 import tls_dissector
 import tls13_dissector
 
+# Several global variables
+#
+## quite explicit, says, if the openvpn "handshake" is finished
 openvpn_handshake_finished = False
 
+## some secrets for key generation
 client_secret = None
 client_seed_1 = None
 client_seed_2 = None
 server_seed_1 = None
 server_seed_2 = None
 
+## authentication/encryption keys for data channel
 client_data_cipher_key = None
 client_data_hmac_key = None
 server_data_cipher_key = None
 server_data_hmac_key = None
 
+## PSK algorithm for tls-auth
+## Can be:
+## - SHA512
+## - SHA256
+## - SHA1 (default behaviour, if not specified)
+## - None (if tls-auth token doesn't appear in the configuration file)
+psk_mode_algo = None
+## WHen PSK algorithm is not None, then HMAC algorithm is the same as PSK algorithm
+hmac_algo = None
+
+## PSK for tls-auth, aka "HMAC firewall" for control channel
+psk_hmac_client = None
+psk_hmac_server = None
+
+## The session id for both sides
+session_id_client = None
+session_id_server = None
+
+## Some tags for .ovpn configuration file parsing
+tls_auth_begin_tag = "<tls-auth>"
+tls_auth_end_tag = "</tls-auth>"
+psk_begin_tag = "-----BEGIN OpenVPN Static key V1-----"
+psk_end_tag = "-----END OpenVPN Static key V1-----"
+
+## Get the size of an HMAC algorithm output
+def get_hmac_len(algorithm):
+
+	if algorithm == "SHA512":
+		return 64
+	elif algorithm == "SHA256":
+		return 32
+	elif algorithm == "SHA1":
+		return 20
+	else:
+		return 0
+
+## Compute an HMAC
+def compute_hmac(key, hmac_algo, data):
+	if hmac_algo == "SHA512":
+		h = hmac.new(key, digestmod = SHA512)
+	elif hmac_algo == "SHA256":
+		h = hmac.new(key, digestmod = SHA256)
+	elif hmac_algo == "SHA1":
+		h = hmac.new(key, digestmod = SHA1)
+	else:
+		print(f"error: won't compute an HMAC if no HMAC algorithm is defined ! {hmac_algo}")
+		exit()
+
+	h.update(data)
+	mac = h.digest()
+
+	return mac
+
+## Add a fake TCP layer for the TLS dissector
 def add_tcp_ip_layer(openvpn_payload):
 
 	if dissector_globals.is_from_client == True:
@@ -43,21 +102,16 @@ def add_tcp_ip_layer(openvpn_payload):
 	openvpn_packet = IP(src = ip_src, dst = ip_dst) / TCP(sport = udp_src, dport = udp_dst) / Raw(openvpn_payload)
 	return openvpn_packet
 
-tls_auth_begin_tag = "<tls-auth>"
-tls_auth_end_tag = "</tls-auth>"
-psk_begin_tag = "-----BEGIN OpenVPN Static key V1-----"
-psk_end_tag = "-----END OpenVPN Static key V1-----"
-
-psk_hmac_client = None
-psk_hmac_server = None
-
-session_id_client = None
-session_id_server = None
-
+## Extract the following information from the .ovpn file:
+## - Is tls-auth activated or not
+## - HMAC algorithm (will be used for both data channel and tls-auth, unless tls-auth is deactivated)
+## - HMAC tls-auth key (if activated)
 def parse_openvpn_file(ovpn_path):
 
 	global psk_hmac_client
 	global psk_hmac_server
+	global psk_mode_algo
+	global hmac_algo
 
 	try:
 		fd = open(ovpn_path, "r")
@@ -67,28 +121,69 @@ def parse_openvpn_file(ovpn_path):
 
 	ovpn_content = ""
 	ovpn_lines = fd.readlines()
-	
-	for line in ovpn_lines:
-		ovpn_content += line.strip('\n')
 
+	# Unless explicitely configured, HMAC uses SHA1
+	hmac_algo = "SHA1"
+
+	# Loop over the .ovpn file and search some tokens:
+	# - "tls-auth" token for tls-auth, aka HMAC firewall
+	# - "auth" token for HMAC algorithm token
+	# Each of these token is considered as commented if not at the very beginning of its line
+	for line in ovpn_lines:
+		ovpn_line = line.strip('\n')
+		ovpn_content += ovpn_line
+
+		# Look for "auth" token
+		index_512 = ovpn_line.find("auth SHA512")
+		index_256 = ovpn_line.find("auth SHA256")
+		if index_512 == 0:
+			print("auth uses SHA512 !")
+			hmac_algo = "SHA512"
+		elif index_256 == 0:
+			print("auth uses SHA256 !")
+			hmac_algo = "SHA256"
+
+		# Look for the "tls-auth" token
+		# If commented, then we have nothing more to do here
+		index_tls_auth = ovpn_line.find("tls-auth")
+		if index_tls_auth == 0:
+			psk_mode_algo = hmac_algo
+			print(f"tls-auth is used with {psk_mode_algo} !")
+		elif index_tls_auth == 1 and ovpn_line[0] == ';':
+			print("tls-auth is not used !")
+			return
+
+	# if we didn't take the return and psk_mode_algo is still None
+	# it means no "auth" token was found
+	# which means that SHA1 is used for both auth and tls-auth
+	if psk_mode_algo == None:
+		print("auth and tls-auth use SHA1 !")
+		psk_mode_algo = "SHA1"
+
+	# Look for the tls-auth key
+	# This key is between <tls-auth> and </tls-auth> tokens
 	index_begin = ovpn_content.find(tls_auth_begin_tag)
 	index_end = ovpn_content.find(tls_auth_end_tag)
 
+	# If no tls-auth key was found while tls-auth is used we have a problem
 	if index_begin == -1 or index_end == -1:
-		print("tls-auth doesn't seem to be used !")
-		return
+		print("no tls-auth PSK found !")
+		exit()
 
+	# Take the content between the two tokens
 	index_begin = ovpn_content.find(psk_begin_tag)
 	index_end = ovpn_content.find(psk_end_tag)
 
 	if index_begin == -1 or index_end == -1:
 		print("cannot find any PSK key !")
-		return
+		exit()
 
-	psk = ovpn_content[ index_begin + len(psk_begin_tag) : index_end]# - len(psk_end_tag) ]
-	
-	psk_hmac_client_hex = psk[384 : 384 + 128]
-	psk_hmac_server_hex = psk[128 : 128 + 128]
+	psk = ovpn_content[ index_begin + len(psk_begin_tag) : index_end ]
+
+	# Extract the HMAC PSK keys for each direction
+	keylen = get_hmac_len(psk_mode_algo)
+	psk_hmac_client_hex = psk[384 : 384 + 2 * keylen]
+	psk_hmac_server_hex = psk[128 : 128 + 2 * keylen]
 	psk_hmac_client = binascii.unhexlify(psk_hmac_client_hex)
 	psk_hmac_server = binascii.unhexlify(psk_hmac_server_hex)
 
@@ -111,35 +206,44 @@ packet_opcodes = {
 
 compression_methods = {
 	0x66 : "Lzo compression",
-	0x67 : "Lz4 compression",
+	0x69 : "Lz4 compression",
 	0xFA : "No compression",
 	0xFB : "No compression byte swap"
 }
 
+## Print compression method
 def get_compression_method(compression_method):
 	try:
 		return compression_methods[compression_method]
 	except:
-		print("unknown compression method (%r)" % compression_method)
+		print(f"unknown compression method (0x{compression_method:x})")
 		exit()
 
+## Dissect a decrypted OpenVPN plaintext
 def dissect_openvpn_plaintext(plaintext, index):
 
+	# Such a packet begins with a 4 bytes sequence number
 	sequence_number = int.from_bytes(plaintext[:4], 'big')
-	compression_byte = plaintext[4]
+	#compression_byte = plaintext[4]
+	# Get last byte of padding who tells who much bytes of padding
+	# shall be removed
 	padding_byte = plaintext[-1]
 
+	# Check padding consistency
 	if padding_byte > 0x10:
 		print("padding seems to be incorrect! (%r)" % padding_byte)
 		exit()
 
-	raw_plaintext = plaintext[5 : -padding_byte]
+	# Plaintext is between sequence number and padding
+	raw_plaintext = plaintext[4 : -padding_byte]
+	#raw_plaintext = plaintext[5 : -padding_byte]
 	
 	print("sequence number : %r" % sequence_number)
-	print("compression byte : %r (%r)" % (hex(compression_byte), get_compression_method(compression_byte)))
+	#print("compression byte : %r (%r)" % (hex(compression_byte), get_compression_method(compression_byte)))
 	print("padding byte : %r" % padding_byte)
 	print("raw plaintext : %r" % raw_plaintext)
-	
+
+	# Dump plaintext as IP packet
 	if (raw_plaintext[0] & 0xF0 == 0x40):
 		parsed_packet = IP(raw_plaintext)
 		parsed_packet.show()
@@ -149,34 +253,41 @@ def dissect_openvpn_plaintext(plaintext, index):
 	else:
 		print("could not guess type of traffic")
 
-
+## Dissect an OpenVPN data packet
 def dissect_openvpn_data_packet(openvpn_payload, index, k_enc = b'', k_auth = b''):
 
 	global client_data_cipher_key
 	global client_data_hmac_key
 	global server_data_cipher_key
 	global server_data_hmac_key
+	global hmac_algo
 
+	# Boolean which says "the HMAC is correct"
+	is_authenticated = False
+
+	# First OpenVPN data packet proves that handshake has finished
 	global openvpn_handshake_finished
 	if openvpn_handshake_finished == False:
 		openvpn_handshake_finished = True
 
 	print("dissect_openvpn_data_packet")	
 
-	is_authenticated = False
-	peer_id = int.from_bytes(openvpn_payload[1:4], 'big')
+	# Get peer id
+	peer_id = int.from_bytes(openvpn_payload[1 : 4], 'big')
 	data = openvpn_payload[4:]
-	
-	mac = data[:64]
-	iv = data[64:80]
-	ciphertext = data[80:]
+
+	# Extract hmac, iv and ciphertext
+	hmac_len = get_hmac_len(hmac_algo)
+	real_mac = data[ : hmac_len]
+	iv = data[hmac_len : hmac_len + 16]
+	ciphertext = data[hmac_len + 16 : ]
 	
 	print("Peer ID : %r" % hex(peer_id))
-	
-	print("Packet HMAC : %r" % mac)
+	print("Packet HMAC : %r" % real_mac)
 	print("Packet IV : %r" % iv)
 	print("Packet ciphertext : %r" % ciphertext)
 
+	# Set the appropriate keys for encryption and hmac
 	if k_enc != None:
 		k_enc = binascii.unhexlify(k_enc)
 	elif client_secret != None:
@@ -195,41 +306,52 @@ def dissect_openvpn_data_packet(openvpn_payload, index, k_enc = b'', k_auth = b'
 
 	if k_auth != None:
 
-		hmac_input = data[64:]
-		h = hmac.new(k_auth, digestmod = SHA512)
-		h.update(hmac_input)
+		# Recompute the HMAC
+		# The HMAC is computed over the encrypted data (Encrypt-then-MAC)
+		hmac_input = data[hmac_len : ]
+		computed_mac = compute_hmac(k_auth, hmac_algo, hmac_input)
 
-		if h.digest() == mac:
+		# Check the HMAC
+		if computed_mac == real_mac:
 			print("Packet is authenticated")
 			is_authenticated = True
 		else:
 			print("Packet cannot be authenticated\nreal hmac = %r\ncomputed hmac = %r" % (mac, h.hexdigest()))
 			exit()
 
+	# Decrypt the ciphertext
 	if k_enc != None and (k_auth == None or is_authenticated == True):
 	
 		cipher = AES.new(k_enc, AES.MODE_CBC, iv = iv)
 		plaintext = cipher.decrypt(ciphertext)
 		print("Packet plaintext : %r" % plaintext)
-		
+
+		# Process the decrypted plaintext
 		dissect_openvpn_plaintext(plaintext, index)
 
 	print("");
 
+## Dissect an OpenVPN ACK_V1 packet
 def dissect_openvpn_ack_v1(openvpn_payload):
 
+	global psk_mode_algo
 	offset = 0
 
 	openvpn_pkt_type = (openvpn_payload[offset]).to_bytes(1, 'big')
 	offset += 1
 	openvpn_packet_session_id = openvpn_payload[offset : offset + 8]
 	offset += 8
-	openvpn_packet_hmac = openvpn_payload[offset : offset + 64]
-	offset += 64
-	openvpn_packet_id = openvpn_payload[offset : offset + 4]
-	offset += 4
-	openvpn_packet_time = openvpn_payload[offset : offset + 4]
-	offset += 4
+
+	hmac_len = get_hmac_len(psk_mode_algo)
+	openvpn_packet_hmac = openvpn_payload[offset : offset + hmac_len]
+	offset += hmac_len
+
+	if psk_mode_algo != None:
+		openvpn_packet_id = openvpn_payload[offset : offset + 4]
+		offset += 4
+		openvpn_packet_time = openvpn_payload[offset : offset + 4]
+		offset += 4
+
 	openvpn_packet_id_array = openvpn_payload[offset : offset + 5]
 	offset += 5
 	openvpn_remote_session_id = openvpn_payload[offset : offset + 8]
@@ -238,13 +360,14 @@ def dissect_openvpn_ack_v1(openvpn_payload):
 	print(" openvpn_payload : %r" % binascii.hexlify(openvpn_payload))
 	print(" openvpn_pkt_type : %r" % binascii.hexlify(openvpn_pkt_type))
 	print(" openvpn_session_id : %r" % binascii.hexlify(openvpn_packet_session_id))
-	print(" openvpn_hmac : %r" % binascii.hexlify(openvpn_packet_hmac))
-	print(" openvpn pkt_id : %r" % binascii.hexlify(openvpn_packet_id))
-	print(" openvpn time : %r" % binascii.hexlify(openvpn_packet_time))
+	if psk_mode_algo != None:
+		print(" openvpn_hmac : %r" % binascii.hexlify(openvpn_packet_hmac))
+		print(" openvpn pkt_id : %r" % binascii.hexlify(openvpn_packet_id))
+		print(" openvpn time : %r" % binascii.hexlify(openvpn_packet_time))
 	print(" openvpn_packet_id_array : %r" % binascii.hexlify(openvpn_packet_id_array))
 	print(" openvpn_remote_session_id : %r" % binascii.hexlify(openvpn_remote_session_id))
 
-	if psk_hmac_client != None and openvpn_handshake_finished == False:
+	if psk_hmac_client != None and openvpn_handshake_finished == False and psk_mode_algo != None:
 		hmac_input = b''
 		hmac_input += openvpn_packet_id
 		hmac_input += openvpn_packet_time
@@ -253,76 +376,100 @@ def dissect_openvpn_ack_v1(openvpn_payload):
 		hmac_input += openvpn_packet_id_array
 		hmac_input += openvpn_remote_session_id
 
-
 		if dissector_globals.is_from_client == True:
-			h = hmac.new(key = psk_hmac_client, digestmod = SHA512)
+			openvpn_computed_hmac = compute_hmac(psk_hmac_client, psk_mode_algo, hmac_input)
 		else:
-			h = hmac.new(key = psk_hmac_server, digestmod = SHA512)
-		h.update(hmac_input)
-		openvpn_computed_hmac = h.digest()
+			openvpn_computed_hmac = compute_hmac(psk_hmac_server, psk_mode_algo, hmac_input)
 
 		if openvpn_computed_hmac == openvpn_packet_hmac:
 			print(" ack_v1 HMAC is correct :-)")
 		else:
 			print(" ack_v1 HMAC is not correct :-(")
 
+## Dissect an OpenVPN Hard_reset_client_v2 packet
 def dissect_openvpn_hard_reset_client_v2(openvpn_payload):
 
+	global psk_mode_algo
 	global psk_hmac_client
+	offset = 0
 
-	openvpn_pkt_type = (openvpn_payload[0]).to_bytes(1, 'big')
-	openvpn_packet_session_id = openvpn_payload[1 : 9]
-	openvpn_packet_hmac = openvpn_payload[9 : 73]
-	openvpn_packet_id = openvpn_payload[73 : 77]
-	openvpn_packet_time = openvpn_payload[77 : 81]
-	openvpn_packet_trailer = openvpn_payload[81 : 86]
+	openvpn_pkt_type = (openvpn_payload[offset]).to_bytes(1, 'big')
+	offset += 1
+	openvpn_packet_session_id = openvpn_payload[offset : offset + 8]
+	offset += 8
+
+	hmac_len = get_hmac_len(psk_mode_algo)
+	openvpn_packet_hmac = openvpn_payload[offset : offset + hmac_len]
+	offset += hmac_len
+
+	if psk_mode_algo != None:
+		openvpn_packet_id = openvpn_payload[offset : offset + 4]
+		offset += 4
+		openvpn_packet_time = openvpn_payload[offset : offset + 4]
+		offset += 4
+	openvpn_packet_trailer = openvpn_payload[offset : offset + 5]
 
 	print(" openvpn_payload : %r" % binascii.hexlify(openvpn_payload))
 	print(" openvpn_pkt_type : %r" % binascii.hexlify(openvpn_pkt_type))
 	print(" openvpn_session_id : %r" % binascii.hexlify(openvpn_packet_session_id))
-	print(" openvpn_hmac : %r" % binascii.hexlify(openvpn_packet_hmac))
-	print(" openvpn pkt_id : %r" % binascii.hexlify(openvpn_packet_id))
-	print(" openvpn time : %r" % binascii.hexlify(openvpn_packet_time))
+	if psk_mode_algo != None:
+		print(" openvpn_hmac : %r" % binascii.hexlify(openvpn_packet_hmac))
+		print(" openvpn pkt_id : %r" % binascii.hexlify(openvpn_packet_id))
+		print(" openvpn time : %r" % binascii.hexlify(openvpn_packet_time))
 	print(" openvpn trailer : %r" % binascii.hexlify(openvpn_packet_trailer))
 
-	if psk_hmac_client != None:
+	if psk_hmac_client != None and psk_mode_algo != None:
 		hmac_input = b''
 		hmac_input += openvpn_packet_id
 		hmac_input += openvpn_packet_time
 		hmac_input += openvpn_pkt_type
 		hmac_input += openvpn_packet_session_id
 		hmac_input += openvpn_packet_trailer
-		
-		h = hmac.new(key = psk_hmac_client, digestmod = SHA512)
-		h.update(hmac_input)
-		openvpn_computed_hmac = h.digest()
 
+		openvpn_computed_hmac = compute_hmac(psk_hmac_client, psk_mode_algo, hmac_input)
 		if openvpn_computed_hmac == openvpn_packet_hmac:
 			print(" hard_reset_client_v2 HMAC is correct :-)")
 		else:
 			print(" hard_reset_client_v2 HMAC is not correct :-(")
 
+## Dissect an OpenVPN Hard_reset_server_v2 packet
 def dissect_openvpn_hard_reset_server_v2(openvpn_payload):
 
 	global session_id_client
 	global session_id_server
+	global psk_mode_algo
 	global psk_hmac_server
+	offset = 0
 
-	openvpn_pkt_type = (openvpn_payload[0]).to_bytes(1, 'big')
-	openvpn_packet_session_id = openvpn_payload[1 : 9]
-	openvpn_packet_hmac = openvpn_payload[9 : 73]
-	openvpn_packet_id = openvpn_payload[73 : 77]
-	openvpn_packet_time = openvpn_payload[77 : 81]
-	openvpn_packet_id_array = openvpn_payload[81 : 86]
-	openvpn_remote_session_id = openvpn_payload[86 : 94]
-	openvpn_packet_trailer = openvpn_payload[94 : 98]
+	openvpn_pkt_type = (openvpn_payload[offset]).to_bytes(1, 'big')
+	offset += 1
+	openvpn_packet_session_id = openvpn_payload[offset : offset + 8]
+	offset += 8
+
+	hmac_len = get_hmac_len(psk_mode_algo)
+	openvpn_packet_hmac = openvpn_payload[offset : offset + hmac_len]
+	offset += hmac_len
+
+	if psk_mode_algo != None:
+		openvpn_packet_id = openvpn_payload[offset : offset + 4]
+		offset += 4
+		openvpn_packet_time = openvpn_payload[offset : offset + 4]
+		offset += 4
+
+	openvpn_packet_id_array = openvpn_payload[offset : offset + 5]
+	offset += 5
+	openvpn_remote_session_id = openvpn_payload[offset : offset + 8]
+	offset += 8
+	openvpn_packet_trailer = openvpn_payload[offset : offset + 4]
+	offset += 4
 
 	print(" openvpn_payload : %r" % binascii.hexlify(openvpn_payload))
 	print(" openvpn_pkt_type : %r" % binascii.hexlify(openvpn_pkt_type))
 	print(" openvpn_session_id : %r" % binascii.hexlify(openvpn_packet_session_id))
-	print(" openvpn_hmac : %r" % binascii.hexlify(openvpn_packet_hmac))
-	print(" openvpn pkt_id : %r" % binascii.hexlify(openvpn_packet_id))
-	print(" openvpn time : %r" % binascii.hexlify(openvpn_packet_time))
+	if psk_mode_algo != None:
+		print(" openvpn_hmac : %r" % binascii.hexlify(openvpn_packet_hmac))
+		print(" openvpn pkt_id : %r" % binascii.hexlify(openvpn_packet_id))
+		print(" openvpn time : %r" % binascii.hexlify(openvpn_packet_time))
 	print(" openvpn_packet_id_array : %r" % binascii.hexlify(openvpn_packet_id_array))
 	print(" openvpn_remote_session_id : %r" % binascii.hexlify(openvpn_remote_session_id))
 	print(" openvpn trailer : %r" % binascii.hexlify(openvpn_packet_trailer))
@@ -330,7 +477,7 @@ def dissect_openvpn_hard_reset_server_v2(openvpn_payload):
 	session_id_server = openvpn_packet_session_id
 	session_id_client = openvpn_remote_session_id
 
-	if psk_hmac_client != None:
+	if psk_hmac_server != None and psk_mode_algo != None:
 		hmac_input = b''
 		hmac_input += openvpn_packet_id
 		hmac_input += openvpn_packet_time
@@ -339,22 +486,21 @@ def dissect_openvpn_hard_reset_server_v2(openvpn_payload):
 		hmac_input += openvpn_packet_id_array
 		hmac_input += openvpn_remote_session_id
 		hmac_input += openvpn_packet_trailer
-		
-		h = hmac.new(key = psk_hmac_server, digestmod = SHA512)
-		h.update(hmac_input)
-		openvpn_computed_hmac = h.digest()
 
+		openvpn_computed_hmac = compute_hmac(psk_hmac_server, psk_mode_algo, hmac_input)
 		if openvpn_computed_hmac == openvpn_packet_hmac:
 			print(" hard_reset_server_v2 HMAC is correct :-)")
 		else:
 			print(" hard_reset_server_v2 HMAC is not correct :-(")
 
+## Derivate Crypto material for data encryption
 def derivate_openvpn_crypto_material():
 
 	global client_data_cipher_key
 	global client_data_hmac_key
 	global server_data_cipher_key
 	global server_data_hmac_key
+	global hmac_algo
 
 	print("going to derivate crypto key for data packets !")
 
@@ -367,7 +513,7 @@ def derivate_openvpn_crypto_material():
 	openvpn_master_secret = openvpn_master_secret[:48]
 	print("openvpn_master_secret : %r" % binascii.hexlify(openvpn_master_secret) )
 
-	seed = client_seed_2 + server_seed_2 + session_id_client + session_id_server#+ binascii.unhexlify('61a4a423376242556c2ee6e492b0c865')
+	seed = client_seed_2 + server_seed_2 + session_id_client + session_id_server
 	label = b'OpenVPN key expansion'
 
 	openvpn_keys = tls_dissector.PRF(openvpn_master_secret, label, seed)
@@ -379,6 +525,14 @@ def derivate_openvpn_crypto_material():
 	client_data_hmac_key = openvpn_keys[64 : 128]
 	server_data_cipher_key = openvpn_keys[128 : 160]
 	server_data_hmac_key = openvpn_keys[192 : 256]
+
+	# truncate the openvpn data hmac key according to the algorithm size
+	if hmac_algo == "SHA256":
+		client_data_hmac_key = client_data_hmac_key[ : 32]
+		server_data_hmac_key = server_data_hmac_key[ : 32]
+	elif hmac_algo == "SHA1":
+		client_data_hmac_key = client_data_hmac_key[ : 20]
+		server_data_hmac_key = server_data_hmac_key[ : 20]
 
 	print("client_data_cipher_key : %r" % binascii.hexlify(client_data_cipher_key))
 	print("client_data_hmac_key : %r" % binascii.hexlify(client_data_hmac_key))
@@ -394,6 +548,20 @@ def parse_tls_control_payload(tls_payload):
 	global client_seed_2
 	global server_seed_1
 	global server_seed_2
+
+	global client_data_cipher_key
+	global server_data_cipher_key
+
+	# truncate the openvpn data encryption key according to the algorithm size
+	if tls_payload.find(b'PUSH_REPLY') != -1:
+		if tls_payload.find(b'cipher AES-256-CBC') != -1:
+			print(" OpenVPN traffic will be encrypted with AES-256-CBC")
+
+		elif tls_payload.find(b'cipher AES-128-CBC') != -1:
+			print(" OpenVPN traffic will be encrypted with AES-128-CBC")
+
+			client_data_cipher_key = client_data_cipher_key[:16]
+			server_data_cipher_key = server_data_cipher_key[:16]
 
 	if tls_payload.find(b'tls-client') != -1:
 
@@ -417,18 +585,24 @@ def parse_tls_control_payload(tls_payload):
 
 def dissect_openvpn_control_v1(openvpn_payload):
 
+	global psk_mode_algo
 	offset = 0
 
 	openvpn_pkt_type = (openvpn_payload[offset]).to_bytes(1, 'big')
 	offset += 1
 	openvpn_packet_session_id = openvpn_payload[offset : offset + 8]
 	offset += 8
-	openvpn_packet_hmac = openvpn_payload[offset : offset + 64]
-	offset += 64
-	openvpn_packet_id = openvpn_payload[offset : offset + 4]
-	offset += 4
-	openvpn_packet_time = openvpn_payload[offset : offset + 4]
-	offset += 4
+
+	hmac_len = get_hmac_len(psk_mode_algo)
+	openvpn_packet_hmac = openvpn_payload[offset : offset + hmac_len]
+	offset += hmac_len
+
+	if psk_mode_algo != None:
+		openvpn_packet_id = openvpn_payload[offset : offset + 4]
+		offset += 4
+		openvpn_packet_time = openvpn_payload[offset : offset + 4]
+		offset += 4
+
 	openvpn_packet_id_array_len = openvpn_payload[offset]
 	offset += 1
 	openvpn_packet_id_array = openvpn_payload[offset : offset + 4 * openvpn_packet_id_array_len]
@@ -444,9 +618,10 @@ def dissect_openvpn_control_v1(openvpn_payload):
 	print(" openvpn_payload : %r" % binascii.hexlify(openvpn_payload))
 	print(" openvpn_pkt_type : %r" % binascii.hexlify(openvpn_pkt_type))
 	print(" openvpn_session_id : %r" % binascii.hexlify(openvpn_packet_session_id))
-	print(" openvpn_hmac : %r" % binascii.hexlify(openvpn_packet_hmac))
-	print(" openvpn pkt_id : %r" % binascii.hexlify(openvpn_packet_id))
-	print(" openvpn time : %r" % binascii.hexlify(openvpn_packet_time))
+	if psk_mode_algo != None:
+		print(" openvpn_hmac : %r" % binascii.hexlify(openvpn_packet_hmac))
+		print(" openvpn pkt_id : %r" % binascii.hexlify(openvpn_packet_id))
+		print(" openvpn time : %r" % binascii.hexlify(openvpn_packet_time))
 	print(" openvpn_packet_id_array_len : %r" % openvpn_packet_id_array_len)
 	if openvpn_packet_id_array_len != 0:
 		print(" openvpn_packet_id_array : %r" % binascii.hexlify(openvpn_packet_id_array))
@@ -456,7 +631,7 @@ def dissect_openvpn_control_v1(openvpn_payload):
 
 	hmac_input = b''
 
-	if openvpn_handshake_finished == False:
+	if openvpn_handshake_finished == False and psk_mode_algo != None:
 		hmac_input += openvpn_packet_id
 		hmac_input += openvpn_packet_time
 		hmac_input += openvpn_pkt_type
@@ -470,14 +645,9 @@ def dissect_openvpn_control_v1(openvpn_payload):
 
 		if psk_hmac_client != None and psk_hmac_server != None:
 			if dissector_globals.is_from_client == True:
-				h = hmac.new(key = psk_hmac_client, digestmod = SHA512)
-				h.update(hmac_input)
-				openvpn_computed_hmac = h.digest()
-
+				openvpn_computed_hmac = compute_hmac(psk_hmac_client, psk_mode_algo, hmac_input)
 			elif dissector_globals.is_from_client == False:
-				h = hmac.new(key = psk_hmac_server, digestmod = SHA512)
-				h.update(hmac_input)
-				openvpn_computed_hmac = h.digest()
+				openvpn_computed_hmac = compute_hmac(psk_hmac_server, psk_mode_algo, hmac_input)
 
 			if openvpn_computed_hmac == openvpn_packet_hmac:
 				print(" control_v1 HMAC is correct :-)")
