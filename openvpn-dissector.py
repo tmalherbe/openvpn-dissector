@@ -281,7 +281,7 @@ def dissect_openvpn_data_packet(openvpn_payload, index, k_enc = b'', k_auth = b'
 	real_mac = data[ : hmac_len]
 	iv = data[hmac_len : hmac_len + 16]
 	ciphertext = data[hmac_len + 16 : ]
-	
+
 	print("Peer ID : %r" % hex(peer_id))
 	print("Packet HMAC : %r" % real_mac)
 	print("Packet IV : %r" % iv)
@@ -352,8 +352,11 @@ def dissect_openvpn_ack_v1(openvpn_payload):
 		openvpn_packet_time = openvpn_payload[offset : offset + 4]
 		offset += 4
 
-	openvpn_packet_id_array = openvpn_payload[offset : offset + 5]
-	offset += 5
+	openvpn_packet_id_array_len = openvpn_payload[offset : offset + 1]
+	openvpn_packet_id_array_len_int = int.from_bytes(openvpn_packet_id_array_len, 'big')
+	offset += 1
+	openvpn_packet_id_array = openvpn_payload[offset : offset + 4 * openvpn_packet_id_array_len_int]
+	offset += 4 * openvpn_packet_id_array_len_int
 	openvpn_remote_session_id = openvpn_payload[offset : offset + 8]
 	offset += 8
 
@@ -364,6 +367,7 @@ def dissect_openvpn_ack_v1(openvpn_payload):
 		print(" openvpn_hmac : %r" % binascii.hexlify(openvpn_packet_hmac))
 		print(" openvpn pkt_id : %r" % binascii.hexlify(openvpn_packet_id))
 		print(" openvpn time : %r" % binascii.hexlify(openvpn_packet_time))
+	print(" openvpn_packet_id_array_len : %r" % openvpn_packet_id_array_len)
 	print(" openvpn_packet_id_array : %r" % binascii.hexlify(openvpn_packet_id_array))
 	print(" openvpn_remote_session_id : %r" % binascii.hexlify(openvpn_remote_session_id))
 
@@ -373,6 +377,7 @@ def dissect_openvpn_ack_v1(openvpn_payload):
 		hmac_input += openvpn_packet_time
 		hmac_input += openvpn_pkt_type
 		hmac_input += openvpn_packet_session_id
+		hmac_input += openvpn_packet_id_array_len
 		hmac_input += openvpn_packet_id_array
 		hmac_input += openvpn_remote_session_id
 
