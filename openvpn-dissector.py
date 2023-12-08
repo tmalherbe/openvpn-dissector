@@ -32,6 +32,10 @@ client_data_hmac_key = None
 server_data_cipher_key = None
 server_data_hmac_key = None
 
+# IVs if GCM is used
+client_iv = None
+server_iv = None
+
 ## PSK algorithm for tls-auth
 ## Can be:
 ## - SHA512
@@ -41,6 +45,9 @@ server_data_hmac_key = None
 psk_mode_algo = None
 ## WHen PSK algorithm is not None, then HMAC algorithm is the same as PSK algorithm
 hmac_algo = None
+
+## Boolean which will be set to True if data packets are encrypted with AES-GCM
+aes_gcm = False
 
 ## PSK for tls-auth, aka "HMAC firewall" for control channel
 psk_hmac_client = None
@@ -502,10 +509,16 @@ def dissect_openvpn_hard_reset_server_v2(openvpn_payload):
 def derivate_openvpn_crypto_material():
 
 	global client_data_cipher_key
-	global client_data_hmac_key
 	global server_data_cipher_key
+
+	# if GCM is NOT used
+	global client_data_hmac_key
 	global server_data_hmac_key
 	global hmac_algo
+
+	# if GCM is used
+	global client_iv
+	global server_iv
 
 	print("going to derivate crypto key for data packets !")
 
@@ -526,10 +539,15 @@ def derivate_openvpn_crypto_material():
 
 	tls_dissector.selected_version = None
 
+	# Get hmac keys and IVs. They cannot be used simultaneously,
+	# but when this function is called, server hasn't told yet
+	# whether it want to used GCM or not.
 	client_data_cipher_key = openvpn_keys[ : 32]
-	client_data_hmac_key = openvpn_keys[64 : 128]
 	server_data_cipher_key = openvpn_keys[128 : 160]
+	client_data_hmac_key = openvpn_keys[64 : 128]
 	server_data_hmac_key = openvpn_keys[192 : 256]
+	client_iv = openvpn_keys[64 : 72]
+	server_iv = openvpn_keys[192 : 200]
 
 	# truncate the openvpn data hmac key according to the algorithm size
 	if hmac_algo == "SHA256":
@@ -539,10 +557,15 @@ def derivate_openvpn_crypto_material():
 		client_data_hmac_key = client_data_hmac_key[ : 20]
 		server_data_hmac_key = server_data_hmac_key[ : 20]
 
+	# Dump hmac keys and IVs. They cannot be used simultaneously,
+	# but when this function is called, server hasn't told yet
+	# whether it want to used GCM or not.
 	print("client_data_cipher_key : %r" % binascii.hexlify(client_data_cipher_key))
 	print("client_data_hmac_key : %r" % binascii.hexlify(client_data_hmac_key))
 	print("server_data_cipher_key : %r" % binascii.hexlify(server_data_cipher_key))
 	print("server_data_hmac_key : %r" % binascii.hexlify(server_data_hmac_key))
+	print("client_iv : %r" % binascii.hexlify(client_iv))
+	print("server_iv : %r" % binascii.hexlify(server_iv))
 
 def parse_tls_control_payload(tls_payload):
 	if tls_payload == None:
@@ -557,7 +580,11 @@ def parse_tls_control_payload(tls_payload):
 	global client_data_cipher_key
 	global server_data_cipher_key
 
-	# truncate the openvpn data encryption key according to the algorithm size
+	global aes_gcm
+
+	# set the encryption algorithm according to the server's PUSH_REPLY:
+	# - truncate the openvpn data encryption key according to the algorithm size
+	# - treat specific case of GCM
 	if tls_payload.find(b'PUSH_REPLY') != -1:
 		if tls_payload.find(b'cipher AES-256-CBC') != -1:
 			print(" OpenVPN traffic will be encrypted with AES-256-CBC")
@@ -567,6 +594,10 @@ def parse_tls_control_payload(tls_payload):
 
 			client_data_cipher_key = client_data_cipher_key[:16]
 			server_data_cipher_key = server_data_cipher_key[:16]
+
+		elif tls_payload.find(b'cipher AES-256-GCM') != -1:
+			print(" OpenVPN traffic will be encrypted with AES-256-GCM")
+			aes_gcm = True
 
 	if tls_payload.find(b'tls-client') != -1:
 
