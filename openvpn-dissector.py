@@ -229,26 +229,50 @@ def get_compression_method(compression_method):
 ## Dissect a decrypted OpenVPN plaintext
 def dissect_openvpn_plaintext(plaintext, index):
 
-	# Such a packet begins with a 4 bytes sequence number
-	sequence_number = int.from_bytes(plaintext[:4], 'big')
-	#compression_byte = plaintext[4]
-	# Get last byte of padding who tells who much bytes of padding
-	# shall be removed
-	padding_byte = plaintext[-1]
+	# If GCM is not used, the packet has the following format:
+	#
+	# +-----------------+------+-----------------+
+	# | sequence_number | data |     padding     |
+	# +-----------------+------+-----------------+
+	# <---- 4 bytes --->       <- 0 to 16 bytes ->
+	#
+	# A byte indicating compression algorithm used to be nested
+	# between sequence number and data in older versions.
+	#
+	# Padding is PKCS#7 padding, that is to say it looks like:
+	# 01
+	# 02 02
+	# 03 03 03
+	# 04 04 04 04
+	# and so on
+	#
+	if aes_gcm is False:
+		# Such a packet begins with a 4 bytes sequence number
+		sequence_number = int.from_bytes(plaintext[:4], 'big')
+		#compression_byte = plaintext[4]
+		# Get last byte of padding who tells who much bytes of padding
+		# shall be removed
+		padding_byte = plaintext[-1]
 
-	# Check padding consistency
-	if padding_byte > 0x10:
-		print("padding seems to be incorrect! (%r)" % padding_byte)
-		exit()
+		# Check padding consistency
+		if padding_byte > 0x10:
+			print("padding seems to be incorrect! (%r)" % padding_byte)
+			exit()
 
-	# Plaintext is between sequence number and padding
-	raw_plaintext = plaintext[4 : -padding_byte]
-	#raw_plaintext = plaintext[5 : -padding_byte]
-	
-	print("sequence number : %r" % sequence_number)
-	#print("compression byte : %r (%r)" % (hex(compression_byte), get_compression_method(compression_byte)))
-	print("padding byte : %r" % padding_byte)
-	print("raw plaintext : %r" % raw_plaintext)
+		# Plaintext is between sequence number and padding
+		raw_plaintext = plaintext[4 : -padding_byte]
+		#raw_plaintext = plaintext[5 : -padding_byte]
+
+		print("sequence number : %r" % sequence_number)
+		#print("compression byte : %r (%r)" % (hex(compression_byte), get_compression_method(compression_byte)))
+		print("padding byte : %r" % padding_byte)
+		print("raw plaintext : %r" % raw_plaintext)
+
+	# if GCM is used,
+	# - No sequence number is included
+	# - No padding is needed because GCM uses CTR mode
+	else:
+		raw_plaintext = plaintext
 
 	# Dump plaintext as IP packet
 	if (raw_plaintext[0] & 0xF0 == 0x40):
@@ -260,9 +284,8 @@ def dissect_openvpn_plaintext(plaintext, index):
 	else:
 		print("could not guess type of traffic")
 
-## Dissect an OpenVPN data packet
-def dissect_openvpn_data_packet(openvpn_payload, index, k_enc = b'', k_auth = b''):
-
+## Dissect an OpenVPN data packet - HMAC case
+def dissect_openvpn_data_packet_hmac(openvpn_payload, index, k_enc = b'', k_auth = b''):
 	global client_data_cipher_key
 	global client_data_hmac_key
 	global server_data_cipher_key
@@ -277,7 +300,7 @@ def dissect_openvpn_data_packet(openvpn_payload, index, k_enc = b'', k_auth = b'
 	if openvpn_handshake_finished == False:
 		openvpn_handshake_finished = True
 
-	print("dissect_openvpn_data_packet")	
+	print("dissect_openvpn_data_packet_hmac")
 
 	# Get peer id
 	peer_id = int.from_bytes(openvpn_payload[1 : 4], 'big')
@@ -337,6 +360,79 @@ def dissect_openvpn_data_packet(openvpn_payload, index, k_enc = b'', k_auth = b'
 		dissect_openvpn_plaintext(plaintext, index)
 
 	print("");
+
+## Dissect an OpenVPN data packet - GCM case
+def dissect_openvpn_data_packet_gcm(openvpn_payload, index, k_enc = b''):
+	global client_data_cipher_key
+	global server_data_cipher_key
+
+	# Boolean which says "the GCM tag is correct"
+	is_authenticated = False
+
+	# First OpenVPN data packet proves that handshake has finished
+	global openvpn_handshake_finished
+	if openvpn_handshake_finished == False:
+		openvpn_handshake_finished = True
+
+	print("dissect_openvpn_data_packet_gcm")
+
+	# Get peer id
+	peer_id = int.from_bytes(openvpn_payload[1 : 4], 'big')
+	data = openvpn_payload[4:]
+
+	# Extract partial iv, gcm tag and ciphertext
+	gcm_count = data[0 : 4]
+	gcm_tag = data[4 : 20]
+	gcm_ciphertext = data[20 : ]
+
+	print("Peer ID : %r" % hex(peer_id))
+	print("GCM counter : %r" % gcm_count)
+	print("GCM tag : %r" % gcm_tag)
+	print("GCM ciphertext : %r" % gcm_ciphertext)
+
+	# Set the appropriate keys for encryption and hmac
+	if k_enc != None:
+		k_enc = binascii.unhexlify(k_enc)
+	elif client_secret != None:
+		if dissector_globals.is_from_client == True:
+			k_enc = client_data_cipher_key
+			iv = client_iv
+		else:
+			k_enc = server_data_cipher_key
+			iv = server_iv
+
+	# Decrypt the ciphertext
+	if k_enc != None:
+
+		cipher = AES.new(k_enc, AES.MODE_GCM, gcm_count + iv)
+		additional_data = openvpn_payload[0 : 8]
+		cipher.update(additional_data)
+		plaintext = cipher.decrypt(gcm_ciphertext)
+
+		print(f"plaintext: {plaintext}")
+
+		try:
+			tag = cipher.verify(gcm_tag)
+			print("  OpenVPN GCM tag is correct :-)")
+
+			# Process the decrypted plaintext
+			dissect_openvpn_plaintext(plaintext, index)
+
+		except ValueError:
+			print("  GCM tag is not correct :-(")
+
+	print("");
+
+## Dissect an OpenVPN data packet
+def dissect_openvpn_data_packet(openvpn_payload, index, k_enc = b'', k_auth = b''):
+
+	global aes_gcm
+	print("dissect_openvpn_data_packet")
+
+	if aes_gcm == True:
+		dissect_openvpn_data_packet_gcm(openvpn_payload, index, k_enc)
+	else:
+		dissect_openvpn_data_packet_hmac(openvpn_payload, index, k_enc, k_auth)
 
 ## Dissect an OpenVPN ACK_V1 packet
 def dissect_openvpn_ack_v1(openvpn_payload):
