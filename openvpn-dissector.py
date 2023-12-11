@@ -4,7 +4,7 @@
 import argparse
 import binascii
 from Cryptodome.Cipher import AES
-from Cryptodome.Hash import HMAC as hmac, SHA512, SHA256, SHA1
+from Cryptodome.Hash import HMAC as hmac, SHA512, SHA384, SHA256, SHA1
 from scapy.all import *
 
 from dissector_const import *
@@ -18,6 +18,12 @@ import tls13_dissector
 #
 ## quite explicit, says, if the openvpn "handshake" is finished
 openvpn_handshake_finished = False
+
+## OpenVPN supports two methods to establish session secrets which will encrypt data:
+## - old way: OpenvpnPRF is used to derive server/client keys/ivs from a client secret, and some seeds
+## - new way: Via TLS Exporter mechanism: Some crypto material is derived from the Exporter secret
+## This boolean is set to True when the later mechanism is used
+crypto_via_exporter_mechanism = False
 
 ## some secrets for key generation
 client_secret = None
@@ -419,7 +425,8 @@ def dissect_openvpn_data_packet_gcm(openvpn_payload, index, k_enc = b''):
 			dissect_openvpn_plaintext(plaintext, index)
 
 		except ValueError:
-			print("  GCM tag is not correct :-(")
+			print("  OpenVPN GCM tag is not correct :-(")
+			exit()
 
 	print("");
 
@@ -601,7 +608,7 @@ def dissect_openvpn_hard_reset_server_v2(openvpn_payload):
 		else:
 			print(" hard_reset_server_v2 HMAC is not correct :-(")
 
-## Derivate Crypto material for data encryption
+## Derivate Crypto material for data encryption - old way
 def derivate_openvpn_crypto_material():
 
 	global client_data_cipher_key
@@ -663,6 +670,40 @@ def derivate_openvpn_crypto_material():
 	print("client_iv : %r" % binascii.hexlify(client_iv))
 	print("server_iv : %r" % binascii.hexlify(server_iv))
 
+## Derivate Crypto material for data encryption - new way, with exporter
+def derivate_openvpn_crypto_from_exporter():
+
+	global client_data_cipher_key
+	global server_data_cipher_key
+
+	# GCM is used
+	global client_iv
+	global server_iv
+
+	print(f"exporter_secret: {tls13_dissector.exporter_secret}")
+
+	label = b'EXPORTER-OpenVPN-datakeys'
+	# data = SHA384(b'')
+	data = binascii.unhexlify(b'38b060a751ac96384cd9327eb1b1e36a21fdb71114be07434c0cc7bf63f6e1da274edebfe76f65fbd51ad2f14898b95b')
+	exportsecret = tls13_dissector.HKDF_Expand_Label(tls13_dissector.exporter_secret, label, data, 48, SHA384)
+
+	print(f"exportsecret: {binascii.hexlify(exportsecret)}")
+
+	exporterlabel = b'exporter'
+	openvpn_crypto_material = tls13_dissector.HKDF_Expand_Label(exportsecret, exporterlabel, data, 256, SHA384)
+
+	print(f"openvpn_crypto_material: {binascii.hexlify(openvpn_crypto_material)}")
+
+	client_data_cipher_key = openvpn_crypto_material[0 : 32]
+	client_iv = openvpn_crypto_material[64 : 72]
+	server_data_cipher_key = openvpn_crypto_material[128 : 160]
+	server_iv = openvpn_crypto_material[128 + 64 : 128 + 72]
+
+	print(f"client_data_cipher_key: {binascii.hexlify(client_data_cipher_key)}")
+	print(f"server_data_cipher_key: {binascii.hexlify(server_data_cipher_key)}")
+	print(f"client_iv: {binascii.hexlify(client_iv)}")
+	print(f"server_iv: {binascii.hexlify(server_iv)}")
+
 def parse_tls_control_payload(tls_payload):
 	if tls_payload == None:
 		return
@@ -678,10 +719,18 @@ def parse_tls_control_payload(tls_payload):
 
 	global aes_gcm
 
+	global crypto_via_exporter_mechanism
+
 	# set the encryption algorithm according to the server's PUSH_REPLY:
 	# - truncate the openvpn data encryption key according to the algorithm size
 	# - treat specific case of GCM
+	# - recognize if session keys are established using openvpn_PRF (old way) or through exporter mechanism (new way)
 	if tls_payload.find(b'PUSH_REPLY') != -1:
+
+		if tls_payload.find(b'tls-ekm') != -1:
+			print(" OpenVPN session keys are established via exporter mechanism !")
+			crypto_via_exporter_mechanism = True
+
 		if tls_payload.find(b'cipher AES-256-CBC') != -1:
 			print(" OpenVPN traffic will be encrypted with AES-256-CBC")
 
@@ -714,6 +763,10 @@ def parse_tls_control_payload(tls_payload):
 		print("server_seed_2 : %r" % binascii.hexlify(server_seed_2))
 
 		derivate_openvpn_crypto_material()
+
+	# if tls-ekm was found, we do derivation via exporter
+	if crypto_via_exporter_mechanism is True:
+		derivate_openvpn_crypto_from_exporter()
 
 def dissect_openvpn_control_v1(openvpn_payload):
 
