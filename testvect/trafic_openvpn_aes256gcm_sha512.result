@@ -1,0 +1,2200 @@
+auth uses SHA512 !
+tls-auth is used with SHA512 !
+PSK HMAC client : '2e32583b29f493e42b334f3ace5c67377153e80850d40d3b4bfbe0a784099a6a05bbc95063a322a9805fc06fd23111ce940ecc113e277fc06358d6ac212889f4'
+PSK HMAC server : '50b73fdf93d26b08fc56685cb96fcc7384f3a124e1c1b3cc217ddbe728ce834444f11cc1ea15a991ac873eee3bc2fd6b98a83bc54befb3dc4db88d25a6908022'
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 0 : 
+ Packet Type : '0x38'
+ Packet Opcode : '0x7' ('P_CONTROL_HARD_RESET_CLIENT_V2')
+ openvpn_payload : b'381698c9b423ee69cfc65a33814903f334a06180ac9a2084f48a434630bb55fd3babbadefd9323c82a5a2b998be1c6009e4f5aeea161d60937d7490dda70d9e1e110c6126d0ec8727900000001657369440000000000'
+ openvpn_pkt_type : b'38'
+ openvpn_session_id : b'1698c9b423ee69cf'
+ openvpn_hmac : b'c65a33814903f334a06180ac9a2084f48a434630bb55fd3babbadefd9323c82a5a2b998be1c6009e4f5aeea161d60937d7490dda70d9e1e110c6126d0ec87279'
+ openvpn pkt_id : b'00000001'
+ openvpn time : b'65736944'
+ openvpn trailer : b'0000000000'
+ hard_reset_client_v2 HMAC is correct :-)
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 1 : 
+ Packet Type : '0x40'
+ Packet Opcode : '0x8' ('P_CONTROL_HARD_RESET_SERVER_V2')
+ openvpn_payload : b'406814a798ad6596071e173bcab7df527d442b33fcd3e94904bcd2d70dbf66aa0c17e803faf900f33b687a1ae686aed8bcb8c962cc2b95a9eef2b9a1b80b0dacd2beecb3899df86f79000000016573694401000000001698c9b423ee69cf00000000'
+ openvpn_pkt_type : b'40'
+ openvpn_session_id : b'6814a798ad659607'
+ openvpn_hmac : b'1e173bcab7df527d442b33fcd3e94904bcd2d70dbf66aa0c17e803faf900f33b687a1ae686aed8bcb8c962cc2b95a9eef2b9a1b80b0dacd2beecb3899df86f79'
+ openvpn pkt_id : b'00000001'
+ openvpn time : b'65736944'
+ openvpn_packet_id_array : b'0100000000'
+ openvpn_remote_session_id : b'1698c9b423ee69cf'
+ openvpn trailer : b'00000000'
+ hard_reset_server_v2 HMAC is correct :-)
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 2 : 
+ Packet Type : '0x28'
+ Packet Opcode : '0x5' ('P_ACK_V1')
+ openvpn_payload : b'281698c9b423ee69cf496bba1e513f447837c76773633782198d1605212ad721e03db6a119f13836fc6cc8c7f460459ce8236172f7703d172086a613aa6563f266ba1d56a339c61c2d000000026573694401000000006814a798ad659607'
+ openvpn_pkt_type : b'28'
+ openvpn_session_id : b'1698c9b423ee69cf'
+ openvpn_hmac : b'496bba1e513f447837c76773633782198d1605212ad721e03db6a119f13836fc6cc8c7f460459ce8236172f7703d172086a613aa6563f266ba1d56a339c61c2d'
+ openvpn pkt_id : b'00000002'
+ openvpn time : b'65736944'
+ openvpn_packet_id_array_len : b'\x01'
+ openvpn_packet_id_array : b'00000000'
+ openvpn_remote_session_id : b'6814a798ad659607'
+ ack_v1 HMAC is correct :-)
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 3 : 
+ Packet Type : '0x20'
+ Packet Opcode : '0x4' ('P_CONTROL_V1')
+ openvpn_payload : b'201698c9b423ee69cf86fddb6ca3b3156cf968db2228af84e69de5e55d35693403065a92cf69ab29515a97139b80750ae07b51eedba915e3449366cf80c15d79e19bea76b2653cf5520000000365736944000000000116030101160100011203033e84de95f664aa495cb70288f9439e075fac7f25f0e553f32cc0237de703bb8c2054b7297d714465a012d57fb49bf4215bb3645fc418759407ecb6e61e9d674e0f0032130213031301c02cc030009fcca9cca8ccaac02bc02f009ec024c028006bc023c0270067c00ac0140039c009c013003300ff01000097000b000403000102000a00160014001d0017001e00190018010001010102010301040016000000170000000d0030002e04030503060308070808081a081b081c0809080a080b080408050806040105010601030303010302040205020602002b00050403040303002d00020101003300260024001d0020d5532490eee7772852a7325dae707299dde33946d99b430933a2e477aeac5a22'
+ openvpn_pkt_type : b'20'
+ openvpn_session_id : b'1698c9b423ee69cf'
+ openvpn_hmac : b'86fddb6ca3b3156cf968db2228af84e69de5e55d35693403065a92cf69ab29515a97139b80750ae07b51eedba915e3449366cf80c15d79e19bea76b2653cf552'
+ openvpn pkt_id : b'00000003'
+ openvpn time : b'65736944'
+ openvpn_packet_id_array_len : 0
+ openvpn_msg_packet_id : b'00000001'
+ openvpn_tls_payload : b'16030101160100011203033e84de95f664aa495cb70288f9439e075fac7f25f0e553f32cc0237de703bb8c2054b7297d714465a012d57fb49bf4215bb3645fc418759407ecb6e61e9d674e0f0032130213031301c02cc030009fcca9cca8ccaac02bc02f009ec024c028006bc023c0270067c00ac0140039c009c013003300ff01000097000b000403000102000a00160014001d0017001e00190018010001010102010301040016000000170000000d0030002e04030503060308070808081a081b081c0809080a080b080408050806040105010601030303010302040205020602002b00050403040303002d00020101003300260024001d0020d5532490eee7772852a7325dae707299dde33946d99b430933a2e477aeac5a22'
+ control_v1 HMAC is correct :-)
+'192.168.1.151' -> '163.172.176.157'
+TLS packet 0, length 283
+ client -> server
+ TLS packet n°0, record n°0 :
+ packet version : '0x301' ('TLSv1.0')
+ tls_content_type 'Handshake'
+ record length : 278
+  Handshake record
+  Handshake Type 1 ('ClientHello')
+  Message length : 274
+  ClientHello - TLS version : '0x303' ('TLSv1.2')
+  ClientHello - Random : b'>\x84\xde\x95\xf6d\xaaI\\\xb7\x02\x88\xf9C\x9e\x07_\xac\x7f%\xf0\xe5S\xf3,\xc0#}\xe7\x03\xbb\x8c'
+  ClientHello - SessionID : b'T\xb7)}qDe\xa0\x12\xd5\x7f\xb4\x9b\xf4![\xb3d_\xc4\x18u\x94\x07\xec\xb6\xe6\x1e\x9dgN\x0f'
+  ClientHello : 25 CipherSuites :
+  - TLS_AES_256_GCM_SHA384
+  - TLS_CHACHA20_POLY1305_SHA256
+  - TLS_AES_128_GCM_SHA256
+  - TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+  - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+  - TLS_DHE_RSA_WITH_AES_256_GCM_SHA384
+  - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
+  - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
+  - TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256
+  - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+  - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+  - TLS_DHE_RSA_WITH_AES_128_GCM_SHA256
+  - TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384
+  - TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384
+  - TLS_DHE_RSA_WITH_AES_256_CBC_SHA256
+  - TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256
+  - TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
+  - TLS_DHE_RSA_WITH_AES_128_CBC_SHA256
+  - TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA
+  - TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
+  - TLS_DHE_RSA_WITH_AES_256_CBC_SHA
+  - TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
+  - TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+  - TLS_DHE_RSA_WITH_AES_128_CBC_SHA
+  - TLS_EMPTY_RENEGOTIATION_INFO_SCSV
+  ClientHello : 1 CompressionSuites :
+  - [0]
+  extension total length : 151
+  - extension type : 11 ('ec_point_formats')
+  - extension length : 4
+  - extension type : 10 ('supported_groups')
+  - extension length : 22
+  - extension type : 22 ('encrypted_then_mac')
+  - extension length : 0
+  - extension type : 23 ('extended_master_secret')
+  - extension length : 0
+  - extension type : 13 ('signature_algorithms')
+  - extension length : 48
+  - extension type : 43 ('supported_versions')
+  - extension length : 5
+  - supported version n°0 : '0x304' ('TLSv1.3')
+  - supported version n°1 : '0x303' ('TLSv1.2')
+  - extension type : 45 ('psk_key_exchange_modes')
+  - extension length : 2
+  - extension type : 51 ('key_share')
+  - extension length : 38
+
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 4 : 
+ Packet Type : '0x20'
+ Packet Opcode : '0x4' ('P_CONTROL_V1')
+ openvpn_payload : b'206814a798ad6596079791dd9d5b270c2922a37db813eed08a858b56f6c235e59db1c949646b2fea8a58ac88ede260a87c84ead8fcb1dd91a50eb30fbd4301734a3ba7506c6b944ef2000000026573694401000000011698c9b423ee69cf00000001160303007a020000760303283b4c55b5c947d73b07ca6568aeae351cb8c5e32aab596485c5a53fa293a8352054b7297d714465a012d57fb49bf4215bb3645fc418759407ecb6e61e9d674e0f130200002e002b0002030400330024001d0020fa4a4a59001cf3fa6a1f62f25b0b629816eb193dbe4f4dafc816251dee7583441403030001011703030017d0f35c51638d4d6b72b933212b9de6bcfccba0fc29b66f1703030067af8a51d585300c34f7cc030c0e8f0168d13956f4780ecfd5492b499c12c05f7897bab3b0bac8e9328b5693c6bc5cdebd7039541a3368f078fcd38be2b6e368265529bb9bbfb980e0fdb4692bd42b750058f1bc89debe1619fac7ca7f22909e9eb9f51a3c2bafce1703030705828a07edf88ffc07658982b26e1b1759d1390331a40159d13b43274ea916d0af525df84529d1a31356cd51116753e4239d404a5c2c13febcf13bd638bd4d169b3b6b19a81b74e70a95023955c95033cd1d871b2a089447cc656b5ef5762f373d0578e56a699e0dcd921e88444c74ce762a90f5c8efae110eee03c963301d4f615a9b68d0ad4bed0b3f9a45aff5a91e41e0f38465bc3df8c6670e6346786b07856179351fd70d647e80004badb9d3df3bae374be2b70ce7624b177cf49f725d9f730a991ade7055f9ddc575be47fe3d54364673ec69244102e0252f3c50faf5d7aa0210fe5f07dfdb1ece9cefd139bf2dd7ba4c3e2f5d9e4a1aceb6c85b95e135c7bd5d0e55cc831e0d7b76a53404e482f03b12d547fa54e6342e46f09e7d77795a5a6cefd931228886b5f4212af14fae350d86f0f7f3d8db21359881b3cf671520438f8423e5b046c5b25ba7753fd4d06f4b0103c1dc8420c1095df912a0318a92cdf5eee31e346600be01f4608ad96ed4e300fee6fdde1afcd3c0fbd77907b06222dc42693949d0d8d49d23aceb85128ff733de290159cb73656138aa7fa4ee5a0c9c0eadc17e3ba4a7e6257616afd0b59553778cefd4f707dc906051c36c4ac1ce74ffbd7139a6353d395ef0284a6955167fe7a3ee63032a13ba04d039d81fc3f5481febce76e58dcb0f9b9bae6fcfece4e2cf2ea3dae4f9bfb081f60baf3f1fd18cad9d905a2ff51e806e95cc9456523a626f4f1cee1af2eb06485a8c1bb90bd82b043b219ad083d51b073b5dc46485c7935ae0f6bd328c302e6c330e94eb4017111b104e8dbd2faebe516127bee3dcd0816c9f0c7081c8e81cc56b6aa6e4303155693af40bb4216c8360d0472ad9c68439f67fea826c4eda24840295bc9df66e2a7f4d5b0133d417a8325254e6ed25176b73bdc28f578a4eb6afce1f0b0039fffc56d1b185330fb6c27b7821253f476ad777373ba28fdd03e3e20c334686773d8590f3c11b2b26dc1033ba2b6568e2a475a0e42406da30d710e03c9c559af30a5e5327963ad540dd46a32aa776884ca5ae17fb76191f365dc1a63d4cd0d82b3764cc3015ec67b985b256b0a772d1c0d66ade068dc246e3f0558b7c42bfb56f0c648f0c9077a9f18c63a51c83b465376dc3c8eaf7acc7635a54500a3119d1706e1d2ba6e4fe4adb4b47fd6172945f1d91'
+ openvpn_pkt_type : b'20'
+ openvpn_session_id : b'6814a798ad659607'
+ openvpn_hmac : b'9791dd9d5b270c2922a37db813eed08a858b56f6c235e59db1c949646b2fea8a58ac88ede260a87c84ead8fcb1dd91a50eb30fbd4301734a3ba7506c6b944ef2'
+ openvpn pkt_id : b'00000002'
+ openvpn time : b'65736944'
+ openvpn_packet_id_array_len : 1
+ openvpn_packet_id_array : b'00000001'
+ openvpn_remote_session_id : b'1698c9b423ee69cf'
+ openvpn_msg_packet_id : b'00000001'
+ openvpn_tls_payload : b'160303007a020000760303283b4c55b5c947d73b07ca6568aeae351cb8c5e32aab596485c5a53fa293a8352054b7297d714465a012d57fb49bf4215bb3645fc418759407ecb6e61e9d674e0f130200002e002b0002030400330024001d0020fa4a4a59001cf3fa6a1f62f25b0b629816eb193dbe4f4dafc816251dee7583441403030001011703030017d0f35c51638d4d6b72b933212b9de6bcfccba0fc29b66f1703030067af8a51d585300c34f7cc030c0e8f0168d13956f4780ecfd5492b499c12c05f7897bab3b0bac8e9328b5693c6bc5cdebd7039541a3368f078fcd38be2b6e368265529bb9bbfb980e0fdb4692bd42b750058f1bc89debe1619fac7ca7f22909e9eb9f51a3c2bafce1703030705828a07edf88ffc07658982b26e1b1759d1390331a40159d13b43274ea916d0af525df84529d1a31356cd51116753e4239d404a5c2c13febcf13bd638bd4d169b3b6b19a81b74e70a95023955c95033cd1d871b2a089447cc656b5ef5762f373d0578e56a699e0dcd921e88444c74ce762a90f5c8efae110eee03c963301d4f615a9b68d0ad4bed0b3f9a45aff5a91e41e0f38465bc3df8c6670e6346786b07856179351fd70d647e80004badb9d3df3bae374be2b70ce7624b177cf49f725d9f730a991ade7055f9ddc575be47fe3d54364673ec69244102e0252f3c50faf5d7aa0210fe5f07dfdb1ece9cefd139bf2dd7ba4c3e2f5d9e4a1aceb6c85b95e135c7bd5d0e55cc831e0d7b76a53404e482f03b12d547fa54e6342e46f09e7d77795a5a6cefd931228886b5f4212af14fae350d86f0f7f3d8db21359881b3cf671520438f8423e5b046c5b25ba7753fd4d06f4b0103c1dc8420c1095df912a0318a92cdf5eee31e346600be01f4608ad96ed4e300fee6fdde1afcd3c0fbd77907b06222dc42693949d0d8d49d23aceb85128ff733de290159cb73656138aa7fa4ee5a0c9c0eadc17e3ba4a7e6257616afd0b59553778cefd4f707dc906051c36c4ac1ce74ffbd7139a6353d395ef0284a6955167fe7a3ee63032a13ba04d039d81fc3f5481febce76e58dcb0f9b9bae6fcfece4e2cf2ea3dae4f9bfb081f60baf3f1fd18cad9d905a2ff51e806e95cc9456523a626f4f1cee1af2eb06485a8c1bb90bd82b043b219ad083d51b073b5dc46485c7935ae0f6bd328c302e6c330e94eb4017111b104e8dbd2faebe516127bee3dcd0816c9f0c7081c8e81cc56b6aa6e4303155693af40bb4216c8360d0472ad9c68439f67fea826c4eda24840295bc9df66e2a7f4d5b0133d417a8325254e6ed25176b73bdc28f578a4eb6afce1f0b0039fffc56d1b185330fb6c27b7821253f476ad777373ba28fdd03e3e20c334686773d8590f3c11b2b26dc1033ba2b6568e2a475a0e42406da30d710e03c9c559af30a5e5327963ad540dd46a32aa776884ca5ae17fb76191f365dc1a63d4cd0d82b3764cc3015ec67b985b256b0a772d1c0d66ade068dc246e3f0558b7c42bfb56f0c648f0c9077a9f18c63a51c83b465376dc3c8eaf7acc7635a54500a3119d1706e1d2ba6e4fe4adb4b47fd6172945f1d91'
+ control_v1 HMAC is correct :-)
+'163.172.176.157' -> '192.168.1.151'
+TLS packet 0, length 1124
+ server -> client
+ TLS packet n°0, record n°0 :
+ packet version : '0x303' ('TLSv1.2')
+ tls_content_type 'Handshake'
+ record length : 122
+  Handshake record
+  Handshake Type 2 ('ServerHello')
+  Message length : 118
+  ServerHello - TLS version : '0x303' ('TLSv1.2')
+  ServerHello - Random : b'(;LU\xb5\xc9G\xd7;\x07\xcaeh\xae\xae5\x1c\xb8\xc5\xe3*\xabYd\x85\xc5\xa5?\xa2\x93\xa85'
+  ServerHello - SessionID : b'T\xb7)}qDe\xa0\x12\xd5\x7f\xb4\x9b\xf4![\xb3d_\xc4\x18u\x94\x07\xec\xb6\xe6\x1e\x9dgN\x0f'
+  ServerHello - Selected CipherSuite : TLS_AES_256_GCM_SHA384
+  ServerHello : 0 CompressionSuites :
+  - []
+  extension total length : 46
+  - extension type : 43 ('supported_versions')
+  - extension length : 2
+  - Server supported version : '0x304' ('TLSv1.3')
+  - extension type : 51 ('key_share')
+  - extension length : 36
+  ServerHello - Server selected TLSv1.3
+  ServerHello sent, subsequent handshake messages will be encrypted
+
+ TLS packet n°0, record n°1 :
+ packet version : '0x303' ('TLSv1.2')
+ tls_content_type 'ChangeCipherSpec'
+ record length : 1
+  ChangeCipherSpec record
+ TLS packet n°0, record n°2 :
+ packet version : '0x303' ('TLSv1.2')
+ tls_content_type 'Application Data'
+ record length : 23
+  Application record
+  plaintext : b'\x08\x00\x00\x02\x00\x00'
+  plaintext type : 'Handshake'
+  GCM tag is correct :-)
+  Going to parse the decrypted handshake :-)
+  Handshake record
+  Handshake Type 8 ('EncryptedExtension')
+  Message length : 2
+encrypted_extension : b'0000'
+len : 0
+encrypted extension : b'' 
+ TLS packet n°0, record n°3 :
+ packet version : '0x303' ('TLSv1.2')
+ tls_content_type 'Application Data'
+ record length : 103
+  Application record
+  plaintext : b'\r\x00\x00R\x00\x00O\x00\r\x00&\x00$\x04\x03\x05\x03\x06\x03\x08\x07\x08\x08\x08\t\x08\n\x08\x0b\x08\x04\x08\x05\x08\x06\x04\x01\x05\x01\x06\x01\x03\x03\x02\x03\x03\x01\x02\x01\x00/\x00!\x00\x1f\x00\x1d0\x1b1\x190\x17\x06\x03U\x04\x03\x0c\x10openvpn-tolva-ca'
+  plaintext type : 'Handshake'
+  GCM tag is correct :-)
+  Going to parse the decrypted handshake :-)
+  Handshake record
+  Handshake Type 13 ('CertificateRequest')
+  Message length : 82
+ TLS packet n°0, record n°4 :
+ packet version : '0x303' ('TLSv1.2')
+ tls_content_type 'Application Data'
+ record length : 1797
+TLS packet seems to be fragmented across several TCP segments...
+
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 5 : 
+ Packet Type : '0x20'
+ Packet Opcode : '0x4' ('P_CONTROL_V1')
+ openvpn_payload : b'206814a798ad659607a0cb57d8452402b197800b612c7e0cc4457bd899d752870c64c7b42c932ed0e6dd294ab2343d2747437535c6dae472c2611fb0e734c916015dfcc656bf19a858000000036573694401000000011698c9b423ee69cf00000002cedad8e0b21b831675db9de34f475e336d5b4d5b2472ce3ed75a9b895590c81c43bfb31b84f8f72b90bb439b29121f6e36f460e086e4b411e39f6c929c08a63dd10200c207df584d154cfde24d811729ad69de6ab28a18d67e19da9f8564e0921a9eada813013f2e1a3a9ee74dcbb5c5c43f49f96e42679ae88b334f7fad103af09b2764a140577f9fd15fcf1b9732d952546a83325ae85a01dcb15cd81f191d4d4023c2fd799775be45aefdb7a3ebb998f0fd3d59ca92a16fa90385be4d5baad168f7d7335630cbe18ff5a05f783c6eec5df2419ef1088b46e81062fb9b41f1cdc14f54cfe0b9bffb4606d120f4146ecaace73ca45e34a75ef0a4b2d7ea69e721f4f8ad1e1308d8eae0decb3e2077462bff12119ea10c5db616c78dc57b2793f83c4698a65b02ed1bbd979f46320338b9785eb8f607cbb3cddecb25d74cb71c65aa1c7db01932119a7c2a3f3818f8159b0ffb6a864d25910a395968466352fef71dcd6761189812f1743af252662312749fe92021680b48657012c05647d580225c64aa48caaebf677a5c61d1415d84a8d7b1713ec2e131ef0908bd5fa66c07e85c4a5fc2064de01c3f69b3f0e4e5e3fa0fbcf8909e822a4119be70dcf578085b14177d694a43bea1043639b73d96c64bfdc11912e024c0bcf86de3592d56fbaefc0660feee6dbab0ff0bd033f33aa0c7b5fb264f01abbca1f42d16209c5a6dc4cea87698fa0f0522f6a3c59eb6d9fb1fb27a05181d504b870c65a814a9196948a8de06925290881b99433334f1fe521361800759f3ccfdc1505cb6d1d6161ba7f18386796b4a2cb8ab66f4e4d7f115566e51269a6ac6735e28d4a62170072216bcea0713e133dadeecb5cc0d540d3d36ecb52a37a211da33c6a1bba760629b2353cd82e994732e160967812d760db39039ace829861c9f82d4f6cd92b550770533dfe2ba71c1c957cd7851e4920faa05418f59b045ddb4ed93f64c314f39af4b96764d7b9dfa608d45d2f56528ebca8e15181010750e43ef3c0316c208e71653408013142ef9fec268b517d6783eb68312189fbcfc67fcb87b54276841bc9f73b37fcef04377816732434998e73f609dc5237848f236c956d6744e1eccd587f1da8ab1062ae7412b9078fa85773f948705e58bdcac2c35d3e08b5b67044eafb8bfcafe077695d4fb5112a6e869819c6085be87e11083fed3f91565b9667113ba962893695539855db57b9fc5986a497b4887fced664bc5164c55248318cd137b21d8ae85741b5325b1659438cbdf79fc24d93f6a7e633fe8ae7f1c8694910baa17ed5cb89c7f717c2c2a7ce020dd3fbbbdbb1703030119f13bd671034c2b63a28ad620fceaee23b493d1cc53e4449360389d127ae60ba428b294c3b56452df20c22299000296fb38818aeac26ab0f6628a7f1ff0e913213cc42691fd46469b38df6fa3267119882037372452ed60e8eabecd27c354f7fb230541a479fe4521bbea36c7310fda7a9afc113ce1baf9c0798eb994bcc7dce42c78e12464c8ccff9e405d3b411abf4e94f9a474715ca0303957212aa14d79e23c20b15b7b088073c6da6fcf'
+ openvpn_pkt_type : b'20'
+ openvpn_session_id : b'6814a798ad659607'
+ openvpn_hmac : b'a0cb57d8452402b197800b612c7e0cc4457bd899d752870c64c7b42c932ed0e6dd294ab2343d2747437535c6dae472c2611fb0e734c916015dfcc656bf19a858'
+ openvpn pkt_id : b'00000003'
+ openvpn time : b'65736944'
+ openvpn_packet_id_array_len : 1
+ openvpn_packet_id_array : b'00000001'
+ openvpn_remote_session_id : b'1698c9b423ee69cf'
+ openvpn_msg_packet_id : b'00000002'
+ openvpn_tls_payload : b'cedad8e0b21b831675db9de34f475e336d5b4d5b2472ce3ed75a9b895590c81c43bfb31b84f8f72b90bb439b29121f6e36f460e086e4b411e39f6c929c08a63dd10200c207df584d154cfde24d811729ad69de6ab28a18d67e19da9f8564e0921a9eada813013f2e1a3a9ee74dcbb5c5c43f49f96e42679ae88b334f7fad103af09b2764a140577f9fd15fcf1b9732d952546a83325ae85a01dcb15cd81f191d4d4023c2fd799775be45aefdb7a3ebb998f0fd3d59ca92a16fa90385be4d5baad168f7d7335630cbe18ff5a05f783c6eec5df2419ef1088b46e81062fb9b41f1cdc14f54cfe0b9bffb4606d120f4146ecaace73ca45e34a75ef0a4b2d7ea69e721f4f8ad1e1308d8eae0decb3e2077462bff12119ea10c5db616c78dc57b2793f83c4698a65b02ed1bbd979f46320338b9785eb8f607cbb3cddecb25d74cb71c65aa1c7db01932119a7c2a3f3818f8159b0ffb6a864d25910a395968466352fef71dcd6761189812f1743af252662312749fe92021680b48657012c05647d580225c64aa48caaebf677a5c61d1415d84a8d7b1713ec2e131ef0908bd5fa66c07e85c4a5fc2064de01c3f69b3f0e4e5e3fa0fbcf8909e822a4119be70dcf578085b14177d694a43bea1043639b73d96c64bfdc11912e024c0bcf86de3592d56fbaefc0660feee6dbab0ff0bd033f33aa0c7b5fb264f01abbca1f42d16209c5a6dc4cea87698fa0f0522f6a3c59eb6d9fb1fb27a05181d504b870c65a814a9196948a8de06925290881b99433334f1fe521361800759f3ccfdc1505cb6d1d6161ba7f18386796b4a2cb8ab66f4e4d7f115566e51269a6ac6735e28d4a62170072216bcea0713e133dadeecb5cc0d540d3d36ecb52a37a211da33c6a1bba760629b2353cd82e994732e160967812d760db39039ace829861c9f82d4f6cd92b550770533dfe2ba71c1c957cd7851e4920faa05418f59b045ddb4ed93f64c314f39af4b96764d7b9dfa608d45d2f56528ebca8e15181010750e43ef3c0316c208e71653408013142ef9fec268b517d6783eb68312189fbcfc67fcb87b54276841bc9f73b37fcef04377816732434998e73f609dc5237848f236c956d6744e1eccd587f1da8ab1062ae7412b9078fa85773f948705e58bdcac2c35d3e08b5b67044eafb8bfcafe077695d4fb5112a6e869819c6085be87e11083fed3f91565b9667113ba962893695539855db57b9fc5986a497b4887fced664bc5164c55248318cd137b21d8ae85741b5325b1659438cbdf79fc24d93f6a7e633fe8ae7f1c8694910baa17ed5cb89c7f717c2c2a7ce020dd3fbbbdbb1703030119f13bd671034c2b63a28ad620fceaee23b493d1cc53e4449360389d127ae60ba428b294c3b56452df20c22299000296fb38818aeac26ab0f6628a7f1ff0e913213cc42691fd46469b38df6fa3267119882037372452ed60e8eabecd27c354f7fb230541a479fe4521bbea36c7310fda7a9afc113ce1baf9c0798eb994bcc7dce42c78e12464c8ccff9e405d3b411abf4e94f9a474715ca0303957212aa14d79e23c20b15b7b088073c6da6fcf'
+ control_v1 HMAC is correct :-)
+'163.172.176.157' -> '192.168.1.151'
+TLS traffic is fragmented into several TCP packets
+TLS packet 0, length 2248
+ server -> client
+ TLS packet n°0, record n°4 :
+ packet version : '0x303' ('TLSv1.2')
+ tls_content_type 'Application Data'
+ record length : 1797
+  Application record
+  plaintext : b'\x0b\x00\x06\xf0\x00\x00\x06\xec\x00\x03\x840\x82\x03\x800\x82\x02h\xa0\x03\x02\x01\x02\x02\x11\x00\xd7r\x06\x9b\xe9\x914C\x87<\xb8z\xa2:,\xd50\r\x06\t*\x86H\x86\xf7\r\x01\x01\x0b\x05\x000\x1b1\x190\x17\x06\x03U\x04\x03\x0c\x10openvpn-tolva-ca0\x1e\x17\r231125164610Z\x17\r261109164610Z0\x181\x160\x14\x06\x03U\x04\x03\x0c\ropenvpnserver0\x82\x01"0\r\x06\t*\x86H\x86\xf7\r\x01\x01\x01\x05\x00\x03\x82\x01\x0f\x000\x82\x01\n\x02\x82\x01\x01\x00\xd3\x82\x16(\xb8\x12(\xdftip@\x06\xfa5\xf5m$\x07\xcd?l\xaf\xa2\xf1\xbe\xc9\xe0\x81\xd9\xabH\x0c\x9c\x94\xe9\xff\x07$\xd1\xcd\xb4g\xdb\xe7\xfbq|n?\xf4O\xc7\xaeD*N\x9d=\x8f\xd1\xbb\x160(X(\xcc\xd6\x90\xbbJG\x12\x9c\x1bA\x9f\xf3\xa0\xc5\xed?;\x80\x1b\x91$0F\x80\xfe4Y\xd65p\x17\xd5\x00\xfdz+at6\xa1\xc45\x02U\x04\x8a;<|\x99g\xc9\xe5\x11V)N#\x9e9kC5\x1ck\x11\xfd\x06\xf1\xe8!\x80\x02\xe9\xdf\xa2\xbe\xe44\xb9\xb4\t\x0b[/\xab\x05\x044\xec\xb0\xf1/\xf8\xb2R~ \xf7\xdc\x8a\x9f\xd8\x87AQ\nU\x1c\xa7D\xc80\xd2\xcfk\xba\x84S;t\xdb\xa8H|\x9by\xd6\xdc8\xed\xc1\x87\xf2\x90\xa0\xf7?\xfd\x84\xf4\xef\x92\xf2%`P@E\x9c\x8fKi\xa1\xb8T\x10Nw<\rI\x8c\x03\xed\xc2^\xc8\xcc\xe2\xf6\xa2g\xec\xa9n\x15z\x912\xd6p\x14v\xed;\x9d\x8e\xcd\x02\x03\x01\x00\x01\xa3\x81\xc10\x81\xbe0\t\x06\x03U\x1d\x13\x04\x020\x000\x1d\x06\x03U\x1d\x0e\x04\x16\x04\x14\xf3\x9bi6V\x83g\x11\xef\xfa\'\xc8\xec\x174\x90\xc4\xa6\x06\x060V\x06\x03U\x1d#\x04O0M\x80\x14\x13\x8e\x13\xb7d\x91\xdc\x0bT\xa5\x88\x1b\x197c\xc0\tT\xfd\x02\xa1\x1f\xa4\x1d0\x1b1\x190\x17\x06\x03U\x04\x03\x0c\x10openvpn-tolva-ca\x82\x149\xab\\\x8d\xa1\xba\x89\x19\xa5\xbe\x92\x07\x992\x0b\xde@\'\xd1$0\x13\x06\x03U\x1d%\x04\x0c0\n\x06\x08+\x06\x01\x05\x05\x07\x03\x010\x0b\x06\x03U\x1d\x0f\x04\x04\x03\x02\x05\xa00\x18\x06\x03U\x1d\x11\x04\x110\x0f\x82\ropenvpnserver0\r\x06\t*\x86H\x86\xf7\r\x01\x01\x0b\x05\x00\x03\x82\x01\x01\x00^!\x12O\x1e\x94\xc6\xd9\xfd\xee\xf0iTH)TS2\xc7\xa1\xca\xe3\xdf\xc3h\xe4\xc0X\xcfK \xc60\x93XWt\xa8o\x8f\xc7\xbe\xfey\xb7\xfbth"\xa4\xb4\xa1\xb7z\xd4o\xb8\x94H\x9all[\x8a\xd4\xe6\xc5tE\x89?\x95\xb9\xd5\xa7\x04\x8e\xe1\x05\xf7\xd8\xe3\xd0\x83\x12\x8e\x99\xa5\xa8\xea\xf5{\x17g\x158\xde\x00w\xb9\xb5\xbcR\xe6\xf9O\xa9K~\xff)Db\xf6\xd4\x9d\xf4\xb6=1\xb4\x1e\xbd\xf2\xeb\xa0\xee\'e&A\xefw\xd1\xf4\xed\x90\x8e.\xcd\x139\xdcE\t_\x13S\xd4\x0f\xc6\xc2yn\x83+$\x03\xa5\x88\x08|\x898\x7fh/D\xcb\xdc<\x0e\xaf\xc6\xe4\x91\x02\xac\x0fl\xa4$\x03\xf1&y\xd20\x1b\xd6\xc3\xe2\xb0B\xf1\xd3\xee\x80Zn\xe4\x06\xcb\xe7N\xda\x9f\x06]\xba 7T\x0b\xa4\x008\xac\x8a\xf2o\xa17\xeb\x80w\x8fZ\x8c\x89+\x9cz\x8f(<)}\xfa=w\xa9s\x1a\x03\xda\x8c\xf2DS\xaa\x0fJ\xabXS\x00\x00\x00\x03^0\x82\x03Z0\x82\x02B\xa0\x03\x02\x01\x02\x02\x149\xab\\\x8d\xa1\xba\x89\x19\xa5\xbe\x92\x07\x992\x0b\xde@\'\xd1$0\r\x06\t*\x86H\x86\xf7\r\x01\x01\x0b\x05\x000\x1b1\x190\x17\x06\x03U\x04\x03\x0c\x10openvpn-tolva-ca0\x1e\x17\r231125154520Z\x17\r331122154520Z0\x1b1\x190\x17\x06\x03U\x04\x03\x0c\x10openvpn-tolva-ca0\x82\x01"0\r\x06\t*\x86H\x86\xf7\r\x01\x01\x01\x05\x00\x03\x82\x01\x0f\x000\x82\x01\n\x02\x82\x01\x01\x00\xd9\xe4\x1dWB\xcf#\xf9\xbc\xff!\xf4\x17\xe5\xca&Q-.\x03\xf8\xa8\xcf\x8e\xa9d\xa9T\xc6\xb8\xc3\xd5\xbd\xe7\xaeMi2\xdf6\xc3\xae\x02/+\xb5\x99\xdb\x05\xd5\x99\xa3\xcb\x9d)\xb7\xb1/#\x11st~\x1d\x83\x13<Ze\xbd\x8c\xb0\xf3\x1d\xc5\xe1(\xc7O\xe3"{\xaa\n\x1a\xbax\xf7\xc7\x84\x8b\x11\x97Y\x08\xe4\x05\xc9\xf6_G\xf7\x1a\x16\xb8\x10\x8e\x8c`\xe6.\xaf@\xb4|\xb9\x92\x9b\x19\xab\xa9\xf3/\xa8\xb5\xfc|\xd2:dH\xfa\x1bL:-\xdeZ|\x8b\xc2\x89\xe2\x06 E?Z\x8fG\x83\x03\xac#\x8dZC.5\xcc\xa2\xbc\xfcp|\xda\x8cc\x95\xaf\xadb\x89\x99\xe29\xfa\x90\xe3\xbcC\x0b\xd4\x8b0L1.\xbd\x8fUs\x8e\x1c)_\x03\xcfyB\x92\x9alH\xb1\xdfz\xa7%J\xd4\xa0c\x9df\x12\xdf*\x9e\xc5DK$\xf5\x18\x13\x8f\xc0\xce\x80o\xe6)\xaa\xf2\xdeu\x9fy\x06\xe9;\xba\xaa\xe0\xc9\x9d\x9a\x81\xd2\x90\xb0\xb4%\xb8\xc1\x02\x03\x01\x00\x01\xa3\x81\x950\x81\x920\x1d\x06\x03U\x1d\x0e\x04\x16\x04\x14\x13\x8e\x13\xb7d\x91\xdc\x0bT\xa5\x88\x1b\x197c\xc0\tT\xfd\x020V\x06\x03U\x1d#\x04O0M\x80\x14\x13\x8e\x13\xb7d\x91\xdc\x0bT\xa5\x88\x1b\x197c\xc0\tT\xfd\x02\xa1\x1f\xa4\x1d0\x1b1\x190\x17\x06\x03U\x04\x03\x0c\x10openvpn-tolva-ca\x82\x149\xab\\\x8d\xa1\xba\x89\x19\xa5\xbe\x92\x07\x992\x0b\xde@\'\xd1$0\x0c\x06\x03U\x1d\x13\x04\x050\x03\x01\x01\xff0\x0b\x06\x03U\x1d\x0f\x04\x04\x03\x02\x01\x060\r\x06\t*\x86H\x86\xf7\r\x01\x01\x0b\x05\x00\x03\x82\x01\x01\x00\xb2\xf5\xf7-@\xaf\xdb\x80\xe2\x87\x80\xe5\x06b\xf9B\x84m=\xf2~\xa9\xd5\xa8\x1b4F\x88\xf8R\x08\xe0\x85\xe1c*\xd9\x04\xa3\xb8\xca\xb9\xa6\xee\x1d\x8235\xb8Z\xac\xe7\xbdz\x18\xbdA-!\x8bvP\xbc\xb59\x1cY\x8ar\xd5\xfa\xab\x82w\xf9Hf&[\xa6E\x84h\x9aB\xd6\x8e(\x04\xe9\xb1o\x1a\xef\x93\x99\xb0\xdc\xaf-\x0e|\x9b\xfd\ne6\x1a\x08\x85\xbc\xc40i\t#\xf7\xfa\x8c\xff\xb97\x9c\xfc\x0b\x0b\xaf\xb7P\xfa\r\xb2/\x18!\xdds\xa4\xf6\x01n\xcd\xffo\x99\xa60APR\xb8\x98\xc4\xb7WI,RIQ\xea\xb1)\x11\xac\xb6\x18\x8b\xbe\xb9y\xc4\xe7\xacN\x9c\xbe\x87s#1\xb7n\xb2\x13\xece\x1d\xddU\x99\x98WM\xef\xc3\x0e1`?\xeb\x1fH\xaa\xad\xbe\x96\xba\r\xd1X(G\xc8\xe8D\x9c\xa4e\x05\x85\xefj\r\x13U\xd6X\xa8\t"\xfa\xb3\xfd\x95\xb1\xde3v`Lj\xc6\xf6\xee\xfc Z\xe7\'0}\xba\xe4Py\x00\x00'
+  plaintext type : 'Handshake'
+  GCM tag is correct :-)
+  Going to parse the decrypted handshake :-)
+  Handshake record
+  Handshake Type 11 ('Certificate')
+  Message length : 1776
+  certificates chain length : 1772
+  certificate n°0, 900 ('0x384') bytes : 
+  MIIDgDCCAmigAwIBAgIRANdyBpvpkTRDhzy4eqI6LNUwDQYJKoZIhvcNAQELBQAw
+  GzEZMBcGA1UEAwwQb3BlbnZwbi10b2x2YS1jYTAeFw0yMzExMjUxNjQ2MTBaFw0y
+  NjExMDkxNjQ2MTBaMBgxFjAUBgNVBAMMDW9wZW52cG5zZXJ2ZXIwggEiMA0GCSqG
+  SIb3DQEBAQUAA4IBDwAwggEKAoIBAQDTghYouBIo33RpcEAG+jX1bSQHzT9sr6Lx
+  vsnggdmrSAyclOn/ByTRzbRn2+f7cXxuP/RPx65EKk6dPY/RuxYwKFgozNaQu0pH
+  EpwbQZ/zoMXtPzuAG5EkMEaA/jRZ1jVwF9UA/XorYXQ2ocQ1AlUEijs8fJlnyeUR
+  VilOI545a0M1HGsR/Qbx6CGAAunfor7kNLm0CQtbL6sFBDTssPEv+LJSfiD33Iqf
+  2IdBUQpVHKdEyDDSz2u6hFM7dNuoSHybedbcOO3Bh/KQoPc//YT075LyJWBQQEWc
+  j0tpobhUEE53PA1JjAPtwl7IzOL2omfsqW4VepEy1nAUdu07nY7NAgMBAAGjgcEw
+  gb4wCQYDVR0TBAIwADAdBgNVHQ4EFgQU85tpNlaDZxHv+ifI7Bc0kMSmBgYwVgYD
+  VR0jBE8wTYAUE44Tt2SR3AtUpYgbGTdjwAlU/QKhH6QdMBsxGTAXBgNVBAMMEG9w
+  ZW52cG4tdG9sdmEtY2GCFDmrXI2huokZpb6SB5kyC95AJ9EkMBMGA1UdJQQMMAoG
+  CCsGAQUFBwMBMAsGA1UdDwQEAwIFoDAYBgNVHREEETAPgg1vcGVudnBuc2VydmVy
+  MA0GCSqGSIb3DQEBCwUAA4IBAQBeIRJPHpTG2f3u8GlUSClUUzLHocrj38No5MBY
+  z0sgxjCTWFd0qG+Px77+ebf7dGgipLSht3rUb7iUSJpsbFuK1ObFdEWJP5W51acE
+  juEF99jj0IMSjpmlqOr1exdnFTjeAHe5tbxS5vlPqUt+/ylEYvbUnfS2PTG0Hr3y
+  66DuJ2UmQe930fTtkI4uzRM53EUJXxNT1A/GwnlugyskA6WICHyJOH9oL0TL3DwO
+  r8bkkQKsD2ykJAPxJnnSMBvWw+KwQvHT7oBabuQGy+dO2p8GXbogN1QLpAA4rIry
+  b6E364B3j1qMiSuceo8oPCl9+j13qXMaA9qM8kRTqg9Kq1hT
+
+  certificate n°1, 862 ('0x35e') bytes : 
+  MIIDWjCCAkKgAwIBAgIUOatcjaG6iRmlvpIHmTIL3kAn0SQwDQYJKoZIhvcNAQEL
+  BQAwGzEZMBcGA1UEAwwQb3BlbnZwbi10b2x2YS1jYTAeFw0yMzExMjUxNTQ1MjBa
+  Fw0zMzExMjIxNTQ1MjBaMBsxGTAXBgNVBAMMEG9wZW52cG4tdG9sdmEtY2EwggEi
+  MA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDZ5B1XQs8j+bz/IfQX5comUS0u
+  A/ioz46pZKlUxrjD1b3nrk1pMt82w64CLyu1mdsF1Zmjy50pt7EvIxFzdH4dgxM8
+  WmW9jLDzHcXhKMdP4yJ7qgoaunj3x4SLEZdZCOQFyfZfR/caFrgQjoxg5i6vQLR8
+  uZKbGaup8y+otfx80jpkSPobTDot3lp8i8KJ4gYgRT9aj0eDA6wjjVpDLjXMorz8
+  cHzajGOVr61iiZniOfqQ47xDC9SLMEwxLr2PVXOOHClfA895QpKabEix33qnJUrU
+  oGOdZhLfKp7FREsk9RgTj8DOgG/mKary3nWfeQbpO7qq4MmdmoHSkLC0JbjBAgMB
+  AAGjgZUwgZIwHQYDVR0OBBYEFBOOE7dkkdwLVKWIGxk3Y8AJVP0CMFYGA1UdIwRP
+  ME2AFBOOE7dkkdwLVKWIGxk3Y8AJVP0CoR+kHTAbMRkwFwYDVQQDDBBvcGVudnBu
+  LXRvbHZhLWNhghQ5q1yNobqJGaW+kgeZMgveQCfRJDAMBgNVHRMEBTADAQH/MAsG
+  A1UdDwQEAwIBBjANBgkqhkiG9w0BAQsFAAOCAQEAsvX3LUCv24Dih4DlBmL5QoRt
+  PfJ+qdWoGzRGiPhSCOCF4WMq2QSjuMq5pu4dgjM1uFqs5716GL1BLSGLdlC8tTkc
+  WYpy1fqrgnf5SGYmW6ZFhGiaQtaOKATpsW8a75OZsNyvLQ58m/0KZTYaCIW8xDBp
+  CSP3+oz/uTec/AsLr7dQ+g2yLxgh3XOk9gFuzf9vmaYwQVBSuJjEt1dJLFJJUeqx
+  KRGsthiLvrl5xOesTpy+h3MjMbdushPsZR3dVZmYV03vww4xYD/rH0iqrb6Wug3R
+  WChHyOhEnKRlBYXvag0TVdZYqAki+rP9lbHeM3ZgTGrG9u78IFrnJzB9uuRQeQ==
+
+  read all the certificates ! 
+ TLS packet n°0, record n°5 :
+ packet version : '0x303' ('TLSv1.2')
+ tls_content_type 'Application Data'
+ record length : 281
+TLS packet seems to be fragmented across several TCP segments...
+
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 6 : 
+ Packet Type : '0x20'
+ Packet Opcode : '0x4' ('P_CONTROL_V1')
+ openvpn_payload : b'206814a798ad659607769434e38ce7e586f2705cf98de6d57268612b95550e77be4e83ace993a779782d1d66420faab14b8bb904827e6cf7465de8c279effde79fa9421a1907393ffd000000046573694401000000011698c9b423ee69cf00000003621b8c914a82bb5181809992ca9a2500ded84ec8f3c949bf778840a1630846aec89f595081392594eb767c33da9fc9798bedc1b0c712404273b3ffcd9ae2710e8ae12aa9923c010e33abe4baac955112899fc2b81b619186b5dfc44ddb6a01339860d95812c1553e509466ddc617030300458600f1114f7ed6292ea88a6a56ea1bb28bb87d728add79489bd88b0cfcc292f53709be218064f7cb2edd0210141ca47f24276acb501371bdb8a79c5b47ab0dfc50ad0b494d'
+ openvpn_pkt_type : b'20'
+ openvpn_session_id : b'6814a798ad659607'
+ openvpn_hmac : b'769434e38ce7e586f2705cf98de6d57268612b95550e77be4e83ace993a779782d1d66420faab14b8bb904827e6cf7465de8c279effde79fa9421a1907393ffd'
+ openvpn pkt_id : b'00000004'
+ openvpn time : b'65736944'
+ openvpn_packet_id_array_len : 1
+ openvpn_packet_id_array : b'00000001'
+ openvpn_remote_session_id : b'1698c9b423ee69cf'
+ openvpn_msg_packet_id : b'00000003'
+ openvpn_tls_payload : b'621b8c914a82bb5181809992ca9a2500ded84ec8f3c949bf778840a1630846aec89f595081392594eb767c33da9fc9798bedc1b0c712404273b3ffcd9ae2710e8ae12aa9923c010e33abe4baac955112899fc2b81b619186b5dfc44ddb6a01339860d95812c1553e509466ddc617030300458600f1114f7ed6292ea88a6a56ea1bb28bb87d728add79489bd88b0cfcc292f53709be218064f7cb2edd0210141ca47f24276acb501371bdb8a79c5b47ab0dfc50ad0b494d'
+ control_v1 HMAC is correct :-)
+'163.172.176.157' -> '192.168.1.151'
+TLS traffic is fragmented into several TCP packets
+TLS packet 0, length 2431
+ server -> client
+ TLS packet n°0, record n°5 :
+ packet version : '0x303' ('TLSv1.2')
+ tls_content_type 'Application Data'
+ record length : 281
+  Application record
+  plaintext : b'\x0f\x00\x01\x04\x08\x04\x01\x00w\xb2S\xe1\xab\xad\x1fV\x85\xf4<\xa7\x02\xd9\x9f\x17\xef\x87\xcd\xe7\x8c\x00^\xb66\xbbL\x96\x00\x19\x01\xeb&\xb7\x12\x15\xa54G\x02%\xce&jL\x16G4\x13s\xb1|\xbc\xfb\x14"\x98\x8d\xf8\x00\xe2\xe6\xdb\xde,\xaf\xe9\xa8\x04\xb9\xd7\x18\xcaQ\xcf\x0b\xe55\x00\xd1\x8eJ\xf1j3f>VhOI\xa6\xb4\xac\xf8\xd0\x90g/u\xa7\xe8\xf8\x88\x07\xc5\xdf\xe4\xa18,ou\x80\x86\x9eq\xd6A\x19\xb0\x07\xf7\xd4\x12.A\xdb\xfa\x0b\x10\xa2\xa9\xc2k\x08--\xf5\x1d\x87\x0b\x9a\x99.\xc7\x1fsa\xd1\x8b R\x99im\xb7\x1a~)\x9c\xa4W3\xffM\'\x9a\x01\x91&j\xb8\x00[\x81q$R\x83\xec\x91\xdaM\x97B\xd5\xa5\xb5\xb3A!*\x9aA\xe5L\xf0X\xb4\xf8\xac#\x8b\x8a]\x99\x05|d\xc8\xc9\x992\xb8X\xd8\x0fl\x9b\x8e&4B,\xe0@\xae\xa0\xc3\x1bi\x08x\xbc#\xa58\xe6\xa5\x0fo\x94\x88\xa8u\xb7\x1d\x05\x16D\x15\xf4\xe6XT'
+  plaintext type : 'Handshake'
+  GCM tag is correct :-)
+  Going to parse the decrypted handshake :-)
+  Handshake record
+  Handshake Type 15 ('CertificateVerify')
+  Message length : 260
+ TLS packet n°0, record n°6 :
+ packet version : '0x303' ('TLSv1.2')
+ tls_content_type 'Application Data'
+ record length : 69
+  Application record
+  plaintext : b'\x14\x00\x000S\xd0\x90\xfa\x81\xb8]qI\xcc\xd8W\x00\xb2\xde\xc4\x92\xe2gq)\x861Fx\x0eD \xda\xa8z*D\x00;%>t+\xbd\xc6\xbe!\xc1\xaco\xdd('
+  plaintext type : 'Handshake'
+  GCM tag is correct :-)
+  Going to parse the decrypted handshake :-)
+  Handshake record
+  Handshake Type 20 ('Finished')
+  Message length : 48
+
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 7 : 
+ Packet Type : '0x28'
+ Packet Opcode : '0x5' ('P_ACK_V1')
+ openvpn_payload : b'281698c9b423ee69cf9b041debf983a9d36079e8a2b1cc0db6675ce7f4fd0b5adaa8489be39a570562c4fcb1d123d5443dfd99d8e32ea8e815f6c42a34100a7cdc692c5a349e501453000000046573694401000000016814a798ad659607'
+ openvpn_pkt_type : b'28'
+ openvpn_session_id : b'1698c9b423ee69cf'
+ openvpn_hmac : b'9b041debf983a9d36079e8a2b1cc0db6675ce7f4fd0b5adaa8489be39a570562c4fcb1d123d5443dfd99d8e32ea8e815f6c42a34100a7cdc692c5a349e501453'
+ openvpn pkt_id : b'00000004'
+ openvpn time : b'65736944'
+ openvpn_packet_id_array_len : b'\x01'
+ openvpn_packet_id_array : b'00000001'
+ openvpn_remote_session_id : b'6814a798ad659607'
+ ack_v1 HMAC is correct :-)
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 8 : 
+ Packet Type : '0x28'
+ Packet Opcode : '0x5' ('P_ACK_V1')
+ openvpn_payload : b'281698c9b423ee69cfcea0eed39dab51566280c23ecf980058deb6f3784641fce3b311afa993fc75e7760b85a9ddd353922f955099b338d4cb885a4fe32bad92d77f2954740506a7a9000000056573694401000000026814a798ad659607'
+ openvpn_pkt_type : b'28'
+ openvpn_session_id : b'1698c9b423ee69cf'
+ openvpn_hmac : b'cea0eed39dab51566280c23ecf980058deb6f3784641fce3b311afa993fc75e7760b85a9ddd353922f955099b338d4cb885a4fe32bad92d77f2954740506a7a9'
+ openvpn pkt_id : b'00000005'
+ openvpn time : b'65736944'
+ openvpn_packet_id_array_len : b'\x01'
+ openvpn_packet_id_array : b'00000002'
+ openvpn_remote_session_id : b'6814a798ad659607'
+ ack_v1 HMAC is correct :-)
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 9 : 
+ Packet Type : '0x20'
+ Packet Opcode : '0x4' ('P_CONTROL_V1')
+ openvpn_payload : b'201698c9b423ee69cf9565a459c415787cc8d5e82cb08e4cf16aae72cf1d3a514712b5f907295c19a5dc83bbbcd1a122f6e14d68b131afa495ada922a96633e57952badcc86ffd93e1000000066573694401000000036814a798ad6596070000000214030300010117030306eb3435c7f44c9505e06f6980fcb89fe195c03961b5805d12a9fa360f1890484d460fc6b95afcfe049b395bf010bd2e5ef72bc0982e6be5637bc7d43a559c704fdb458ee3c5c4ba54d123f91dca9512aac168ab0e86b0badbff3260ea1b5d3fef4a987bcb41ce3be6e515159d64dcbaca85d6d811b79839a68400bfa9a9736e28407652d3747c245d3782cc8e1a48bc22f8e3cc95dcf9adc03c4de45887ee93dece5a8f3a71e2c6b4a428f8d22c2367bbb2c963e4f76890350b9531511d8fc20b50e2d60184412e7ef25a72e67536321d17f41a08a2718bfaddd216f0b47da8842415db516cde88c61ebc70368ce26e23c999b3c63d7398e89a0e1d6e0af00c1026b9d6afcfc7e6bcbafb0199181dec27e25b6c739a9e6cf382447a59ff99edb256128b78c77f4079e7cd56ab85786452ea826600b22f00e40d3039bc94848963dc44a72b9fc272effa8fa4cf421430d9d489b52fc7ac522d25a5c0bdec7e2e715f0b9b1d0af7369243c75285a673684ffc7341af189ed9e4b57c4a30d5ff22c83b0f916948f6850627382a4a2ba5e05bc37c66a300e5a18c2e042f2179ff953966ce27a5939c94f06bafb283f4e1e1861dda7ee82f7e6074f8db3d6241b821786f3192e7ef73fa422274ffeedb059332ee9121932521edb03c8571833da7b3e2afd3358246d69947eea82998ba982898fca0586e6af56100a834a8f20866766e5f1b00137e11c65a3e2de50a12fc0d618cefa543ffcb0d9fb67d232f407637ad1874cafb30767a6eda80aa6ec185d4e2b48bbfb593fea6bc9fb05dbcff62f389538ff55aa14a1a9017c82b87af3c14d41dd3ed114c8ce858431d0920342365dfd658ddf99aa8fe473e24741de594563126f7db670294654ce8d47fc59fa2a66e484d5fa39a0b18bc9323029d3e00ceb66dc0b0387b50aba467c2ba651a05dae6bfef89e54b7c0e1e2714a2285a620d5c6f16780aa507e6d396699f6dc50e6e1a0a2fe917f942d4b7495a3c86e0070f876a69bc3ee2efe8ff4a8374b5619aa9477d26e6cf04f7be3580ad83f051557a978a9b5027dbb2fc5016918379ce237e6ccd7fa22091eb57fbc5a955280dc18811118b31e5f7690589df39aaaad3703012fe0e3a0307ceb1040ae90a3091b0d32a222bd5a70d72293702148b511ae79c88e600314c1fa59bc8c6ef7ae2e6b8ebea46b47e7d8a7a03017785dc38fe332fe756b145d5485d46731b6e445a23f623d22c2510d4d2f631798d2d3f6dfa5859e2f2cfaf582a14e5f675608a4f7d69f1aa5e01b56f255c633dfd976b72700cc2be95e819fec19cdef9be9fc9281b206d646bc367bca11a90d8e167437e75aede48143f349eb5bfc709e692badb6ba30373d4fd89b026b2b48296ddaf572dbcad7bdf0989b6e4efe880a48c541539b08a34aaef539a48fcc614f836d059'
+ openvpn_pkt_type : b'20'
+ openvpn_session_id : b'1698c9b423ee69cf'
+ openvpn_hmac : b'9565a459c415787cc8d5e82cb08e4cf16aae72cf1d3a514712b5f907295c19a5dc83bbbcd1a122f6e14d68b131afa495ada922a96633e57952badcc86ffd93e1'
+ openvpn pkt_id : b'00000006'
+ openvpn time : b'65736944'
+ openvpn_packet_id_array_len : 1
+ openvpn_packet_id_array : b'00000003'
+ openvpn_remote_session_id : b'6814a798ad659607'
+ openvpn_msg_packet_id : b'00000002'
+ openvpn_tls_payload : b'14030300010117030306eb3435c7f44c9505e06f6980fcb89fe195c03961b5805d12a9fa360f1890484d460fc6b95afcfe049b395bf010bd2e5ef72bc0982e6be5637bc7d43a559c704fdb458ee3c5c4ba54d123f91dca9512aac168ab0e86b0badbff3260ea1b5d3fef4a987bcb41ce3be6e515159d64dcbaca85d6d811b79839a68400bfa9a9736e28407652d3747c245d3782cc8e1a48bc22f8e3cc95dcf9adc03c4de45887ee93dece5a8f3a71e2c6b4a428f8d22c2367bbb2c963e4f76890350b9531511d8fc20b50e2d60184412e7ef25a72e67536321d17f41a08a2718bfaddd216f0b47da8842415db516cde88c61ebc70368ce26e23c999b3c63d7398e89a0e1d6e0af00c1026b9d6afcfc7e6bcbafb0199181dec27e25b6c739a9e6cf382447a59ff99edb256128b78c77f4079e7cd56ab85786452ea826600b22f00e40d3039bc94848963dc44a72b9fc272effa8fa4cf421430d9d489b52fc7ac522d25a5c0bdec7e2e715f0b9b1d0af7369243c75285a673684ffc7341af189ed9e4b57c4a30d5ff22c83b0f916948f6850627382a4a2ba5e05bc37c66a300e5a18c2e042f2179ff953966ce27a5939c94f06bafb283f4e1e1861dda7ee82f7e6074f8db3d6241b821786f3192e7ef73fa422274ffeedb059332ee9121932521edb03c8571833da7b3e2afd3358246d69947eea82998ba982898fca0586e6af56100a834a8f20866766e5f1b00137e11c65a3e2de50a12fc0d618cefa543ffcb0d9fb67d232f407637ad1874cafb30767a6eda80aa6ec185d4e2b48bbfb593fea6bc9fb05dbcff62f389538ff55aa14a1a9017c82b87af3c14d41dd3ed114c8ce858431d0920342365dfd658ddf99aa8fe473e24741de594563126f7db670294654ce8d47fc59fa2a66e484d5fa39a0b18bc9323029d3e00ceb66dc0b0387b50aba467c2ba651a05dae6bfef89e54b7c0e1e2714a2285a620d5c6f16780aa507e6d396699f6dc50e6e1a0a2fe917f942d4b7495a3c86e0070f876a69bc3ee2efe8ff4a8374b5619aa9477d26e6cf04f7be3580ad83f051557a978a9b5027dbb2fc5016918379ce237e6ccd7fa22091eb57fbc5a955280dc18811118b31e5f7690589df39aaaad3703012fe0e3a0307ceb1040ae90a3091b0d32a222bd5a70d72293702148b511ae79c88e600314c1fa59bc8c6ef7ae2e6b8ebea46b47e7d8a7a03017785dc38fe332fe756b145d5485d46731b6e445a23f623d22c2510d4d2f631798d2d3f6dfa5859e2f2cfaf582a14e5f675608a4f7d69f1aa5e01b56f255c633dfd976b72700cc2be95e819fec19cdef9be9fc9281b206d646bc367bca11a90d8e167437e75aede48143f349eb5bfc709e692badb6ba30373d4fd89b026b2b48296ddaf572dbcad7bdf0989b6e4efe880a48c541539b08a34aaef539a48fcc614f836d059'
+ control_v1 HMAC is correct :-)
+'192.168.1.151' -> '163.172.176.157'
+TLS packet 0, length 1030
+ client -> server
+ TLS packet n°0, record n°0 :
+ packet version : '0x303' ('TLSv1.2')
+ tls_content_type 'ChangeCipherSpec'
+ record length : 1
+  ChangeCipherSpec record
+ TLS packet n°0, record n°1 :
+ packet version : '0x303' ('TLSv1.2')
+ tls_content_type 'Application Data'
+ record length : 1771
+TLS packet seems to be fragmented across several TCP segments...
+
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 10 : 
+ Packet Type : '0x20'
+ Packet Opcode : '0x4' ('P_CONTROL_V1')
+ openvpn_payload : b'201698c9b423ee69cf6c7d35f928fbf3c565ac3e6caad0c62d726b267b30ecd23220c2916b3d4583940ded71054a94bbd999de2c0073cd6e55bd3d851f5111ce372787f7d80eda790700000007657369440000000003453d7807ad9d6347f235a4fdec701834658127f3ef153bc021c1a7b375da3295e0daa0bfaae6a9f8c00d07ebdd62e9e53b54edc471bc6624df7327d62177f0744f47473db7e2e7cbb88ee3041cd15a18bb1ad621b0c1d92b213f888a68119894f5d8aed43775b405d2dbf440483b8c15c58ca3120d8e6dd01a4bbe11445610bd592e6aa35605a981bd893f90391e1b2ba034dbf16105914a3085db8f5f13b46d82ff24764ee78300ba3223cc734a140bb461928c1a8e6dc1402ec479d06303f15f3de414a371bfc3408a1bd721d00f41f203acb71fd1b8d46bd57b6b6d8b1e47287726b06d0314a77a469d88e6a38cf75419e33b42b37c05d80ae5814cbbfab91f7566c637f65e17b5356362b8cc380a10fb98871b3f1297425feaaa913f629bbc5530c60ac696d0887abd8a588742553185b32ebfe2f78cd834eac1f570e11e18c0e9f825609e18d7b1f186d4371a8067670e467545427badce95187d8f51e0abe624946408cc0be85f31fd0b6b50e7ffe4246a0fc71c00b12ff4f38ab14682b17fed321ec8738cc79714ccf2f8ab8434d5f0ff1ce4eff571a3bfdf2604fd0f45bbd9dfdd624c12f8515a4fc5804754bb341636e2819e657e117f2b4bd7229f8fb73f551756337520a39e196b772c10aeeb09a8df2e4cd4ac02ce85e0cfa5d416d25a419c60b2fd223d95a50a5602307c3478225fbe3077e3849dd864d1a9d13f534ab66a3f31975c5b1c72dfc971d15aa0f6a6a86dfb899e5d4fa689a4e02bcd683997580721d9b20c95a8c2106057300531c78d2e860abe9c2511a822c683c04da0f3e9446d68831033e351095de5bbe18b262aa08503cc53dbb5956b4902989aa816bb7e2a518d85a5d7e73db5c243a83e9b5880480394873f095f260e5ed83d4982b60b1e9a3c5641f8f740ae02bd86e9aeb701caeaa4979cb05e5d818798b7ed4e2ceef99175e8cb0b58596b7f4243ee7ecb643d2b11d70aea146ffe4d2b4c0b77e6bdbd66d1ee6b3e783f7e6df0f12620e5257f6e05e53e1f98bc39e03849668a517247fa18c2550f8a511b581703030119a1c0aad80ad3aabd2965bda5938cddb71bc733ad7902956df38de954077ade5386c0d65ba0a8415c3b21694f030abea9c952e7acb6ae093a9650ea47938fa81da87cfbf008ca3720153b0b9d697bca2c953e6b8566c10f654739eb754e52eda573c410444877e301db20fc1f77d29f0cb5cabe9a42b2ddd620c5ed8b18977658a76d1692d9e347934c3673366a673fa35c092a72983bdd52a804f8c9d927dcb92c9b92909115b8f54760523d1bea2ad4f034331ea2db4458e57d1a0bccab527f9655f3f9a43b059651466cdca133ecf74e91940b060e1cdcbc9d54d565c16b8dc33dd4ae2f4c8acc14130529d34b23f8899da5fa015a69a73dc72f7bbc6508e7f7f92ff545de30889e1382f849f42dbed8'
+ openvpn_pkt_type : b'20'
+ openvpn_session_id : b'1698c9b423ee69cf'
+ openvpn_hmac : b'6c7d35f928fbf3c565ac3e6caad0c62d726b267b30ecd23220c2916b3d4583940ded71054a94bbd999de2c0073cd6e55bd3d851f5111ce372787f7d80eda7907'
+ openvpn pkt_id : b'00000007'
+ openvpn time : b'65736944'
+ openvpn_packet_id_array_len : 0
+ openvpn_msg_packet_id : b'00000003'
+ openvpn_tls_payload : b'453d7807ad9d6347f235a4fdec701834658127f3ef153bc021c1a7b375da3295e0daa0bfaae6a9f8c00d07ebdd62e9e53b54edc471bc6624df7327d62177f0744f47473db7e2e7cbb88ee3041cd15a18bb1ad621b0c1d92b213f888a68119894f5d8aed43775b405d2dbf440483b8c15c58ca3120d8e6dd01a4bbe11445610bd592e6aa35605a981bd893f90391e1b2ba034dbf16105914a3085db8f5f13b46d82ff24764ee78300ba3223cc734a140bb461928c1a8e6dc1402ec479d06303f15f3de414a371bfc3408a1bd721d00f41f203acb71fd1b8d46bd57b6b6d8b1e47287726b06d0314a77a469d88e6a38cf75419e33b42b37c05d80ae5814cbbfab91f7566c637f65e17b5356362b8cc380a10fb98871b3f1297425feaaa913f629bbc5530c60ac696d0887abd8a588742553185b32ebfe2f78cd834eac1f570e11e18c0e9f825609e18d7b1f186d4371a8067670e467545427badce95187d8f51e0abe624946408cc0be85f31fd0b6b50e7ffe4246a0fc71c00b12ff4f38ab14682b17fed321ec8738cc79714ccf2f8ab8434d5f0ff1ce4eff571a3bfdf2604fd0f45bbd9dfdd624c12f8515a4fc5804754bb341636e2819e657e117f2b4bd7229f8fb73f551756337520a39e196b772c10aeeb09a8df2e4cd4ac02ce85e0cfa5d416d25a419c60b2fd223d95a50a5602307c3478225fbe3077e3849dd864d1a9d13f534ab66a3f31975c5b1c72dfc971d15aa0f6a6a86dfb899e5d4fa689a4e02bcd683997580721d9b20c95a8c2106057300531c78d2e860abe9c2511a822c683c04da0f3e9446d68831033e351095de5bbe18b262aa08503cc53dbb5956b4902989aa816bb7e2a518d85a5d7e73db5c243a83e9b5880480394873f095f260e5ed83d4982b60b1e9a3c5641f8f740ae02bd86e9aeb701caeaa4979cb05e5d818798b7ed4e2ceef99175e8cb0b58596b7f4243ee7ecb643d2b11d70aea146ffe4d2b4c0b77e6bdbd66d1ee6b3e783f7e6df0f12620e5257f6e05e53e1f98bc39e03849668a517247fa18c2550f8a511b581703030119a1c0aad80ad3aabd2965bda5938cddb71bc733ad7902956df38de954077ade5386c0d65ba0a8415c3b21694f030abea9c952e7acb6ae093a9650ea47938fa81da87cfbf008ca3720153b0b9d697bca2c953e6b8566c10f654739eb754e52eda573c410444877e301db20fc1f77d29f0cb5cabe9a42b2ddd620c5ed8b18977658a76d1692d9e347934c3673366a673fa35c092a72983bdd52a804f8c9d927dcb92c9b92909115b8f54760523d1bea2ad4f034331ea2db4458e57d1a0bccab527f9655f3f9a43b059651466cdca133ecf74e91940b060e1cdcbc9d54d565c16b8dc33dd4ae2f4c8acc14130529d34b23f8899da5fa015a69a73dc72f7bbc6508e7f7f92ff545de30889e1382f849f42dbed8'
+ control_v1 HMAC is correct :-)
+'192.168.1.151' -> '163.172.176.157'
+TLS traffic is fragmented into several TCP packets
+TLS packet 0, length 2060
+ client -> server
+ TLS packet n°0, record n°1 :
+ packet version : '0x303' ('TLSv1.2')
+ tls_content_type 'Application Data'
+ record length : 1771
+  Application record
+  plaintext : b'\x0b\x00\x06\xd6\x00\x00\x06\xd2\x00\x03j0\x82\x03f0\x82\x02N\xa0\x03\x02\x01\x02\x02\x11\x00\xa4P\xd0\x86\xc7\xfe\xbe\x8f\x16`*F\x88\xd1\x02\xa70\r\x06\t*\x86H\x86\xf7\r\x01\x01\x0b\x05\x000\x1b1\x190\x17\x06\x03U\x04\x03\x0c\x10openvpn-tolva-ca0\x1e\x17\r231125192450Z\x17\r261109192450Z0\x181\x160\x14\x06\x03U\x04\x03\x0c\ropenvpnclient0\x82\x01"0\r\x06\t*\x86H\x86\xf7\r\x01\x01\x01\x05\x00\x03\x82\x01\x0f\x000\x82\x01\n\x02\x82\x01\x01\x00\xad\xdc4\xac>\xf8\x8f0\xc3i\x1c\xab\x89Y\xf1\xc7\xc7\xc0\x1b\xb9\xd6\x81\xcd\x04\xafE3\x90\x97\xcb\xcc\xa5G\xff\xe4E{\x9b\xe8g\xf4\x87$\xee\xb0\x0c\xf7w\xf2NO\x9bd\xb0>\x9f\x7fw\xed7\xe7}A\x03\x01`\x91B\xf9\xda\xeeJ\x018\xc7\xb6\xf6\x07\x11\xca\xbd\xc8\xcdY2N{\xebz\xa9\x8c\xea\xaf\xa1Y\xb5\x91\xc3\xb9|)\xd8\xc3\xfa\x07\xb4\x05\xdb\xe3\x95\xde\xa1\x16\x98v\'[\x1fJ\'\xec\xf7\x11\xdbHB\x9aZ\x14\xce\xb5_\xe8t41\xc1\x11*q\x88\x16\x04\xb1\x0f\xafHD\r_\x9a\xb3\x13\xf8\xe9\xcc<\xf9\x94\xee2\xd6_G\x83\xaf\xc7]\x8fy\xdbRu\xb1cs\xaeuOM\xbb\xcc\xd83\xb8\xce\x83O&\x8a\x04\x90\x19a\xc0\x16\x0f\xe7_P\xaeU]\x14\xfd\xc7<\xc8De\xc2mB\xf6o\x18Z\x9e\x17\x1f\xbd\xad}{\xf2U\xa7\x8b~\xb7\xd9\x03<\xbc\xd1\xdd\xca\xc4Y\x93`\xfbu\xb5\x97\x88Wj\xeb\x08\x1b]\xfe\x92}M\x02\x03\x01\x00\x01\xa3\x81\xa70\x81\xa40\t\x06\x03U\x1d\x13\x04\x020\x000\x1d\x06\x03U\x1d\x0e\x04\x16\x04\x14_\xa8\xaf\xf9\xef\\\x96\x17yRq\x9b;\xc3c[\x1d\x85u\xb80V\x06\x03U\x1d#\x04O0M\x80\x14\x13\x8e\x13\xb7d\x91\xdc\x0bT\xa5\x88\x1b\x197c\xc0\tT\xfd\x02\xa1\x1f\xa4\x1d0\x1b1\x190\x17\x06\x03U\x04\x03\x0c\x10openvpn-tolva-ca\x82\x149\xab\\\x8d\xa1\xba\x89\x19\xa5\xbe\x92\x07\x992\x0b\xde@\'\xd1$0\x13\x06\x03U\x1d%\x04\x0c0\n\x06\x08+\x06\x01\x05\x05\x07\x03\x020\x0b\x06\x03U\x1d\x0f\x04\x04\x03\x02\x07\x800\r\x06\t*\x86H\x86\xf7\r\x01\x01\x0b\x05\x00\x03\x82\x01\x01\x00p\xe8\x9b\x1aV\xb1\xc2\x87*\x8e\xe4.\x1ccD\t\xa6v\xad<\x89\xf34\xf5>\xa9\x93\x1e\xa924\xb9{\xab\x80{.bJ\xf0\xdf&8\xc7\x95j^\xf7\x01\x99\xdc@SvO\xea*W\x0f\x1f\x15\x96\x19\xd6D\xf7\x7f\xf4n\r\xbeE=\x11T\xf6jjWq\x01\xfb\xbb\xd3\xe6\x7f5\xb1\x80\x0b>D\t\x8c\xc7!\xee\xb6.\x1b\x90z/\xb1jO\xf4\xab\xde]\xa0\xea$\xf4\xf4\x06\x0cs\t>\x1e$\x02\x989\xd2\x00\x98\xdfX\xe8\nR\x00\x8d>\xd9\x1d\x9a\xb4\xef\xf2D\xd1\x1e\xb8/P\xff\xaf(S\x1b\xbf\x12\x8a\xd9\xc6\x1f\xe9\'\xa3\x7f2\xcc\xd5h@\x1aaTy\xc9qo\x17\x10\xb4@\xf4\x04\x0f\xa1"\x1e\x8fX\xc5\xd1\xa2@\xa7\x9eq#\xc5\xde\xba\xb7~\x0f\xd9\r\x8b\xf3\x17\xd0\x80/y\xe4X7T\x0b1\x08\xf1\xad\\\xb8,\xaf\xc1]\x0e\xad\xebz\xc9\xfe\xa7\xb0\xb0\xab\xf3\xb3\xe3xKZ\x1fF\xec\x11\xa8G\xdf\xc6u\xc2\x16\x87\xcb\xb7\xff\x00\x00\x00\x03^0\x82\x03Z0\x82\x02B\xa0\x03\x02\x01\x02\x02\x149\xab\\\x8d\xa1\xba\x89\x19\xa5\xbe\x92\x07\x992\x0b\xde@\'\xd1$0\r\x06\t*\x86H\x86\xf7\r\x01\x01\x0b\x05\x000\x1b1\x190\x17\x06\x03U\x04\x03\x0c\x10openvpn-tolva-ca0\x1e\x17\r231125154520Z\x17\r331122154520Z0\x1b1\x190\x17\x06\x03U\x04\x03\x0c\x10openvpn-tolva-ca0\x82\x01"0\r\x06\t*\x86H\x86\xf7\r\x01\x01\x01\x05\x00\x03\x82\x01\x0f\x000\x82\x01\n\x02\x82\x01\x01\x00\xd9\xe4\x1dWB\xcf#\xf9\xbc\xff!\xf4\x17\xe5\xca&Q-.\x03\xf8\xa8\xcf\x8e\xa9d\xa9T\xc6\xb8\xc3\xd5\xbd\xe7\xaeMi2\xdf6\xc3\xae\x02/+\xb5\x99\xdb\x05\xd5\x99\xa3\xcb\x9d)\xb7\xb1/#\x11st~\x1d\x83\x13<Ze\xbd\x8c\xb0\xf3\x1d\xc5\xe1(\xc7O\xe3"{\xaa\n\x1a\xbax\xf7\xc7\x84\x8b\x11\x97Y\x08\xe4\x05\xc9\xf6_G\xf7\x1a\x16\xb8\x10\x8e\x8c`\xe6.\xaf@\xb4|\xb9\x92\x9b\x19\xab\xa9\xf3/\xa8\xb5\xfc|\xd2:dH\xfa\x1bL:-\xdeZ|\x8b\xc2\x89\xe2\x06 E?Z\x8fG\x83\x03\xac#\x8dZC.5\xcc\xa2\xbc\xfcp|\xda\x8cc\x95\xaf\xadb\x89\x99\xe29\xfa\x90\xe3\xbcC\x0b\xd4\x8b0L1.\xbd\x8fUs\x8e\x1c)_\x03\xcfyB\x92\x9alH\xb1\xdfz\xa7%J\xd4\xa0c\x9df\x12\xdf*\x9e\xc5DK$\xf5\x18\x13\x8f\xc0\xce\x80o\xe6)\xaa\xf2\xdeu\x9fy\x06\xe9;\xba\xaa\xe0\xc9\x9d\x9a\x81\xd2\x90\xb0\xb4%\xb8\xc1\x02\x03\x01\x00\x01\xa3\x81\x950\x81\x920\x1d\x06\x03U\x1d\x0e\x04\x16\x04\x14\x13\x8e\x13\xb7d\x91\xdc\x0bT\xa5\x88\x1b\x197c\xc0\tT\xfd\x020V\x06\x03U\x1d#\x04O0M\x80\x14\x13\x8e\x13\xb7d\x91\xdc\x0bT\xa5\x88\x1b\x197c\xc0\tT\xfd\x02\xa1\x1f\xa4\x1d0\x1b1\x190\x17\x06\x03U\x04\x03\x0c\x10openvpn-tolva-ca\x82\x149\xab\\\x8d\xa1\xba\x89\x19\xa5\xbe\x92\x07\x992\x0b\xde@\'\xd1$0\x0c\x06\x03U\x1d\x13\x04\x050\x03\x01\x01\xff0\x0b\x06\x03U\x1d\x0f\x04\x04\x03\x02\x01\x060\r\x06\t*\x86H\x86\xf7\r\x01\x01\x0b\x05\x00\x03\x82\x01\x01\x00\xb2\xf5\xf7-@\xaf\xdb\x80\xe2\x87\x80\xe5\x06b\xf9B\x84m=\xf2~\xa9\xd5\xa8\x1b4F\x88\xf8R\x08\xe0\x85\xe1c*\xd9\x04\xa3\xb8\xca\xb9\xa6\xee\x1d\x8235\xb8Z\xac\xe7\xbdz\x18\xbdA-!\x8bvP\xbc\xb59\x1cY\x8ar\xd5\xfa\xab\x82w\xf9Hf&[\xa6E\x84h\x9aB\xd6\x8e(\x04\xe9\xb1o\x1a\xef\x93\x99\xb0\xdc\xaf-\x0e|\x9b\xfd\ne6\x1a\x08\x85\xbc\xc40i\t#\xf7\xfa\x8c\xff\xb97\x9c\xfc\x0b\x0b\xaf\xb7P\xfa\r\xb2/\x18!\xdds\xa4\xf6\x01n\xcd\xffo\x99\xa60APR\xb8\x98\xc4\xb7WI,RIQ\xea\xb1)\x11\xac\xb6\x18\x8b\xbe\xb9y\xc4\xe7\xacN\x9c\xbe\x87s#1\xb7n\xb2\x13\xece\x1d\xddU\x99\x98WM\xef\xc3\x0e1`?\xeb\x1fH\xaa\xad\xbe\x96\xba\r\xd1X(G\xc8\xe8D\x9c\xa4e\x05\x85\xefj\r\x13U\xd6X\xa8\t"\xfa\xb3\xfd\x95\xb1\xde3v`Lj\xc6\xf6\xee\xfc Z\xe7\'0}\xba\xe4Py\x00\x00'
+  plaintext type : 'Handshake'
+  GCM tag is correct :-)
+  Going to parse the decrypted handshake :-)
+  Handshake record
+  Handshake Type 11 ('Certificate')
+  Message length : 1750
+  certificates chain length : 1746
+  certificate n°0, 874 ('0x36a') bytes : 
+  MIIDZjCCAk6gAwIBAgIRAKRQ0IbH/r6PFmAqRojRAqcwDQYJKoZIhvcNAQELBQAw
+  GzEZMBcGA1UEAwwQb3BlbnZwbi10b2x2YS1jYTAeFw0yMzExMjUxOTI0NTBaFw0y
+  NjExMDkxOTI0NTBaMBgxFjAUBgNVBAMMDW9wZW52cG5jbGllbnQwggEiMA0GCSqG
+  SIb3DQEBAQUAA4IBDwAwggEKAoIBAQCt3DSsPviPMMNpHKuJWfHHx8AbudaBzQSv
+  RTOQl8vMpUf/5EV7m+hn9Ick7rAM93fyTk+bZLA+n3937TfnfUEDAWCRQvna7koB
+  OMe29gcRyr3IzVkyTnvreqmM6q+hWbWRw7l8KdjD+ge0Bdvjld6hFph2J1sfSifs
+  9xHbSEKaWhTOtV/odDQxwREqcYgWBLEPr0hEDV+asxP46cw8+ZTuMtZfR4Ovx12P
+  edtSdbFjc651T027zNgzuM6DTyaKBJAZYcAWD+dfUK5VXRT9xzzIRGXCbUL2bxha
+  nhcfva19e/JVp4t+t9kDPLzR3crEWZNg+3W1l4hXausIG13+kn1NAgMBAAGjgacw
+  gaQwCQYDVR0TBAIwADAdBgNVHQ4EFgQUX6iv+e9clhd5UnGbO8NjWx2FdbgwVgYD
+  VR0jBE8wTYAUE44Tt2SR3AtUpYgbGTdjwAlU/QKhH6QdMBsxGTAXBgNVBAMMEG9w
+  ZW52cG4tdG9sdmEtY2GCFDmrXI2huokZpb6SB5kyC95AJ9EkMBMGA1UdJQQMMAoG
+  CCsGAQUFBwMCMAsGA1UdDwQEAwIHgDANBgkqhkiG9w0BAQsFAAOCAQEAcOibGlax
+  wocqjuQuHGNECaZ2rTyJ8zT1PqmTHqkyNLl7q4B7LmJK8N8mOMeVal73AZncQFN2
+  T+oqVw8fFZYZ1kT3f/RuDb5FPRFU9mpqV3EB+7vT5n81sYALPkQJjMch7rYuG5B6
+  L7FqT/Sr3l2g6iT09AYMcwk+HiQCmDnSAJjfWOgKUgCNPtkdmrTv8kTRHrgvUP+v
+  KFMbvxKK2cYf6SejfzLM1WhAGmFUeclxbxcQtED0BA+hIh6PWMXRokCnnnEjxd66
+  t34P2Q2L8xfQgC955Fg3VAsxCPGtXLgsr8FdDq3resn+p7Cwq/Oz43hLWh9G7BGo
+  R9/GdcIWh8u3/w==
+
+  certificate n°1, 862 ('0x35e') bytes : 
+  MIIDWjCCAkKgAwIBAgIUOatcjaG6iRmlvpIHmTIL3kAn0SQwDQYJKoZIhvcNAQEL
+  BQAwGzEZMBcGA1UEAwwQb3BlbnZwbi10b2x2YS1jYTAeFw0yMzExMjUxNTQ1MjBa
+  Fw0zMzExMjIxNTQ1MjBaMBsxGTAXBgNVBAMMEG9wZW52cG4tdG9sdmEtY2EwggEi
+  MA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDZ5B1XQs8j+bz/IfQX5comUS0u
+  A/ioz46pZKlUxrjD1b3nrk1pMt82w64CLyu1mdsF1Zmjy50pt7EvIxFzdH4dgxM8
+  WmW9jLDzHcXhKMdP4yJ7qgoaunj3x4SLEZdZCOQFyfZfR/caFrgQjoxg5i6vQLR8
+  uZKbGaup8y+otfx80jpkSPobTDot3lp8i8KJ4gYgRT9aj0eDA6wjjVpDLjXMorz8
+  cHzajGOVr61iiZniOfqQ47xDC9SLMEwxLr2PVXOOHClfA895QpKabEix33qnJUrU
+  oGOdZhLfKp7FREsk9RgTj8DOgG/mKary3nWfeQbpO7qq4MmdmoHSkLC0JbjBAgMB
+  AAGjgZUwgZIwHQYDVR0OBBYEFBOOE7dkkdwLVKWIGxk3Y8AJVP0CMFYGA1UdIwRP
+  ME2AFBOOE7dkkdwLVKWIGxk3Y8AJVP0CoR+kHTAbMRkwFwYDVQQDDBBvcGVudnBu
+  LXRvbHZhLWNhghQ5q1yNobqJGaW+kgeZMgveQCfRJDAMBgNVHRMEBTADAQH/MAsG
+  A1UdDwQEAwIBBjANBgkqhkiG9w0BAQsFAAOCAQEAsvX3LUCv24Dih4DlBmL5QoRt
+  PfJ+qdWoGzRGiPhSCOCF4WMq2QSjuMq5pu4dgjM1uFqs5716GL1BLSGLdlC8tTkc
+  WYpy1fqrgnf5SGYmW6ZFhGiaQtaOKATpsW8a75OZsNyvLQ58m/0KZTYaCIW8xDBp
+  CSP3+oz/uTec/AsLr7dQ+g2yLxgh3XOk9gFuzf9vmaYwQVBSuJjEt1dJLFJJUeqx
+  KRGsthiLvrl5xOesTpy+h3MjMbdushPsZR3dVZmYV03vww4xYD/rH0iqrb6Wug3R
+  WChHyOhEnKRlBYXvag0TVdZYqAki+rP9lbHeM3ZgTGrG9u78IFrnJzB9uuRQeQ==
+
+  read all the certificates ! 
+ TLS packet n°0, record n°2 :
+ packet version : '0x303' ('TLSv1.2')
+ tls_content_type 'Application Data'
+ record length : 281
+TLS packet seems to be fragmented across several TCP segments...
+
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 11 : 
+ Packet Type : '0x28'
+ Packet Opcode : '0x5' ('P_ACK_V1')
+ openvpn_payload : b'286814a798ad65960723e3041502c0d3c609e25bbc638c38cebd5d53eb933a42b2e7e7bfe3c2917a75265351457f338d40a78cafddff5fe4d7006b0f9f2ff024e5334ef7219f9b318e00000005657369440200000002000000011698c9b423ee69cf'
+ openvpn_pkt_type : b'28'
+ openvpn_session_id : b'6814a798ad659607'
+ openvpn_hmac : b'23e3041502c0d3c609e25bbc638c38cebd5d53eb933a42b2e7e7bfe3c2917a75265351457f338d40a78cafddff5fe4d7006b0f9f2ff024e5334ef7219f9b318e'
+ openvpn pkt_id : b'00000005'
+ openvpn time : b'65736944'
+ openvpn_packet_id_array_len : b'\x02'
+ openvpn_packet_id_array : b'0000000200000001'
+ openvpn_remote_session_id : b'1698c9b423ee69cf'
+ ack_v1 HMAC is correct :-)
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 12 : 
+ Packet Type : '0x28'
+ Packet Opcode : '0x5' ('P_ACK_V1')
+ openvpn_payload : b'286814a798ad659607ad156723b7e0445bf581a3558754b1bb6ad0bad58accf9a78d1890a208dc0b9f6796cc9120940913c3bdefa43e2c62e95935aacf4ff649d308b9dd3f04b13f540000000665736944030000000300000002000000011698c9b423ee69cf'
+ openvpn_pkt_type : b'28'
+ openvpn_session_id : b'6814a798ad659607'
+ openvpn_hmac : b'ad156723b7e0445bf581a3558754b1bb6ad0bad58accf9a78d1890a208dc0b9f6796cc9120940913c3bdefa43e2c62e95935aacf4ff649d308b9dd3f04b13f54'
+ openvpn pkt_id : b'00000006'
+ openvpn time : b'65736944'
+ openvpn_packet_id_array_len : b'\x03'
+ openvpn_packet_id_array : b'000000030000000200000001'
+ openvpn_remote_session_id : b'1698c9b423ee69cf'
+ ack_v1 HMAC is correct :-)
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 13 : 
+ Packet Type : '0x20'
+ Packet Opcode : '0x4' ('P_CONTROL_V1')
+ openvpn_payload : b'201698c9b423ee69cfa14a5fa886196ffa16cfe9698ce10e1daf91a084e5d973675d84c1aa92e841e9d21020bb05ab5238994fc4b04b77ba706704a004cf6c1cac4b114e5ffc7192ce0000000865736944000000000419a849b8f9fd118b1703030045adc36f2bab6a33cc68ef1ace75a4491859fa1e56805a6d4566255938cd23a187fad7c8f865b3d8491c653d793056f464317722aee872a3451ee8dbd9fbfb1edd35a22199cd17030301bc7db1f160056990263ebe469163e791d429e7ad51da2009505b873e5d8f4dfd80c106be1d128d7f622161839bea8bac62633d83e630e297aca017a334388b4771f2186d09767b898312073dcef4b1448c8fee42bf18de3e4f885f3e0af4571d814375e300e41e0c1ef5565ca8172a098b0132f5d137f0c2e35b445e3dee11a7e03c44e9cedfc611c7adf38928b66322cd8d721f7f9ff49b1a29a6fadb6f8a827401a052b58ea0e9b0f64829c1210eb91bd86d66bc91cac88d236b8552daf42046fe46174f9413d81093ca27d88b768daacddc9850759162d6d536745a3c57942b7c31813acc1762b364ece277f57af802a1ef7f8e2a5c93356682cbd6a24c8b89637468607913b1f027cacd3549ebb4b25c47319a6e5a963b1a911ad4921b0955da1cc9359d0dfd959412171606741b40bc03a0c53c7984328cfeb665b7b36664ae0ce5037432d56d0286ab2ed55109818802947edcd8317685c65c0adf7306bc16585ef22096f4977bac315401aa7d77760f34fb1460980bbc1c946b07d91caab3940adadd3495460e9ca18cba705fd3663b76bc8d6dbbe2f6ad1178aa376be63ba33649983446cf33b0df486e4b7696d00652123890f3266866850a'
+ openvpn_pkt_type : b'20'
+ openvpn_session_id : b'1698c9b423ee69cf'
+ openvpn_hmac : b'a14a5fa886196ffa16cfe9698ce10e1daf91a084e5d973675d84c1aa92e841e9d21020bb05ab5238994fc4b04b77ba706704a004cf6c1cac4b114e5ffc7192ce'
+ openvpn pkt_id : b'00000008'
+ openvpn time : b'65736944'
+ openvpn_packet_id_array_len : 0
+ openvpn_msg_packet_id : b'00000004'
+ openvpn_tls_payload : b'19a849b8f9fd118b1703030045adc36f2bab6a33cc68ef1ace75a4491859fa1e56805a6d4566255938cd23a187fad7c8f865b3d8491c653d793056f464317722aee872a3451ee8dbd9fbfb1edd35a22199cd17030301bc7db1f160056990263ebe469163e791d429e7ad51da2009505b873e5d8f4dfd80c106be1d128d7f622161839bea8bac62633d83e630e297aca017a334388b4771f2186d09767b898312073dcef4b1448c8fee42bf18de3e4f885f3e0af4571d814375e300e41e0c1ef5565ca8172a098b0132f5d137f0c2e35b445e3dee11a7e03c44e9cedfc611c7adf38928b66322cd8d721f7f9ff49b1a29a6fadb6f8a827401a052b58ea0e9b0f64829c1210eb91bd86d66bc91cac88d236b8552daf42046fe46174f9413d81093ca27d88b768daacddc9850759162d6d536745a3c57942b7c31813acc1762b364ece277f57af802a1ef7f8e2a5c93356682cbd6a24c8b89637468607913b1f027cacd3549ebb4b25c47319a6e5a963b1a911ad4921b0955da1cc9359d0dfd959412171606741b40bc03a0c53c7984328cfeb665b7b36664ae0ce5037432d56d0286ab2ed55109818802947edcd8317685c65c0adf7306bc16585ef22096f4977bac315401aa7d77760f34fb1460980bbc1c946b07d91caab3940adadd3495460e9ca18cba705fd3663b76bc8d6dbbe2f6ad1178aa376be63ba33649983446cf33b0df486e4b7696d00652123890f3266866850a'
+ control_v1 HMAC is correct :-)
+'192.168.1.151' -> '163.172.176.157'
+TLS traffic is fragmented into several TCP packets
+TLS packet 0, length 2591
+ client -> server
+ TLS packet n°0, record n°2 :
+ packet version : '0x303' ('TLSv1.2')
+ tls_content_type 'Application Data'
+ record length : 281
+  Application record
+  plaintext : b"\x0f\x00\x01\x04\x08\x04\x01\x00d&\x17\x0c\xe9nTD\xf8\x08\xf5C\x14\xb2\xc5Q\xd8\xba0\xd8\xcd\x88\t\x90\xfd\xd3c*\xb7\x12G\xb0,\xb0z\xed\x96\xf3\x1eP\xbe\n\xe3\xbdI\xa4\xe8N\xae\xab\x06\xfbqO\xf5d\x91\x9b\xf1\x0b\x97\xd1M\x1a\x14\xaa*\x88\x13\r\x96:\xcc\xf0kS\x93\xf5ePof\x9a\xec@e\\9\x14\xedw\x15\xb8'\xa6\xf6\xff\xdf\x0c\xed8D\x12\x8b\r\xd2?M\xd8]\xcb\x8c\x90\x85umM\x98p\xbb\xe4\xfdr\x1a\xabo\xe0w\xc3g\x93\xf8\x8b\xbe\xb2\xcaC\xb1/\xa3*=\xe5\x99e\xdc\xcc\xdb\x8b\xd3{-M3\xfaTlk{\xf3\x16\x16\x90T;\xa7r\x13\x13\x88\x0e\xa5\xa5\x13\xfc\xa707L\xa2: zfr\xfd@\x81\xd8\xc5@\x0f\x81_+\x87\xcfb\xcd\x05\xe2\xf1\xf5\r\xe1\xdf\x8f \x1fK\x9d\xd0\x8d\x837|P1cZq\x1bA\xc1\x1eU\xce\xcc\x90\xbc\xd5\x8e\x9bHQ\xf2X\xd1\xf8\xc60\xd1\x16\xd4\xbd\xd9\xfb\x05W\xb1\xb0\xc8\xf8\xb0\xb8\xff"
+  plaintext type : 'Handshake'
+  GCM tag is correct :-)
+  Going to parse the decrypted handshake :-)
+  Handshake record
+  Handshake Type 15 ('CertificateVerify')
+  Message length : 260
+ TLS packet n°0, record n°3 :
+ packet version : '0x303' ('TLSv1.2')
+ tls_content_type 'Application Data'
+ record length : 69
+  Application record
+  plaintext : b'\x14\x00\x000\xa0\x0f\xd2\xa4\\\x94\xfc~\x19\xa0"\x90\x88\x87GA\xf1\xb1\xf2\xfc\x94\xf7?\xaa\xf0\n\x9f\xd4\x05\xd7\xc8\xb02aJ+F\x1b1\xaf\x05S\xdf\xdd*l\xa2m'
+  plaintext type : 'Handshake'
+  GCM tag is correct :-)
+  Going to parse the decrypted handshake :-)
+  Handshake record
+  Handshake Type 20 ('Finished')
+  Message length : 48
+ TLS packet n°0, record n°4 :
+ packet version : '0x303' ('TLSv1.2')
+ tls_content_type 'Application Data'
+ record length : 444
+  Application record
+  plaintext : b'\x00\x00\x00\x00\x02`f\xf0\x19\xab\x8a\xee\xde\xfa\'o\x03\xffq\xadN\x87\xcb\x0bQ\x08Tx\xd7\xc4\xceR\x8f\x9b\x1d\x9c\x14\x91\xc1\xf5\t\xa2b\x96\x7f\xe1|\xcb@\xe3\x8b\xbdW"k\x98\xf6m\xfe\xb0.\xfb\xb3\xd9k\xb6C.\x03\xf54\xb0\x9b\x18\xd39B\xd4{\xd6zh\xa93\x91\xe9 \x18[\x0e}\xc7\x9d\xbc\xb0c8}o\xa0\x01\xe4\xe3\xb0\x13\xce&\x08\x08\xdd\x81\xe0\xabX\x86u\x01\x00\x93V4,dev-type tun,link-mtu 1549,tun-mtu 1500,proto UDPv4,keydir 1,cipher AES-256-GCM,auth [null-digest],keysize 256,tls-auth,key-method 2,tls-client\x00\x00\x00\x00\x00\x00\x9bIV_VER=2.5.5\nIV_PLAT=linux\nIV_PROTO=6\nIV_NCP=2\nIV_CIPHERS=AES-256-GCM:AES-128-GCM\nIV_LZ4=1\nIV_LZ4v2=1\nIV_LZO=1\nIV_COMP_STUB=1\nIV_COMP_STUBv2=1\nIV_TCPNL=1\n\x00'
+  plaintext type : 'Application Data'
+  GCM tag is correct :-)
+
+client_secret : b'6066f019ab8aeedefa276f03ff71ad4e87cb0b51085478d7c4ce528f9b1d9c1491c1f509a262967fe17ccb40e38bbd57'
+client_seed_1 : b'226b98f66dfeb02efbb3d96bb6432e03f534b09b18d33942d47bd67a68a93391'
+client_seed_2 : b'e920185b0e7dc79dbcb063387d6fa001e4e3b013ce260808dd81e0ab58867501'
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 14 : 
+ Packet Type : '0x20'
+ Packet Opcode : '0x4' ('P_CONTROL_V1')
+ openvpn_payload : b'206814a798ad6596078889bb013c624521867ab685885c3812d29c6d8737db09a35f0c14b13b6345716d6c403134211d43dcb750456ba9b8c4a2f6aa05325f96a5907db86447f9a7c2000000076573694404000000040000000300000002000000011698c9b423ee69cf00000004170303004ad502369db3591f58f2786edeb7bf1e130f5f37d59431a1c42a55ff169718321635e5bf2ac9e42542824541c58f1f167464cbe90b634984850f85689894af166bcf27951828ff65f17ee4170303004a2f2f013f76ca14aaef85679dc241c566d73284894a5751fcc22949434f58999a3a8308b21a46f70448cf9354daa8bab6b3932db76c5601bfe3d37edf8d7d76a509437748decdf6597039'
+ openvpn_pkt_type : b'20'
+ openvpn_session_id : b'6814a798ad659607'
+ openvpn_hmac : b'8889bb013c624521867ab685885c3812d29c6d8737db09a35f0c14b13b6345716d6c403134211d43dcb750456ba9b8c4a2f6aa05325f96a5907db86447f9a7c2'
+ openvpn pkt_id : b'00000007'
+ openvpn time : b'65736944'
+ openvpn_packet_id_array_len : 4
+ openvpn_packet_id_array : b'00000004000000030000000200000001'
+ openvpn_remote_session_id : b'1698c9b423ee69cf'
+ openvpn_msg_packet_id : b'00000004'
+ openvpn_tls_payload : b'170303004ad502369db3591f58f2786edeb7bf1e130f5f37d59431a1c42a55ff169718321635e5bf2ac9e42542824541c58f1f167464cbe90b634984850f85689894af166bcf27951828ff65f17ee4170303004a2f2f013f76ca14aaef85679dc241c566d73284894a5751fcc22949434f58999a3a8308b21a46f70448cf9354daa8bab6b3932db76c5601bfe3d37edf8d7d76a509437748decdf6597039'
+ control_v1 HMAC is correct :-)
+'163.172.176.157' -> '192.168.1.151'
+TLS packet 0, length 158
+ server -> client
+ TLS packet n°0, record n°0 :
+ packet version : '0x303' ('TLSv1.2')
+ tls_content_type 'Application Data'
+ record length : 74
+  Application record
+  plaintext : b'\x04\x00\x005\x00\x00\x1c \xb7\x87\n|\x08\x00\x00\x00\x00\x00\x00\x00\x00\x00 M:\xa6\xf7\xe1J\xcb\xc0Jo\xf7C)\xe5\xa1\xc2\xd5\x85\x93Yx\x9b\x9a\x8b\x92o\xd4\x15\x11[\xc1\x96\x00\x00'
+  plaintext type : 'Handshake'
+  GCM tag is correct :-)
+  Going to parse the decrypted handshake :-)
+  Handshake record
+  Handshake Type 4 ('NewSessionTicket')
+  Message length : 53
+ TLS packet n°0, record n°1 :
+ packet version : '0x303' ('TLSv1.2')
+ tls_content_type 'Application Data'
+ record length : 74
+  Application record
+  plaintext : b'\x04\x00\x005\x00\x00\x1c \x8aG\xb0\x05\x08\x00\x00\x00\x00\x00\x00\x00\x01\x00 \xc9\xb1\xe5R\xd5=p\x15\xe7:\xe57\x89_U*Y\xe0\x01\xf2\x07Z\xef\x9b\x0bt\xec\xe6\xc8\xd1\xe3\x9c\x00\x00'
+  plaintext type : 'Handshake'
+  GCM tag is correct :-)
+  Going to parse the decrypted handshake :-)
+  Handshake record
+  Handshake Type 4 ('NewSessionTicket')
+  Message length : 53
+
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 15 : 
+ Packet Type : '0x20'
+ Packet Opcode : '0x4' ('P_CONTROL_V1')
+ openvpn_payload : b'206814a798ad6596075c896bdbe9691edac64165e772243d7f1d65fd47def11e3f4957fdcb91a24361190dd6678793f9acf9ce22ee78a1844a7db2d01f300c04544a569e68245c0b09000000086573694404000000040000000300000002000000011698c9b423ee69cf0000000517030300d749eec4d0ca70c35b4a669cf9608e33d88ef59e1e676e3d5a275279acfddc2f23b1088bbb786e30f9ede0a2f4398bb083ca40dbd50490a09a4fec0b47fa044b75fac121c456286b497a44e656ce850375b53b638c5b12362d38efca745c622226776734f3250fa9c87edcdb1a4dbb23db9be393401fdc8064648cbf831fb7b8d9473c90c5d2d7999efebb2780936ea9befc75ec3c17c5e00287bea6b8b90014c5ac976bcfe8cbd98cbda8ef6ec3eb550d505ecd20dc80882b9245939fd35ddfed13693fc5b09b2f891fc27aefcf51961c6e9fea7f701b3b'
+ openvpn_pkt_type : b'20'
+ openvpn_session_id : b'6814a798ad659607'
+ openvpn_hmac : b'5c896bdbe9691edac64165e772243d7f1d65fd47def11e3f4957fdcb91a24361190dd6678793f9acf9ce22ee78a1844a7db2d01f300c04544a569e68245c0b09'
+ openvpn pkt_id : b'00000008'
+ openvpn time : b'65736944'
+ openvpn_packet_id_array_len : 4
+ openvpn_packet_id_array : b'00000004000000030000000200000001'
+ openvpn_remote_session_id : b'1698c9b423ee69cf'
+ openvpn_msg_packet_id : b'00000005'
+ openvpn_tls_payload : b'17030300d749eec4d0ca70c35b4a669cf9608e33d88ef59e1e676e3d5a275279acfddc2f23b1088bbb786e30f9ede0a2f4398bb083ca40dbd50490a09a4fec0b47fa044b75fac121c456286b497a44e656ce850375b53b638c5b12362d38efca745c622226776734f3250fa9c87edcdb1a4dbb23db9be393401fdc8064648cbf831fb7b8d9473c90c5d2d7999efebb2780936ea9befc75ec3c17c5e00287bea6b8b90014c5ac976bcfe8cbd98cbda8ef6ec3eb550d505ecd20dc80882b9245939fd35ddfed13693fc5b09b2f891fc27aefcf51961c6e9fea7f701b3b'
+ control_v1 HMAC is correct :-)
+'163.172.176.157' -> '192.168.1.151'
+TLS packet 0, length 220
+ server -> client
+ TLS packet n°0, record n°0 :
+ packet version : '0x303' ('TLSv1.2')
+ tls_content_type 'Application Data'
+ record length : 215
+  Application record
+  plaintext : b'\x00\x00\x00\x00\x021\xa2s\x89\xda\xeb,-r(o\xcd\xe6|s\x0c\x94\xb1\xb3\xe4\xb4k\x85\x82G\x98vr\xa9\xf4\x15}\xd8?\xa8*\xf1hTF\x0bZm\x19\x96\x91z\xaeF\xc8\x8a\x0e\x0b\x0fh\x19q)%\xa0\xc8\xf7#L\x00yV4,dev-type tun,link-mtu 1585,tun-mtu 1500,proto UDPv4,keydir 0,auth SHA512,keysize 128,tls-auth,key-method 2,tls-server\x00\x00\x00\x00\x00\x00\x00'
+  plaintext type : 'Application Data'
+  GCM tag is correct :-)
+
+server_seed_1 : b'31a27389daeb2c2d72286fcde67c730c94b1b3e4b46b858247987672a9f4157d'
+server_seed_2 : b'd83fa82af16854460b5a6d1996917aae46c88a0e0b0f6819712925a0c8f7234c'
+going to derivate crypto key for data packets !
+openvpn_master_secret : b'675997e2cba8b485c1a0ed1155e1744e723f4e734fef172ed6980507b5a5f5089e508dfc6ff6ed548b562cec61cf992a'
+openvpn_keys : b'4c87e60a310d82307bf2661bb355b9e11ab0b1eeb060c2075a7d1ba4146057760d616aa0a47e3efeef39173be019cb01bbd5c23f8d97b3b4a0901c2baf57db570111208fc09e6e788e03e09711364b4a8edecaada9790cd4c364cd1133836801adc6f2ab3ff185585e11a8dd2a67a98aa7c43939de3b06eb4f49ae9d99a05d93187d4c67673a64017e59e5b86f9b8a3477e919d0be401b893dd9b744dd775d6e01dc5c8e54d1fa07dfe360154817e65bd4d290a5cc2bf0af2c641cca39f071ab582e6804fc33ac44f2005556580d54365d44aee193681902c08242e621a458e73324b126a1498dfc2fb8330332ca60b787eb8184df679e95b906fe53958b6d6a9c3ac15dfdbf5f015f673aff94805151e2ca6c784cf8e7804f8b75565da0d116ed987bfc4265cdf3dfe89b4e5c657455347a67af6060f348c2c299178cbb18e0'
+client_data_cipher_key : b'4c87e60a310d82307bf2661bb355b9e11ab0b1eeb060c2075a7d1ba414605776'
+client_data_hmac_key : b'0111208fc09e6e788e03e09711364b4a8edecaada9790cd4c364cd1133836801adc6f2ab3ff185585e11a8dd2a67a98aa7c43939de3b06eb4f49ae9d99a05d93'
+server_data_cipher_key : b'187d4c67673a64017e59e5b86f9b8a3477e919d0be401b893dd9b744dd775d6e'
+server_data_hmac_key : b'582e6804fc33ac44f2005556580d54365d44aee193681902c08242e621a458e73324b126a1498dfc2fb8330332ca60b787eb8184df679e95b906fe53958b6d6a'
+client_iv : b'0111208fc09e6e78'
+server_iv : b'582e6804fc33ac44'
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 16 : 
+ Packet Type : '0x28'
+ Packet Opcode : '0x5' ('P_ACK_V1')
+ openvpn_payload : b'281698c9b423ee69cff4d94333aae3a982b1db222b722f6dfe6eecca3bf035c9a7a556388dbcc911a6018cd7fe1c5de4f4d89569a754c4df0e66209c33753427671396028f219c54d3000000096573694401000000046814a798ad659607'
+ openvpn_pkt_type : b'28'
+ openvpn_session_id : b'1698c9b423ee69cf'
+ openvpn_hmac : b'f4d94333aae3a982b1db222b722f6dfe6eecca3bf035c9a7a556388dbcc911a6018cd7fe1c5de4f4d89569a754c4df0e66209c33753427671396028f219c54d3'
+ openvpn pkt_id : b'00000009'
+ openvpn time : b'65736944'
+ openvpn_packet_id_array_len : b'\x01'
+ openvpn_packet_id_array : b'00000004'
+ openvpn_remote_session_id : b'6814a798ad659607'
+ ack_v1 HMAC is correct :-)
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 17 : 
+ Packet Type : '0x28'
+ Packet Opcode : '0x5' ('P_ACK_V1')
+ openvpn_payload : b'281698c9b423ee69cfc2d7ce7967cbf056f849d1cfb7a51d90138ce8cae6e3e81a93fd8bc5f998c18c5fcc9dfc52fe5983a1840e9403736bd3e7182f79da0be469ce09fe434a3decc30000000a6573694401000000056814a798ad659607'
+ openvpn_pkt_type : b'28'
+ openvpn_session_id : b'1698c9b423ee69cf'
+ openvpn_hmac : b'c2d7ce7967cbf056f849d1cfb7a51d90138ce8cae6e3e81a93fd8bc5f998c18c5fcc9dfc52fe5983a1840e9403736bd3e7182f79da0be469ce09fe434a3decc3'
+ openvpn pkt_id : b'0000000a'
+ openvpn time : b'65736944'
+ openvpn_packet_id_array_len : b'\x01'
+ openvpn_packet_id_array : b'00000005'
+ openvpn_remote_session_id : b'6814a798ad659607'
+ ack_v1 HMAC is correct :-)
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 18 : 
+ Packet Type : '0x20'
+ Packet Opcode : '0x4' ('P_CONTROL_V1')
+ openvpn_payload : b'206814a798ad65960712ff482ad96e783891b21631f073b72b07e18860725559273f49378fa68560d5209a523026d2fc3ffd8b467b7c2c9c67e86e5b44503dd85e5290c26ad76483cc000000096573694404000000040000000300000002000000011698c9b423ee69cf0000000617030300ba3a9b7dc09542ad1bba5158ab6803887cbd434916fa6c1a5d3cd5f198d409fa5cbd118cf55bf71a090fec84c63a39a4bc304e78d7daffd75c7d59ebb6d49e3e4db44215ba62b554b34192f0765e0c5b59beaa6681796f846bddca10eac1bf0751e4c635092566b515f3be05c5b26a3a39b6d889a94430308739bc32e58b44f277dcae7a6ed20e0aa8be34385ab72b0396e715d2716a691302ee1e1291a2629698a5fdcd7e0019365ac5ca0dab0c2863ae3f4616ec681f48defe6d'
+ openvpn_pkt_type : b'20'
+ openvpn_session_id : b'6814a798ad659607'
+ openvpn_hmac : b'12ff482ad96e783891b21631f073b72b07e18860725559273f49378fa68560d5209a523026d2fc3ffd8b467b7c2c9c67e86e5b44503dd85e5290c26ad76483cc'
+ openvpn pkt_id : b'00000009'
+ openvpn time : b'65736944'
+ openvpn_packet_id_array_len : 4
+ openvpn_packet_id_array : b'00000004000000030000000200000001'
+ openvpn_remote_session_id : b'1698c9b423ee69cf'
+ openvpn_msg_packet_id : b'00000006'
+ openvpn_tls_payload : b'17030300ba3a9b7dc09542ad1bba5158ab6803887cbd434916fa6c1a5d3cd5f198d409fa5cbd118cf55bf71a090fec84c63a39a4bc304e78d7daffd75c7d59ebb6d49e3e4db44215ba62b554b34192f0765e0c5b59beaa6681796f846bddca10eac1bf0751e4c635092566b515f3be05c5b26a3a39b6d889a94430308739bc32e58b44f277dcae7a6ed20e0aa8be34385ab72b0396e715d2716a691302ee1e1291a2629698a5fdcd7e0019365ac5ca0dab0c2863ae3f4616ec681f48defe6d'
+ control_v1 HMAC is correct :-)
+'163.172.176.157' -> '192.168.1.151'
+TLS packet 0, length 191
+ server -> client
+ TLS packet n°0, record n°0 :
+ packet version : '0x303' ('TLSv1.2')
+ tls_content_type 'Application Data'
+ record length : 186
+  Application record
+  plaintext : b'PUSH_REPLY,DNS 10.8.0.1,redirect-gateway def1 bypass-dhcp,route 10.8.0.1,topology net30,ping 10,ping-restart 120,ifconfig 10.8.0.6 10.8.0.5,peer-id 0,cipher AES-256-GCM\x00'
+  plaintext type : 'Application Data'
+  GCM tag is correct :-)
+
+ OpenVPN traffic will be encrypted with AES-256-GCM
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 19 : 
+ Packet Type : '0x28'
+ Packet Opcode : '0x5' ('P_ACK_V1')
+ openvpn_payload : b'281698c9b423ee69cfbfb52b4e10dca1776df4facb5f6a34e10533ba8fd91e9e98c12e533be94db6d3c2e4b933d16bd544db38bfdfe9a20c1a5aa861917d5a0fc976fca45c4e76234e0000000b6573694401000000066814a798ad659607'
+ openvpn_pkt_type : b'28'
+ openvpn_session_id : b'1698c9b423ee69cf'
+ openvpn_hmac : b'bfb52b4e10dca1776df4facb5f6a34e10533ba8fd91e9e98c12e533be94db6d3c2e4b933d16bd544db38bfdfe9a20c1a5aa861917d5a0fc976fca45c4e76234e'
+ openvpn pkt_id : b'0000000b'
+ openvpn time : b'65736944'
+ openvpn_packet_id_array_len : b'\x01'
+ openvpn_packet_id_array : b'00000006'
+ openvpn_remote_session_id : b'6814a798ad659607'
+ ack_v1 HMAC is correct :-)
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 20 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x01'
+GCM tag : b'\x82\xc8\xf5!\xe8\x07\xabZ\x86\x1e\xbb\xb9\x97\x0cP&'
+GCM ciphertext : b'h\xe8.3Lh\xde\x88Q\x96\xdd\xd8\x05\xe5\x81\x05\x17\xeaDM\x1e\x10\x8a\xdf\xb5!\xe9\xdb\xe3\xd6\xd4M\xccb\x00\xc77e\xe2\xb3\x1do\x0f\xb2 u\xdb~'
+plaintext: b'`\x00\x00\x00\x00\x08:\xff\xfe\x80\x00\x00\x00\x00\x00\x00G-H\x1c\xc9\x87I\x1f\xff\x02\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x85\x00\xdbF\x00\x00\x00\x00'
+  OpenVPN GCM tag is correct :-)
+###[ IPv6 ]### 
+  version   = 6
+  tc        = 0
+  fl        = 0
+  plen      = 8
+  nh        = ICMPv6
+  hlim      = 255
+  src       = fe80::472d:481c:c987:491f
+  dst       = ff02::2
+###[ ICMPv6 Neighbor Discovery - Router Solicitation ]### 
+     type      = Router Solicitation
+     code      = 0
+     cksum     = 0xdb46
+     res       = 0
+
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 21 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x02'
+GCM tag : b'\x92\xd9,\xb4\x97.\xaf^un\x8b\xbb\xef\n\x0eC'
+GCM ciphertext : b"\xb3!2\xebDj$w{\xaf\xd3\xfa\xc8\xd7Eh\xb9\xd4\x04\x8dE\xe1U\x07\xc43\xabfB\\\xdcjoV\x92\xa8{(\xc0\x92:\x9f\xa0\x99\n\x1a$K\xc3\xb1&B'\x9a\xab\xbf\x86\xc97r"
+plaintext: b'E\x00\x00<[L@\x00@\x06]\xb4\n\x08\x00\x06\xb9}\xbe0\xed\xec\x00P\xc6\xcf\xb2E\x00\x00\x00\x00\xa0\x02\xfa\xf0\x86o\x00\x00\x02\x04\x05\x06\x04\x02\x08\nI\x8d\x94\xb2\x00\x00\x00\x00\x01\x03\x03\x07'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 60
+  id        = 23372
+  flags     = DF
+  frag      = 0
+  ttl       = 64
+  proto     = tcp
+  chksum    = 0x5db4
+  src       = 10.8.0.6
+  dst       = 185.125.190.48
+  \options   \
+###[ TCP ]### 
+     sport     = 60908
+     dport     = http
+     seq       = 3335500357
+     ack       = 0
+     dataofs   = 10
+     reserved  = 0
+     flags     = S
+     window    = 64240
+     chksum    = 0x866f
+     urgptr    = 0
+     options   = [('MSS', 1286), ('SAckOK', b''), ('Timestamp', (1234015410, 0)), ('NOP', None), ('WScale', 7)]
+
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 22 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x03'
+GCM tag : b'\x12\x06\xf7w\xed\x8c\xee\xd3\xc2\xed\xcdx\xa2\xc6\x95I'
+GCM ciphertext : b'>\x83\xf2\x8e\xe7\xac+\xd6]\x18\xadC\x9d<M\xf8\xbf\x91\xd9\xca\x0e\xd4\x12,\xff\xbb\xcdz\x86\x94\xb7:7\x01Z\xf0\xc6(\xe6.\xbaVzL\x9f\xd18\x99\xe4\xb2\xc2\xe4~Rul\xdb\xd0M\xaa'
+plaintext: b'E\x00\x00<\x18]@\x00@\x06\xa0\xa3\n\x08\x00\x06\xb9}\xbe0\xed\xf4\x00P\x1a`W\x99\x00\x00\x00\x00\xa0\x02\xfa\xf0\x8d\x82\x00\x00\x02\x04\x05\x06\x04\x02\x08\nI\x8d\x94\xb3\x00\x00\x00\x00\x01\x03\x03\x07'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 60
+  id        = 6237
+  flags     = DF
+  frag      = 0
+  ttl       = 64
+  proto     = tcp
+  chksum    = 0xa0a3
+  src       = 10.8.0.6
+  dst       = 185.125.190.48
+  \options   \
+###[ TCP ]### 
+     sport     = 60916
+     dport     = http
+     seq       = 442521497
+     ack       = 0
+     dataofs   = 10
+     reserved  = 0
+     flags     = S
+     window    = 64240
+     chksum    = 0x8d82
+     urgptr    = 0
+     options   = [('MSS', 1286), ('SAckOK', b''), ('Timestamp', (1234015411, 0)), ('NOP', None), ('WScale', 7)]
+
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 23 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x01'
+GCM tag : b"{\xca?eH'\xa0\x9e\xd6#\xd5\x05J6y\xf8"
+GCM ciphertext : b"\xf1\xf4\x18\\\xf4\xa6S=\xcb\n\x8frt\x83\xa5F/f)\x07\xc6\x1a\xe3\xef\xa2\x8d\xb4\x9cbr\x97\x0f\x9f\xe6/\\I\xb6\xc3BoI\xc8\x94\xa4\x84f\x8d!&\xd1'\xc9\xff-*\xd7\xdbJk"
+plaintext: b'E\x00\x00<\x00\x00@\x006\x06\xc3\x00\xb9}\xbe0\n\x08\x00\x06\x00P\xed\xec,[\xc9$\xc6\xcf\xb2F\xa0\x12\xfe\x887<\x00\x00\x02\x04\x05x\x04\x02\x08\n\x05}P\x1bI\x8d\x94\xb2\x01\x03\x03\x07'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 60
+  id        = 0
+  flags     = DF
+  frag      = 0
+  ttl       = 54
+  proto     = tcp
+  chksum    = 0xc300
+  src       = 185.125.190.48
+  dst       = 10.8.0.6
+  \options   \
+###[ TCP ]### 
+     sport     = http
+     dport     = 60908
+     seq       = 744212772
+     ack       = 3335500358
+     dataofs   = 10
+     reserved  = 0
+     flags     = SA
+     window    = 65160
+     chksum    = 0x373c
+     urgptr    = 0
+     options   = [('MSS', 1400), ('SAckOK', b''), ('Timestamp', (92098587, 1234015410)), ('NOP', None), ('WScale', 7)]
+
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 24 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x04'
+GCM tag : b'\x11\x1d\x80l3\x15\xfd\x13t\x96/\x02\xc1\xa4k\x0c'
+GCM ciphertext : b"\x12!\x0c\xb8l\rca\xcd:\xf0\x16w'!\x83\xa4\xba\x0b\x92\x9a\x82\xc6_v\x15\xe6\x19g}\xdaY\x15g\xc4\xc8EP\x86\xe2\xad\xd2\xa3\xef\xb6\xb2^\x1adU*\xfa"
+plaintext: b'E\x00\x004[M@\x00@\x06]\xbb\n\x08\x00\x06\xb9}\xbe0\xed\xec\x00P\xc6\xcf\xb2F,[\xc9%\x80\x10\x01\xf6bM\x00\x00\x01\x01\x08\nI\x8d\x94\xc4\x05}P\x1b'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 52
+  id        = 23373
+  flags     = DF
+  frag      = 0
+  ttl       = 64
+  proto     = tcp
+  chksum    = 0x5dbb
+  src       = 10.8.0.6
+  dst       = 185.125.190.48
+  \options   \
+###[ TCP ]### 
+     sport     = 60908
+     dport     = http
+     seq       = 3335500358
+     ack       = 744212773
+     dataofs   = 8
+     reserved  = 0
+     flags     = A
+     window    = 502
+     chksum    = 0x624d
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (1234015428, 92098587))]
+
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 25 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x02'
+GCM tag : b'\x95\xec\x07\xff\x7f\xe4\xf0\x03\x9c\x00\xdd\xa5\xbfW\xdd6'
+GCM ciphertext : b'\x1f\xf7\xdfZ\x05\xe7\x1b\x878\xfd\xfe\xa1\xc7\x91b\xbf\xe4\x8a\x190\x06\xea\x9c\xb4\xbc\n\xff\x11\xa4\x82\xedn\x9e\xef9&\xfeU\x04\x04E\r\x8cS\xa9\x10{\x90R\x9b1\xceQ\x1c\xee\t\xf7\xd8.\xcd'
+plaintext: b'E\x00\x00<\x00\x00@\x005\x06\xc4\x00\xb9}\xbe0\n\x08\x00\x06\x00P\xed\xf4?\x1d\xc0\xdf\x1a`W\x9a\xa0\x12\xfe\x883\xd1\x00\x00\x02\x04\x05x\x04\x02\x08\n\x05}P\x1cI\x8d\x94\xb3\x01\x03\x03\x07'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 60
+  id        = 0
+  flags     = DF
+  frag      = 0
+  ttl       = 53
+  proto     = tcp
+  chksum    = 0xc400
+  src       = 185.125.190.48
+  dst       = 10.8.0.6
+  \options   \
+###[ TCP ]### 
+     sport     = http
+     dport     = 60916
+     seq       = 1058914527
+     ack       = 442521498
+     dataofs   = 10
+     reserved  = 0
+     flags     = SA
+     window    = 65160
+     chksum    = 0x33d1
+     urgptr    = 0
+     options   = [('MSS', 1400), ('SAckOK', b''), ('Timestamp', (92098588, 1234015411)), ('NOP', None), ('WScale', 7)]
+
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 26 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x05'
+GCM tag : b'D\xddAX\xd8\x84>B\xb3\x0f\x80\xda\x1eI3p'
+GCM ciphertext : b"\x13\xfb]w\xb8\x84M\x14{\xb0\xc4\xee!\x01\x85r\x1f\xec\xb6\x1f:\x8a\xb6.\x8f)\xc8\xdan\xe1\x81yt\x05\xcb-\xe0\xf9\x1d\xa7\xcd\xdd\xbd\xd5\xf37#t\x86\xc2\xbe\xbe\xc9\xd9\x92\xf7\x87_\xf0,Crc\xb2?\xb4\xbb\xe3(h'\x926\xcf\xa5\xef\xac\x1eJ\xcd\xe4\xcc&C\xa5\x05I@\xbd\xaf\x18\xea\xb0\xec\x9e\x02\xedE\xb5 g)\x9e\xc9yow\xe1\x89\x10\xb23\xf3\xf5\xfb'\xa6\x19\xdch!\xdf\xba#\xb0c(\xa3[\xeeuar\xe7^ClZ\x8a"
+plaintext: b'E\x00\x00\x8b[N@\x00@\x06]c\n\x08\x00\x06\xb9}\xbe0\xed\xec\x00P\xc6\xcf\xb2F,[\xc9%\x80\x18\x01\xf6\xa0\xa5\x00\x00\x01\x01\x08\nI\x8d\x94\xc5\x05}P\x1bGET / HTTP/1.1\r\nHost: connectivity-check.ubuntu.com\r\nAccept: */*\r\nConnection: close\r\n\r\n'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 139
+  id        = 23374
+  flags     = DF
+  frag      = 0
+  ttl       = 64
+  proto     = tcp
+  chksum    = 0x5d63
+  src       = 10.8.0.6
+  dst       = 185.125.190.48
+  \options   \
+###[ TCP ]### 
+     sport     = 60908
+     dport     = http
+     seq       = 3335500358
+     ack       = 744212773
+     dataofs   = 8
+     reserved  = 0
+     flags     = PA
+     window    = 502
+     chksum    = 0xa0a5
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (1234015429, 92098587))]
+###[ Raw ]### 
+        load      = 'GET / HTTP/1.1\r\nHost: connectivity-check.ubuntu.com\r\nAccept: */*\r\nConnection: close\r\n\r\n'
+
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 27 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x06'
+GCM tag : b'.\xf0\xd1X\xdf/s]1\x07)vg\x8e\xcf\x1a'
+GCM ciphertext : b'\x0f\x82piyV\x8e\xcb\xe0\xd7L\x98d\x0cC\xdb<Y\x1c2\x86\x8d!\xd3\xce\xec\xb1\x0e\xd5\xc1e3x\xe3p\x9fD\x08\x807Q\xc5\xe1"G\xcb\x96lN\xdf\x98\xc5'
+plaintext: b'E\x00\x004\x18^@\x00@\x06\xa0\xaa\n\x08\x00\x06\xb9}\xbe0\xed\xf4\x00P\x1a`W\x9a?\x1d\xc0\xe0\x80\x10\x01\xf6^\xe1\x00\x00\x01\x01\x08\nI\x8d\x94\xc6\x05}P\x1c'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 52
+  id        = 6238
+  flags     = DF
+  frag      = 0
+  ttl       = 64
+  proto     = tcp
+  chksum    = 0xa0aa
+  src       = 10.8.0.6
+  dst       = 185.125.190.48
+  \options   \
+###[ TCP ]### 
+     sport     = 60916
+     dport     = http
+     seq       = 442521498
+     ack       = 1058914528
+     dataofs   = 8
+     reserved  = 0
+     flags     = A
+     window    = 502
+     chksum    = 0x5ee1
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (1234015430, 92098588))]
+
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 28 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x07'
+GCM tag : b'\x97\xd4\xcc\xb7\x93x\xce#\xef]\xc1|\xc8\xb9\xb3\x17'
+GCM ciphertext : b'!p\x16}\xb8\x00\x047\x17G\x12\xc00d\x8b\xe1\xdc<\xe0+\xe9\x10Ew\xa5>x\xb78(-P\x83N\xa3\xcf(\xebu\x06Po4\x9e\xed\x9b\xb7\x0fa\x11b\xb5\xb1\x11\xf0\xdc\xd0n\x9c\xedm\r\x87\xe9n\xd7\xfa+\xceiG\x11\xdc0\xddK\x88\x98&k\x080\xbb\x98\xf1;U\x02\xac\xe8\n\xf9\xcfB\\9d2\xeb\xcaA,\xbf1\xdbX<\x19\x1a`\xff\xde\xec\xc7\xd11o[\xda\xe4`\xee\xe0H\x18\x92\xb5\xf7\xbe\xf4F\xb5\x9b\x95~\xec\xcd\xba.'
+plaintext: b'E\x00\x00\x8b\x18_@\x00@\x06\xa0R\n\x08\x00\x06\xb9}\xbe0\xed\xf4\x00P\x1a`W\x9a?\x1d\xc0\xe0\x80\x18\x01\xf6\x9d9\x00\x00\x01\x01\x08\nI\x8d\x94\xc7\x05}P\x1cGET / HTTP/1.1\r\nHost: connectivity-check.ubuntu.com\r\nAccept: */*\r\nConnection: close\r\n\r\n'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 139
+  id        = 6239
+  flags     = DF
+  frag      = 0
+  ttl       = 64
+  proto     = tcp
+  chksum    = 0xa052
+  src       = 10.8.0.6
+  dst       = 185.125.190.48
+  \options   \
+###[ TCP ]### 
+     sport     = 60916
+     dport     = http
+     seq       = 442521498
+     ack       = 1058914528
+     dataofs   = 8
+     reserved  = 0
+     flags     = PA
+     window    = 502
+     chksum    = 0x9d39
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (1234015431, 92098588))]
+###[ Raw ]### 
+        load      = 'GET / HTTP/1.1\r\nHost: connectivity-check.ubuntu.com\r\nAccept: */*\r\nConnection: close\r\n\r\n'
+
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 29 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x03'
+GCM tag : b'\xd7\xed\x00\xd0\xce9E\x86iC\xd1\x05\xa5\xd8\x82\xac'
+GCM ciphertext : b"\x13\x90\xdd\x81\x90%\xdb\xdf{k\xa0_\x93\xcc\x920l\xa5y\xc1Z\x7fD\xd3\x19\xe7\x8c\xaa\x87[\xf9\xd9\x126\x0b\xb4\xd3\xa1'P\r\xa7{\xa0l\x00O\x81\x82\xc6I)\x9c\xa2y\x8a\x1e\xf7+\xfe\x84\xe5I\xe1\xae\xc4\xec5\n\xbc\xac\x0cX\xc1\x10\xdcZ\xe3u\xc6t\x85~\x01~8\x8f\x95\xa5%\x80\xf2\x8c\x8f\x02G\xad\xbe3\xacv\xdf\x8fp\x96\x88\xaa\xe0\x84g\xa8\x84\x85\x94\xe9\x16(S\xabH\xa5S\x90\xa9\x15e?\xd5\xee?\x96z\xc1\xe8A\xc5l\t\xdc\xf80\x11P\xfc\x0b\xfc\x10\t\xe4\xd9\xe3+J\xcb\xdf9\xcb5Q\x91\xc8D<\x8cL8\x86\x1f6B\x93\xca],X\xe5\xfc\x19\n\x0c\xba\xfdc\x82I\x08\xe7W\x1du\x9a\x89\x10\xccFs\x88E\xd3\xben\xc3\xfcs\x91\xee\x12\xde\xb8C\x80\xfa\x00\xd6\xc50\xf8\xf9\xb6\xf5\xa0\xba<\xd6=3\xab\xd4x\xa2G\xf7~\xf4\xcb\x15W\x11\x12\x93\x9a"
+plaintext: b'E\x00\x00\xf1\xe78@\x006\x06\xdb\x12\xb9}\xbe0\n\x08\x00\x06\x00P\xed\xec,[\xc9%\xc6\xcf\xb2\x9d\x80\x18\x01\xfd\xcf\x0c\x00\x00\x01\x01\x08\n\x05}P,I\x8d\x94\xc5HTTP/1.1 204 No Content\r\nserver: nginx/1.14.0 (Ubuntu)\r\ndate: Fri, 08 Dec 2023 19:06:44 GMT\r\nx-cache-status: from content-cache-gs2/1\r\nx-networkmanager-status: online\r\nconnection: close\r\n\r\n'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 241
+  id        = 59192
+  flags     = DF
+  frag      = 0
+  ttl       = 54
+  proto     = tcp
+  chksum    = 0xdb12
+  src       = 185.125.190.48
+  dst       = 10.8.0.6
+  \options   \
+###[ TCP ]### 
+     sport     = http
+     dport     = 60908
+     seq       = 744212773
+     ack       = 3335500445
+     dataofs   = 8
+     reserved  = 0
+     flags     = PA
+     window    = 509
+     chksum    = 0xcf0c
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (92098604, 1234015429))]
+###[ Raw ]### 
+        load      = 'HTTP/1.1 204 No Content\r\nserver: nginx/1.14.0 (Ubuntu)\r\ndate: Fri, 08 Dec 2023 19:06:44 GMT\r\nx-cache-status: from content-cache-gs2/1\r\nx-networkmanager-status: online\r\nconnection: close\r\n\r\n'
+
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 30 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x04'
+GCM tag : b'UC=\xfe\\\x00\xf4\x12y\x8d\x06O\xed\x80M\xdb'
+GCM ciphertext : b'\x96%~\xd4\x9b\xbc\xfe\xed=8\x82@\xb8>\xf9\xd1\xd2o\x81OXq"\xd4/\xd8\xb9\xbc<[E\x0b\xe5\xa9\xdcE\xce\xa9O\xbd\x8e\xa1\x0b\xd1\x15\xf2\x11\xef\xef\xad6\xca'
+plaintext: b'E\x00\x004\xe79@\x006\x06\xdb\xce\xb9}\xbe0\n\x08\x00\x06\x00P\xed\xec,[\xc9\xe2\xc6\xcf\xb2\x9d\x80\x11\x01\xfda\x1f\x00\x00\x01\x01\x08\n\x05}P,I\x8d\x94\xc5'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 52
+  id        = 59193
+  flags     = DF
+  frag      = 0
+  ttl       = 54
+  proto     = tcp
+  chksum    = 0xdbce
+  src       = 185.125.190.48
+  dst       = 10.8.0.6
+  \options   \
+###[ TCP ]### 
+     sport     = http
+     dport     = 60908
+     seq       = 744212962
+     ack       = 3335500445
+     dataofs   = 8
+     reserved  = 0
+     flags     = FA
+     window    = 509
+     chksum    = 0x611f
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (92098604, 1234015429))]
+
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 31 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x05'
+GCM tag : b'\x16\x97\xbcM\x7f<\xb2$\xee\xa3\x82\xeb!\xdcJ.'
+GCM ciphertext : b"R\xd6\xa7\xbd\xcfo\xf3\xe9\xf46\xf8\x91\xf1P|\x9f\\j:\xa0E\xae\x8b\x8e\xde\xd0\xe0\xbe\xa5(WX\xd0\x82\xb5d\x1a;\xed\x02\x94Z\x10\xf5\x0f\xdb\x8a\xad\xb4\xf5<\xd0\xb8\x13@\xc0\x12\x90\x13\xf1\xae\xa3\x93N\xf0\x9e\xdd{$\xc0\x9e?\xdd3u\xe0\xba\x81\xd0U\x1e\\XA\xea\xfc\xef`E\x8a\xb1\x7f\xb4\x12\x7f\t\x0b@\xc5p\xaf\x94,x\x1e4\x85\xec\x85W#\x11Jf\x85I(\x1a9\x15\xf6\xe8E\xf3\xc4\xbeB[\x01\xf4k\xd3Q\x0c\x8e^\xb5F\x1e\x902p\xfa\x0be] \xa8\xe2\xe7\xe99\xddRhE\xc9\xad\r\x07\x81x\x85I\xe2\xc21\x06~\t\xd9\xbe3rs\xf2\xd5\xc1D\t\xc1-\x1f\xcbvb\xe0g2t\x9b\x9a\x81\x95a/\xeb1g5+\xbc\x0f\xed\xf8D\xa7\x99`\x19)\xbe\xa8T\xae\xb8\x86\x8e\xeb=\x0eh\x96\xbb\xa5\xce\x0f\xb2\xb7\t'35~\xeb\xc9C\xe0.\xb9\xa5"
+plaintext: b'E\x00\x00\xf1\xef\x99@\x005\x06\xd3\xb1\xb9}\xbe0\n\x08\x00\x06\x00P\xed\xf4?\x1d\xc0\xe0\x1a`W\xf1\x80\x18\x01\xfd\xcb\x94\x00\x00\x01\x01\x08\n\x05}P9I\x8d\x94\xc7HTTP/1.1 204 No Content\r\nserver: nginx/1.14.0 (Ubuntu)\r\ndate: Fri, 08 Dec 2023 19:06:44 GMT\r\nx-cache-status: from content-cache-gs2/1\r\nx-networkmanager-status: online\r\nconnection: close\r\n\r\n'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 241
+  id        = 61337
+  flags     = DF
+  frag      = 0
+  ttl       = 53
+  proto     = tcp
+  chksum    = 0xd3b1
+  src       = 185.125.190.48
+  dst       = 10.8.0.6
+  \options   \
+###[ TCP ]### 
+     sport     = http
+     dport     = 60916
+     seq       = 1058914528
+     ack       = 442521585
+     dataofs   = 8
+     reserved  = 0
+     flags     = PA
+     window    = 509
+     chksum    = 0xcb94
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (92098617, 1234015431))]
+###[ Raw ]### 
+        load      = 'HTTP/1.1 204 No Content\r\nserver: nginx/1.14.0 (Ubuntu)\r\ndate: Fri, 08 Dec 2023 19:06:44 GMT\r\nx-cache-status: from content-cache-gs2/1\r\nx-networkmanager-status: online\r\nconnection: close\r\n\r\n'
+
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 32 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x06'
+GCM tag : b'P6:\xd0C\xa2^K\xb4\xe5y\xee\x9d|\x8a\x1a'
+GCM ciphertext : b"\xc5Z\xe1.PnCT\xcf\x9e\xe9\xf8\x16\x81\x17\xb9\x8d\xf8\x02\x0bT\xc4\x15;*s1?\xb0Y#ok`{\xbb\xb1'xl0?Z{\xb4o\x1f\xca\xb6Dje"
+plaintext: b'E\x00\x004\xef\x9a@\x005\x06\xd4m\xb9}\xbe0\n\x08\x00\x06\x00P\xed\xf4?\x1d\xc1\x9d\x1a`W\xf1\x80\x11\x01\xfd]\xa7\x00\x00\x01\x01\x08\n\x05}P9I\x8d\x94\xc7'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 52
+  id        = 61338
+  flags     = DF
+  frag      = 0
+  ttl       = 53
+  proto     = tcp
+  chksum    = 0xd46d
+  src       = 185.125.190.48
+  dst       = 10.8.0.6
+  \options   \
+###[ TCP ]### 
+     sport     = http
+     dport     = 60916
+     seq       = 1058914717
+     ack       = 442521585
+     dataofs   = 8
+     reserved  = 0
+     flags     = FA
+     window    = 509
+     chksum    = 0x5da7
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (92098617, 1234015431))]
+
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 33 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x07'
+GCM tag : b'D\x92\xf8T\xa1\xf4\xdbP\xe1\x9d\x17H\xc3*\xa4.'
+GCM ciphertext : b'\x90B\x95\x1a \xdc\x9c\x13\x1a\x1c}\xe5=`\xaa\xea\xa6\xff\xad\xfd\x19\xd2\xe6\xe1\x98\xae\xff\x1fJ\x90\xc7\t\xe6\xa5\x18\x82\xe5\xeee\rQ\xcd\xc4\xac;\x96\xfa\x96Sx;E'
+plaintext: b'E\x00\x004\xe7:@\x006\x06\xdb\xcd\xb9}\xbe0\n\x08\x00\x06\x00P\xed\xec,[\xc9\xe2\xc6\xcf\xb2\x9d\x80\x11\x01\xfd`\xf3\x00\x00\x01\x01\x08\n\x05}PXI\x8d\x94\xc5'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 52
+  id        = 59194
+  flags     = DF
+  frag      = 0
+  ttl       = 54
+  proto     = tcp
+  chksum    = 0xdbcd
+  src       = 185.125.190.48
+  dst       = 10.8.0.6
+  \options   \
+###[ TCP ]### 
+     sport     = http
+     dport     = 60908
+     seq       = 744212962
+     ack       = 3335500445
+     dataofs   = 8
+     reserved  = 0
+     flags     = FA
+     window    = 509
+     chksum    = 0x60f3
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (92098648, 1234015429))]
+
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 34 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x08'
+GCM tag : b' \x8f:0\x9f\xa7\x84B,\x99\xbd\x87\xda\x84IO'
+GCM ciphertext : b'\x01m\xf8\x7fu\xdd;\xff\xf2N\xc6\x90,7`c\xfe\xf3<\xd6\x96)\x9b\xeb\xeb*O\xe4(A\x87\xb5Sx3^\x07P\xabU)@\xf7`\xcd\x8f\xb8\x8a\xcf\xce3\xff'
+plaintext: b'E\x00\x004\xef\x9b@\x005\x06\xd4l\xb9}\xbe0\n\x08\x00\x06\x00P\xed\xf4?\x1d\xc1\x9d\x1a`W\xf1\x80\x11\x01\xfd]x\x00\x00\x01\x01\x08\n\x05}PhI\x8d\x94\xc7'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 52
+  id        = 61339
+  flags     = DF
+  frag      = 0
+  ttl       = 53
+  proto     = tcp
+  chksum    = 0xd46c
+  src       = 185.125.190.48
+  dst       = 10.8.0.6
+  \options   \
+###[ TCP ]### 
+     sport     = http
+     dport     = 60916
+     seq       = 1058914717
+     ack       = 442521585
+     dataofs   = 8
+     reserved  = 0
+     flags     = FA
+     window    = 509
+     chksum    = 0x5d78
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (92098664, 1234015431))]
+
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 35 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x08'
+GCM tag : b'j\xe7\xa2\xc9\x1e\x10\x1a\xf7\xf3\xb0\xdf\xf7Z]\xe5\xc2'
+GCM ciphertext : b'Z\xb8[\x0bb_\x1cz\x07\xc7*\x8d\xe2\x85\xbd\x04f7\xc6b\xb5\xc8\xe1"&\x1c8\x92*\x0f\xa7"R\x11N\x16\x85K\x16rJ\xdca\xa0\xa5\xfb\xdcd\xe3\xa2\xb5C'
+plaintext: b'E\x00\x004[O@\x00@\x06]\xb9\n\x08\x00\x06\xb9}\xbe0\xed\xec\x00P\xc6\xcf\xb2\x9d,[\xc9\xe2\x80\x10\x01\xf5`\xfc\x00\x00\x01\x01\x08\nI\x8d\x94\xf1\x05}P,'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 52
+  id        = 23375
+  flags     = DF
+  frag      = 0
+  ttl       = 64
+  proto     = tcp
+  chksum    = 0x5db9
+  src       = 10.8.0.6
+  dst       = 185.125.190.48
+  \options   \
+###[ TCP ]### 
+     sport     = 60908
+     dport     = http
+     seq       = 3335500445
+     ack       = 744212962
+     dataofs   = 8
+     reserved  = 0
+     flags     = A
+     window    = 501
+     chksum    = 0x60fc
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (1234015473, 92098604))]
+
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 36 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\t'
+GCM tag : b'\xde\xd4\x8c\xb5\x96\n\x9c\xa1\xd9\x9c\x97&\xe7\xb6\x18\xa8'
+GCM ciphertext : b'\x98\x92\x8ay\xba\x0cA\x01\xa9\xdd1%\xe7\xe8\x05\xfd/\xef\xd9P\x15\x80K\xccE\x0e\xe6K\xff\x9d\xa28\xbe\xa7\xd8\xd7\x1b\xa9\x8b\xd9Pki`\xa3\xa2z\xc6\xc4:\xb7\xcc'
+plaintext: b'E\x00\x004[P@\x00@\x06]\xb8\n\x08\x00\x06\xb9}\xbe0\xed\xec\x00P\xc6\xcf\xb2\x9d,[\xc9\xe2\x80\x11\x01\xf5`\xfb\x00\x00\x01\x01\x08\nI\x8d\x94\xf1\x05}P,'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 52
+  id        = 23376
+  flags     = DF
+  frag      = 0
+  ttl       = 64
+  proto     = tcp
+  chksum    = 0x5db8
+  src       = 10.8.0.6
+  dst       = 185.125.190.48
+  \options   \
+###[ TCP ]### 
+     sport     = 60908
+     dport     = http
+     seq       = 3335500445
+     ack       = 744212962
+     dataofs   = 8
+     reserved  = 0
+     flags     = FA
+     window    = 501
+     chksum    = 0x60fb
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (1234015473, 92098604))]
+
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 37 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\n'
+GCM tag : b'\xe0dd\x91=c\xdc\x02\xbdz\x8c\xac/\xee-\xe9'
+GCM ciphertext : b'\\\xad\x95\xebj\x9a\x0bol\x87BP\x08\x81\xffT\xbaT3\x8ako\xa9G\xb9\xefJ+D!\x01/\x8f\xb5\xa7<\xe9\xb4\xc7c1\xfdA\xa2,\xa8\xd6\x94\x01\x82j\xce\xccn\xd8\x8c\xf0l\xd7\xc0'
+plaintext: b'E\x00\x00<M\xc7@\x00@\x06O\xee\n\x08\x00\x06#\xe8o\x11\x8e\xd4\x00PZ\x97\x06\x16\x00\x00\x00\x00\xa0\x02\xfa\xf0;A\x00\x00\x02\x04\x05\x06\x04\x02\x08\n\xfa\x90\x8b\x12\x00\x00\x00\x00\x01\x03\x03\x07'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 60
+  id        = 19911
+  flags     = DF
+  frag      = 0
+  ttl       = 64
+  proto     = tcp
+  chksum    = 0x4fee
+  src       = 10.8.0.6
+  dst       = 35.232.111.17
+  \options   \
+###[ TCP ]### 
+     sport     = 36564
+     dport     = http
+     seq       = 1519846934
+     ack       = 0
+     dataofs   = 10
+     reserved  = 0
+     flags     = S
+     window    = 64240
+     chksum    = 0x3b41
+     urgptr    = 0
+     options   = [('MSS', 1286), ('SAckOK', b''), ('Timestamp', (4203776786, 0)), ('NOP', None), ('WScale', 7)]
+
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 38 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\t'
+GCM tag : b'\x98J\nE5_\x81\x8a^\xba\xd6\x83\xd9\x8fse'
+GCM ciphertext : b"\xe9's\xffr\xce.\x07\xff}D\xd8;;\xde\xfa\xbdv\xf9\xfd\t'\x1b/Ea\xc6\xd5\xed\xf5\x88\xd4r\x9c\x137\xb6~\xe2,gy\xe4\r\xb8\xc0\x05Cq\xe2S~"
+plaintext: b'E\x00\x004\xe7;@\x006\x06\xdb\xcc\xb9}\xbe0\n\x08\x00\x06\x00P\xed\xec,[\xc9\xe3\xc6\xcf\xb2\x9e\x80\x10\x01\xfd`h\x00\x00\x01\x01\x08\n\x05}P\xb6I\x8d\x94\xf1'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 52
+  id        = 59195
+  flags     = DF
+  frag      = 0
+  ttl       = 54
+  proto     = tcp
+  chksum    = 0xdbcc
+  src       = 185.125.190.48
+  dst       = 10.8.0.6
+  \options   \
+###[ TCP ]### 
+     sport     = http
+     dport     = 60908
+     seq       = 744212963
+     ack       = 3335500446
+     dataofs   = 8
+     reserved  = 0
+     flags     = A
+     window    = 509
+     chksum    = 0x6068
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (92098742, 1234015473))]
+
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 39 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x0b'
+GCM tag : b'\xc1t\xb5\xdd\x16\xc6r\x8e\x14\xc9p7\x01\xd88L'
+GCM ciphertext : b"\xbe7\xbc\x0e1r\xa6\xed\x9f\x86\x13\xa5V\xef%'\xa2\x06\xecd\xc3\x90\xaaS\xfd\x117dAVQ\xfa_\x1f\x85\xee\x0b\xe5\xf8o]H\x19b\xa9J\xa2\x9f\xe3\xd4\xefU"
+plaintext: b'E\x00\x004[Q@\x00@\x06]\xb7\n\x08\x00\x06\xb9}\xbe0\xed\xec\x00P\xc6\xcf\xb2\x9e,[\xc9\xe3\x80\x10\x01\xf5`\xe8\x00\x00\x01\x01\x08\nI\x8d\x95\x03\x05}P,'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 52
+  id        = 23377
+  flags     = DF
+  frag      = 0
+  ttl       = 64
+  proto     = tcp
+  chksum    = 0x5db7
+  src       = 10.8.0.6
+  dst       = 185.125.190.48
+  \options   \
+###[ TCP ]### 
+     sport     = 60908
+     dport     = http
+     seq       = 3335500446
+     ack       = 744212963
+     dataofs   = 8
+     reserved  = 0
+     flags     = A
+     window    = 501
+     chksum    = 0x60e8
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (1234015491, 92098604))]
+
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 40 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x0c'
+GCM tag : b'\xfa))\xcf\x05\xcd\xbd9\n?\xf9d\xda`4{'
+GCM ciphertext : b"Cvtt\xacL\xce\x83#\xc3\xdb\x8e\x1f\xc0\x86a[\x04\xd6\n\xcf\xf46\x1f\xfe\x94\x92\xaep\xfd\xc3 \xc6\xc4V\x86'`\xffF|\xb8`\x03\x1ar~\xc2\xe3K\x06,"
+plaintext: b'E\x00\x004\x18`@\x00@\x06\xa0\xa8\n\x08\x00\x06\xb9}\xbe0\xed\xf4\x00P\x1a`W\xf1?\x1d\xc1\x9d\x80\x10\x01\xf5]f\x00\x00\x01\x01\x08\nI\x8d\x95\x11\x05}P9'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 52
+  id        = 6240
+  flags     = DF
+  frag      = 0
+  ttl       = 64
+  proto     = tcp
+  chksum    = 0xa0a8
+  src       = 10.8.0.6
+  dst       = 185.125.190.48
+  \options   \
+###[ TCP ]### 
+     sport     = 60916
+     dport     = http
+     seq       = 442521585
+     ack       = 1058914717
+     dataofs   = 8
+     reserved  = 0
+     flags     = A
+     window    = 501
+     chksum    = 0x5d66
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (1234015505, 92098617))]
+
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 41 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\r'
+GCM tag : b'\xb7\xfd\xfe\xcd\x05x\x82NL\xb4Y.\xc9\xfbEN'
+GCM ciphertext : b'\xad\x0f%\xb2ud\x85\x07\xf2\x0b\xf0SI\x7f\xda\xfc\xb06K\x11/V\x88\\\xbdLu \xea[\x1dK\x14^\xbf}[\x17}\xb2\xb8\x02au\xfb\xe6\x8b\x14\x87-\xb0\xa0'
+plaintext: b'E\x00\x004\x18a@\x00@\x06\xa0\xa7\n\x08\x00\x06\xb9}\xbe0\xed\xf4\x00P\x1a`W\xf1?\x1d\xc1\x9d\x80\x11\x01\xf5]e\x00\x00\x01\x01\x08\nI\x8d\x95\x11\x05}P9'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 52
+  id        = 6241
+  flags     = DF
+  frag      = 0
+  ttl       = 64
+  proto     = tcp
+  chksum    = 0xa0a7
+  src       = 10.8.0.6
+  dst       = 185.125.190.48
+  \options   \
+###[ TCP ]### 
+     sport     = 60916
+     dport     = http
+     seq       = 442521585
+     ack       = 1058914717
+     dataofs   = 8
+     reserved  = 0
+     flags     = FA
+     window    = 501
+     chksum    = 0x5d65
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (1234015505, 92098617))]
+
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 42 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x0e'
+GCM tag : b"+\xca\x81'\xca\x8cRV\xacUm\xc1>\xc9\x92\xd4"
+GCM ciphertext : b"\xa9@\xffW\xe4 \x85\xd7\x89z\x980\xb6@\xde\x15Oi\x82\xf0\xe6\xd9\xf0\xa9\xb86k/\xe2\x9e\x82\xfb\x93\xe2Z\xf7u'$ur\xf3\x83|\xc5\xcd*\xb4J\xb2=t"
+plaintext: b'E\x00\x004\x18b@\x00@\x06\xa0\xa6\n\x08\x00\x06\xb9}\xbe0\xed\xf4\x00P\x1a`W\xf2?\x1d\xc1\x9e\x80\x10\x01\xf5]T\x00\x00\x01\x01\x08\nI\x8d\x95!\x05}P9'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 52
+  id        = 6242
+  flags     = DF
+  frag      = 0
+  ttl       = 64
+  proto     = tcp
+  chksum    = 0xa0a6
+  src       = 10.8.0.6
+  dst       = 185.125.190.48
+  \options   \
+###[ TCP ]### 
+     sport     = 60916
+     dport     = http
+     seq       = 442521586
+     ack       = 1058914718
+     dataofs   = 8
+     reserved  = 0
+     flags     = A
+     window    = 501
+     chksum    = 0x5d54
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (1234015521, 92098617))]
+
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 43 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\n'
+GCM tag : b'\\Z\xf7\xc6S\x91\\\xf31\x13\x1e\xca\xd3\x01\xdfl'
+GCM ciphertext : b'\x98\xd0\xe4xM\xaf(x\xb1\x81\xf8\xb8 \x7f\x03/\x01))\xef|\x07\xb4\x81\x02\xb2\x10\xc8\xa7\xb2\xc4\xe1\xa1\xca\xac\xf82\xdfH\x96i,K\x08\xe5\xdb\xfcyow\xd66'
+plaintext: b'E\x00\x004\xef\x9c@\x005\x06\xd4k\xb9}\xbe0\n\x08\x00\x06\x00P\xed\xf4?\x1d\xc1\x9e\x1a`W\xf2\x80\x10\x01\xfd\\\xa8\x00\x00\x01\x01\x08\n\x05}P\xedI\x8d\x95\x11'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 52
+  id        = 61340
+  flags     = DF
+  frag      = 0
+  ttl       = 53
+  proto     = tcp
+  chksum    = 0xd46b
+  src       = 185.125.190.48
+  dst       = 10.8.0.6
+  \options   \
+###[ TCP ]### 
+     sport     = http
+     dport     = 60916
+     seq       = 1058914718
+     ack       = 442521586
+     dataofs   = 8
+     reserved  = 0
+     flags     = A
+     window    = 509
+     chksum    = 0x5ca8
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (92098797, 1234015505))]
+
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 44 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x0f'
+GCM tag : b'\xea\xfe\x1d^\x18\x08\xc4ft\x0b||C\xc3_\xe8'
+GCM ciphertext : b'\xc4\xbd\xb2\xec&o5~\x01\xc6\rb!\xee\x8c\x13\xb9\x01TP\xec\xbe[ozH\xc6Ub\xf7P\x8e0\x01\xe2u2v\x13r\xca\x0ch\x8f\xb7\x99u\x1c\x076\xbd\xb2\x1e\xb2\x88tYZ\x0c\xd7C|\xf3X'
+plaintext: b'E\x00\x00@[R@\x00@\x06]\xaa\n\x08\x00\x06\xb9}\xbe0\xed\xec\x00P\xc6\xcf\xb2\x9e,[\xc9\xe3\xb0\x10\x01\xf5=\xfd\x00\x00\x01\x01\x08\nI\x8d\x95.\x05}PX\x01\x01\x05\n,[\xc9\xe2,[\xc9\xe3'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 64
+  id        = 23378
+  flags     = DF
+  frag      = 0
+  ttl       = 64
+  proto     = tcp
+  chksum    = 0x5daa
+  src       = 10.8.0.6
+  dst       = 185.125.190.48
+  \options   \
+###[ TCP ]### 
+     sport     = 60908
+     dport     = http
+     seq       = 3335500446
+     ack       = 744212963
+     dataofs   = 11
+     reserved  = 0
+     flags     = A
+     window    = 501
+     chksum    = 0x3dfd
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (1234015534, 92098648)), ('NOP', None), ('NOP', None), ('SAck', (744212962, 744212963))]
+
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 45 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x10'
+GCM tag : b'\xa7\xcd\xddU\xd4^Q\xb3]ZcvY\x97\xce>'
+GCM ciphertext : b"\xc7h\xa1v\x81\x1e\xf5\xf1\t\xad\x9c\xaeE\xf7Lw\x86^\x14.z\x19\x05SZ\xa0X\\\x9a\xb1\xde\xd60&\x96<m'\xf1\x12\x9a\xab3Fb\x80*\xa6\x06gs\xeaQ\xea\x91\xc3\xdfq\x1d/H\x8a\xa6\xaa"
+plaintext: b'E\x00\x00@\x18c@\x00@\x06\xa0\x99\n\x08\x00\x06\xb9}\xbe0\xed\xf4\x00P\x1a`W\xf2?\x1d\xc1\x9e\xb0\x10\x01\xf5%\x7f\x00\x00\x01\x01\x08\nI\x8d\x959\x05}Ph\x01\x01\x05\n?\x1d\xc1\x9d?\x1d\xc1\x9e'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 64
+  id        = 6243
+  flags     = DF
+  frag      = 0
+  ttl       = 64
+  proto     = tcp
+  chksum    = 0xa099
+  src       = 10.8.0.6
+  dst       = 185.125.190.48
+  \options   \
+###[ TCP ]### 
+     sport     = 60916
+     dport     = http
+     seq       = 442521586
+     ack       = 1058914718
+     dataofs   = 11
+     reserved  = 0
+     flags     = A
+     window    = 501
+     chksum    = 0x257f
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (1234015545, 92098664)), ('NOP', None), ('NOP', None), ('SAck', (1058914717, 1058914718))]
+
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 46 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x0b'
+GCM tag : b's\xe1\x00+[\xfa{oW\xe6\x92U\x15@{&'
+GCM ciphertext : b'\x89\x85\xa8\x93\xf4\xca]\x85P\xf7n/\x98\xc5\xfd\x0f\x9e\x9e\xe7\xdbY\xe1\x82\xfdF3\xbe\x8doO\xee\xa8\x94\x01:\x95\x87gx\x87\nn\xf4?\x97\x85\xe1\xb8EB\xc4\x8b\xbaN\x89C\xaf\x9cz\xd8'
+plaintext: b'E\x00\x00<\x00\x00@\x005\x06\xa8\xb5#\xe8o\x11\n\x08\x00\x06\x00P\x8e\xd4\xb0z!\xd3Z\x97\x06\x17\xa0\x12\xfd\x00\x1c\x1b\x00\x00\x02\x04\x05x\x04\x02\x08\n\x1c\xde-g\xfa\x90\x8b\x12\x01\x03\x03\x07'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 60
+  id        = 0
+  flags     = DF
+  frag      = 0
+  ttl       = 53
+  proto     = tcp
+  chksum    = 0xa8b5
+  src       = 35.232.111.17
+  dst       = 10.8.0.6
+  \options   \
+###[ TCP ]### 
+     sport     = http
+     dport     = 36564
+     seq       = 2960794067
+     ack       = 1519846935
+     dataofs   = 10
+     reserved  = 0
+     flags     = SA
+     window    = 64768
+     chksum    = 0x1c1b
+     urgptr    = 0
+     options   = [('MSS', 1400), ('SAckOK', b''), ('Timestamp', (484322663, 4203776786)), ('NOP', None), ('WScale', 7)]
+
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 47 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x11'
+GCM tag : b'\xef\x1c\xa4\x0b9\x99>G\xdd>\xe38\xf5\xe0\xd6]'
+GCM ciphertext : b'r2\xda\x8bq,\xbe\xc9\x10bM{X\x91\x94_\x00"\xc6Q\x92\r\xd6\xe7\xfa%\x19\xd9\xd1\\\x19\x8f\x8b\x92\xdf\x1ek\xdf2}\xbcl\xc0\x82\x86\x00x\x9e6\x9cU\xec'
+plaintext: b'E\x00\x004M\xc8@\x00@\x06O\xf5\n\x08\x00\x06#\xe8o\x11\x8e\xd4\x00PZ\x97\x06\x17\xb0z!\xd4\x80\x10\x01\xf6D\xd7\x00\x00\x01\x01\x08\n\xfa\x90\x8b\xf1\x1c\xde-g'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 52
+  id        = 19912
+  flags     = DF
+  frag      = 0
+  ttl       = 64
+  proto     = tcp
+  chksum    = 0x4ff5
+  src       = 10.8.0.6
+  dst       = 35.232.111.17
+  \options   \
+###[ TCP ]### 
+     sport     = 36564
+     dport     = http
+     seq       = 1519846935
+     ack       = 2960794068
+     dataofs   = 8
+     reserved  = 0
+     flags     = A
+     window    = 502
+     chksum    = 0x44d7
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (4203777009, 484322663))]
+
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 48 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x12'
+GCM tag : b'\x16j\xa30\xec\xdc.Q\x91\x81\x18\xa7\xb8\xfd\xd5\xe6'
+GCM ciphertext : b'\xf2\xb1\xe5\xba*[~"\x9c\x89\xe9\xefW\xa4\xd24\xb3\xdd?V~?\x93Hx\xb2\xf8:\x875\xe1\xb8\xa0\xc1\xe9^\x04\xe0\rB\x11\xc5\xbang\xdd/_V\xde0k\xcd\xfc\xbcUBK\xb5\xdd\xb8\t\xc1\x00\x82,\xf9u\xe6\xc1q(\x0b,\xe1\xe7z(kl\xfcy9\x0fj\x8d\x98\xcf\xa7D/E5\x0f\x87\xe1\xe7Mi\xcf\x91\x95\x84\x865\xfaVM\x0f\x07\x05\xc5\x1eY\x10\xd5\xbc\xf7\xce\x1d\xa3S\xb8P\x13}5RN\x02\xdf`\xcc\xcb.\x91\xad\xabE'
+plaintext: b'E\x00\x00\x8bM\xc9@\x00@\x06O\x9d\n\x08\x00\x06#\xe8o\x11\x8e\xd4\x00PZ\x97\x06\x17\xb0z!\xd4\x80\x18\x01\xf6\x830\x00\x00\x01\x01\x08\n\xfa\x90\x8b\xf1\x1c\xde-gGET / HTTP/1.1\r\nHost: connectivity-check.ubuntu.com\r\nAccept: */*\r\nConnection: close\r\n\r\n'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 139
+  id        = 19913
+  flags     = DF
+  frag      = 0
+  ttl       = 64
+  proto     = tcp
+  chksum    = 0x4f9d
+  src       = 10.8.0.6
+  dst       = 35.232.111.17
+  \options   \
+###[ TCP ]### 
+     sport     = 36564
+     dport     = http
+     seq       = 1519846935
+     ack       = 2960794068
+     dataofs   = 8
+     reserved  = 0
+     flags     = PA
+     window    = 502
+     chksum    = 0x8330
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (4203777009, 484322663))]
+###[ Raw ]### 
+        load      = 'GET / HTTP/1.1\r\nHost: connectivity-check.ubuntu.com\r\nAccept: */*\r\nConnection: close\r\n\r\n'
+
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 49 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x0c'
+GCM tag : b'\xf4\x17\xe5\x9ccoHH\xa1\xd8P\xfa\xfd\x9fm\xc3'
+GCM ciphertext : b'x\x9c\xc9\xcai\xa8\x9b\xd4\x19\xa7\xd2\xc2\xbdy\xea\t#8W{\x83\x8f\x8b\xb6R{\x9f\xf9=\xeel\xa9\x80\xa5\xea\x14\xfd\xa9\xe4$\x94\xbd\xba\x92\xb2}B\x8cV\x0e\x82\x04'
+plaintext: b'E\x00\x004\xfb@@\x005\x06\xad|#\xe8o\x11\n\x08\x00\x06\x00P\x8e\xd4\xb0z!\xd4Z\x97\x06n\x80\x10\x01\xfaC\xf4\x00\x00\x01\x01\x08\n\x1c\xde-\xef\xfa\x90\x8b\xf1'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 52
+  id        = 64320
+  flags     = DF
+  frag      = 0
+  ttl       = 53
+  proto     = tcp
+  chksum    = 0xad7c
+  src       = 35.232.111.17
+  dst       = 10.8.0.6
+  \options   \
+###[ TCP ]### 
+     sport     = http
+     dport     = 36564
+     seq       = 2960794068
+     ack       = 1519847022
+     dataofs   = 8
+     reserved  = 0
+     flags     = A
+     window    = 506
+     chksum    = 0x43f4
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (484322799, 4203777009))]
+
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 50 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\r'
+GCM tag : b'\xcf\x84\xb0.\xc7\r[f\x83\xda\x05\xc1\xca[R\x8b'
+GCM ciphertext : b'\x0b\x0fT\xca\xec\x0e\xe9\x03\xd6\x9a\x00\xb6H\x135Ve\x1f}\x0c\xffD\xc1\x0fL\xf1\xe3\xec\'Z\xf5\xff\xe8\xb3=\xe5\x1f\x0e\x804 xo\x06\xe4f9*\xd9,\xd8\xf7\x97\xc2\xe9\xf0.I2#\x01\x82\xc9Je\xba\xfd\xe2\'e{\x06\xc0\x84`\xac\\3t\xb6\x04\xc7\x83\x9d%\x1a\xcc\xa8z\xd0\xe1\\\xd9g/(\xc1cM"E\xc9\x8d\x92\xadQ\xd1\x10\x90,$H/\x95\xac\x9d&$\xb5(\xaaV\x0e\x9e\x8e\xbc\xbe7B\xc4\xd8\xd6\xa2\x08\xa7\x8a4\x06\xc1C\xbb\xf9\x88f\x96\x9c4E\xa6\xee\x1e\xebz\x97\xf4a\xc5(\x14\xe0\xf6\x1fG\xc4\xfa\xd1\xccS\xd7\xdf\xe0\xd0L,i\xc4\xcds\xb6\xf3\x84b$e\x84\x96\xb0\xf0k\xf9%\xec\xc2\x86b\xe9\xf4\x956\xbe'
+plaintext: b'E\x00\x00\xc8\xfbA@\x005\x06\xac\xe7#\xe8o\x11\n\x08\x00\x06\x00P\x8e\xd4\xb0z!\xd4Z\x97\x06n\x80\x18\x01\xfa\xd2W\x00\x00\x01\x01\x08\n\x1c\xde-\xef\xfa\x90\x8b\xf1HTTP/1.1 204 No Content\r\nDate: Fri, 08 Dec 2023 19:06:44 GMT\r\nServer: Apache/2.4.18 (Ubuntu)\r\nX-NetworkManager-Status: online\r\nConnection: close\r\n\r\n'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 200
+  id        = 64321
+  flags     = DF
+  frag      = 0
+  ttl       = 53
+  proto     = tcp
+  chksum    = 0xace7
+  src       = 35.232.111.17
+  dst       = 10.8.0.6
+  \options   \
+###[ TCP ]### 
+     sport     = http
+     dport     = 36564
+     seq       = 2960794068
+     ack       = 1519847022
+     dataofs   = 8
+     reserved  = 0
+     flags     = PA
+     window    = 506
+     chksum    = 0xd257
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (484322799, 4203777009))]
+###[ Raw ]### 
+        load      = 'HTTP/1.1 204 No Content\r\nDate: Fri, 08 Dec 2023 19:06:44 GMT\r\nServer: Apache/2.4.18 (Ubuntu)\r\nX-NetworkManager-Status: online\r\nConnection: close\r\n\r\n'
+
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 51 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x0e'
+GCM tag : b'\xaa`\xae\x89\xd6{O\xb8\xf5\xee\xadxh\xb0\x97x'
+GCM ciphertext : b'\xd9\xaf\xbcJ2\xcb>\xf6\xe9\xf4\xd9\x84\x16{u\xdc\xa5\xcaO\xc8 \x8e[&X\xf5\x11\xd8\xcf\xea\xa8\x95\xda\x1f\x05\xf0\xa6\x9d\xc4\xd7z\xe9\xa5\xf32\xaay\xe8T\x17\xc7%'
+plaintext: b'E\x00\x004\xfbB@\x005\x06\xadz#\xe8o\x11\n\x08\x00\x06\x00P\x8e\xd4\xb0z"hZ\x97\x06n\x80\x11\x01\xfaC^\x00\x00\x01\x01\x08\n\x1c\xde-\xf0\xfa\x90\x8b\xf1'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 52
+  id        = 64322
+  flags     = DF
+  frag      = 0
+  ttl       = 53
+  proto     = tcp
+  chksum    = 0xad7a
+  src       = 35.232.111.17
+  dst       = 10.8.0.6
+  \options   \
+###[ TCP ]### 
+     sport     = http
+     dport     = 36564
+     seq       = 2960794216
+     ack       = 1519847022
+     dataofs   = 8
+     reserved  = 0
+     flags     = FA
+     window    = 506
+     chksum    = 0x435e
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (484322800, 4203777009))]
+
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 52 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x13'
+GCM tag : b'0:\xc78\xccV\xfb\xdf&0;\x0fv\x00\x19%'
+GCM ciphertext : b'\x9e\xc4K\xbc\x81~\xe95\xf3\x7f\x92\x8f9#\xc6^\xa8`\xd02M\xdd\x1aa\x9cj\xa6\x0c;\xdb+\x03\xae)LK\x07\xd8y\xec2fcj\xcfEk\xe3$\x1a\x87\xea'
+plaintext: b'E\x00\x004M\xca@\x00@\x06O\xf3\n\x08\x00\x06#\xe8o\x11\x8e\xd4\x00PZ\x97\x06n\xb0z"h\x80\x10\x01\xf5BH\x00\x00\x01\x01\x08\n\xfa\x90\x8d\x0e\x1c\xde-\xef'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 52
+  id        = 19914
+  flags     = DF
+  frag      = 0
+  ttl       = 64
+  proto     = tcp
+  chksum    = 0x4ff3
+  src       = 10.8.0.6
+  dst       = 35.232.111.17
+  \options   \
+###[ TCP ]### 
+     sport     = 36564
+     dport     = http
+     seq       = 1519847022
+     ack       = 2960794216
+     dataofs   = 8
+     reserved  = 0
+     flags     = A
+     window    = 501
+     chksum    = 0x4248
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (4203777294, 484322799))]
+
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 53 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x14'
+GCM tag : b'\xdez<C\x08M\x89\xfc\xf6\xa5\xbei(\xf1Zs'
+GCM ciphertext : b'\xfb\xd5\x8f\xd7O\xb7_\xa8:V\x0cO\xab\xb5W\xd3%\x7f[=\xda8 \xa7x\xbd`\xb0Y\x85\xe0\xee\x12;{\x0b0\x18\x95\xea\xe1!\x9d_\x00\xdc\xbb*\x88\xae\x99&'
+plaintext: b'E\x00\x004M\xcb@\x00@\x06O\xf2\n\x08\x00\x06#\xe8o\x11\x8e\xd4\x00PZ\x97\x06n\xb0z"h\x80\x11\x01\xf5BG\x00\x00\x01\x01\x08\n\xfa\x90\x8d\x0e\x1c\xde-\xef'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 52
+  id        = 19915
+  flags     = DF
+  frag      = 0
+  ttl       = 64
+  proto     = tcp
+  chksum    = 0x4ff2
+  src       = 10.8.0.6
+  dst       = 35.232.111.17
+  \options   \
+###[ TCP ]### 
+     sport     = 36564
+     dport     = http
+     seq       = 1519847022
+     ack       = 2960794216
+     dataofs   = 8
+     reserved  = 0
+     flags     = FA
+     window    = 501
+     chksum    = 0x4247
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (4203777294, 484322799))]
+
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 54 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x15'
+GCM tag : b'n\xf7\xe5\xed\xb5\xf2\xf7\x16v"`\xc0\xe8\xa37\xc6'
+GCM ciphertext : b'|(\xaa\xe7\xf4vhO\xd8\xabYrm\xec2\xf1l\x1a\xd6\xe9UlUvp\x1b\x83\x99\xe44\x8f\x92Gebw\x0b\x10\xf7\xfbF\n])\x03\x7fC;\x8f\r\x9d\x83'
+plaintext: b'E\x00\x004M\xcc@\x00@\x06O\xf1\n\x08\x00\x06#\xe8o\x11\x8e\xd4\x00PZ\x97\x06o\xb0z"i\x80\x10\x01\xf5B:\x00\x00\x01\x01\x08\n\xfa\x90\x8d\x19\x1c\xde-\xf0'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 52
+  id        = 19916
+  flags     = DF
+  frag      = 0
+  ttl       = 64
+  proto     = tcp
+  chksum    = 0x4ff1
+  src       = 10.8.0.6
+  dst       = 35.232.111.17
+  \options   \
+###[ TCP ]### 
+     sport     = 36564
+     dport     = http
+     seq       = 1519847023
+     ack       = 2960794217
+     dataofs   = 8
+     reserved  = 0
+     flags     = A
+     window    = 501
+     chksum    = 0x423a
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (4203777305, 484322800))]
+
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 55 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x0f'
+GCM tag : b'\xc0\x0bR\xb9\xa1\x012\x87G\x90s\x05Vy\x9ad'
+GCM ciphertext : b'\xc8\xb9\xc7\x93\x02\x1b\xb1\x9ai\x02!\xc2\x0b\xf5\xf8\x18i<\xdf\xa4u\xdc\x97\xe9i\xdb\x8ass`\xde\x8bV\x01\x1e,F\x80d2\xa9\xff~\xcd\x16\x91\xe2\x0e\x8a\xc6\xf0\xae'
+plaintext: b'E\x00\x004\xfbC@\x005\x06\xady#\xe8o\x11\n\x08\x00\x06\x00P\x8e\xd4\xb0z"iZ\x97\x06o\x80\x10\x01\xfaA\x1b\x00\x00\x01\x01\x08\n\x1c\xde/\x15\xfa\x90\x8d\x0e'
+  OpenVPN GCM tag is correct :-)
+###[ IP ]### 
+  version   = 4
+  ihl       = 5
+  tos       = 0x0
+  len       = 52
+  id        = 64323
+  flags     = DF
+  frag      = 0
+  ttl       = 53
+  proto     = tcp
+  chksum    = 0xad79
+  src       = 35.232.111.17
+  dst       = 10.8.0.6
+  \options   \
+###[ TCP ]### 
+     sport     = http
+     dport     = 36564
+     seq       = 2960794217
+     ack       = 1519847023
+     dataofs   = 8
+     reserved  = 0
+     flags     = A
+     window    = 506
+     chksum    = 0x411b
+     urgptr    = 0
+     options   = [('NOP', None), ('NOP', None), ('Timestamp', (484323093, 4203777294))]
+
+
+'192.168.1.151' -> '163.172.176.157'
+Packet 56 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x16'
+GCM tag : b'6\t 0\xa4\x8cF5\xc4P\xd64<\x8ah`'
+GCM ciphertext : b'\xf2`\x1eM\xa6\x13\xfc>\x83\xe0\x84O\xdbc\xaa\x1a\xad\xc0\xcb\x16\xce\xa7*\x96\xef\x9d\xe5Tt\xbdR(\x08%\xab3h?\x1a\x96\xd5\xf5{\xd2\xd1J\x0c\xd3'
+plaintext: b'`\x00\x00\x00\x00\x08:\xff\xfe\x80\x00\x00\x00\x00\x00\x00G-H\x1c\xc9\x87I\x1f\xff\x02\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x85\x00\xdbF\x00\x00\x00\x00'
+  OpenVPN GCM tag is correct :-)
+###[ IPv6 ]### 
+  version   = 6
+  tc        = 0
+  fl        = 0
+  plen      = 8
+  nh        = ICMPv6
+  hlim      = 255
+  src       = fe80::472d:481c:c987:491f
+  dst       = ff02::2
+###[ ICMPv6 Neighbor Discovery - Router Solicitation ]### 
+     type      = Router Solicitation
+     code      = 0
+     cksum     = 0xdb46
+     res       = 0
+
+
+'163.172.176.157' -> '192.168.1.151'
+Packet 57 : 
+ Packet Type : '0x48'
+ Packet Opcode : '0x9' ('P_DATA_V2')
+dissect_openvpn_data_packet
+dissect_openvpn_data_packet_gcm
+Peer ID : '0x0'
+GCM counter : b'\x00\x00\x00\x10'
+GCM tag : b'u\x87\xf71%\xc0\xc7\xab\xb7\xca2\xd0U\xf2\x99~'
+GCM ciphertext : b'\xe6x\xa7\xb8\xd0\x80\x07\xa3\xa8\r\xa3\xeb\xbf;.\x1c'
+plaintext: b'*\x18{\xf3d\x1e\xb4\xcb\x07\xed-\n\x98\x1f\xc7H'
+  OpenVPN GCM tag is correct :-)
+could not guess type of traffic
+
