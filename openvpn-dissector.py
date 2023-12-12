@@ -164,6 +164,9 @@ def parse_openvpn_file(ovpn_path):
 		if index_tls_auth == 0:
 			psk_mode_algo = hmac_algo
 			print(f"tls-auth is used with {psk_mode_algo} !")
+		elif index_tls_auth == 1 and ovpn_line[0] == '<':
+			psk_mode_algo = hmac_algo
+			print(f"tls-auth is used with {psk_mode_algo} !")
 		elif index_tls_auth == 1 and ovpn_line[0] == ';':
 			print("tls-auth is not used !")
 			return
