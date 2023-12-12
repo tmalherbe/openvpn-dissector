@@ -25,6 +25,8 @@ openvpn_handshake_finished = False
 ## This boolean is set to True when the later mechanism is used
 crypto_via_exporter_mechanism = False
 
+old_compression = False
+
 ## some secrets for key generation
 client_secret = None
 client_seed_1 = None
@@ -235,6 +237,8 @@ def get_compression_method(compression_method):
 ## Dissect a decrypted OpenVPN plaintext
 def dissect_openvpn_plaintext(plaintext, index):
 
+	global old_compression
+
 	# If GCM is not used, the packet has the following format:
 	#
 	# +-----------------+------+-----------------+
@@ -255,7 +259,10 @@ def dissect_openvpn_plaintext(plaintext, index):
 	if aes_gcm is False:
 		# Such a packet begins with a 4 bytes sequence number
 		sequence_number = int.from_bytes(plaintext[:4], 'big')
-		#compression_byte = plaintext[4]
+
+		if old_compression is True:
+			compression_byte = plaintext[4]
+
 		# Get last byte of padding who tells who much bytes of padding
 		# shall be removed
 		padding_byte = plaintext[-1]
@@ -266,11 +273,14 @@ def dissect_openvpn_plaintext(plaintext, index):
 			exit()
 
 		# Plaintext is between sequence number and padding
-		raw_plaintext = plaintext[4 : -padding_byte]
-		#raw_plaintext = plaintext[5 : -padding_byte]
+		if old_compression is True:
+			raw_plaintext = plaintext[5 : -padding_byte]
+		else:
+			raw_plaintext = plaintext[4 : -padding_byte]
 
 		print("sequence number : %r" % sequence_number)
-		#print("compression byte : %r (%r)" % (hex(compression_byte), get_compression_method(compression_byte)))
+		if old_compression is True:
+			print("compression byte : %r (%r)" % (hex(compression_byte), get_compression_method(compression_byte)))
 		print("padding byte : %r" % padding_byte)
 		print("raw plaintext : %r" % raw_plaintext)
 
@@ -890,6 +900,8 @@ def main():
 	global addr_client
 	global addr_server
 
+	global old_compression
+
 	parser = argparse.ArgumentParser()
 
 	parser.add_argument("-p", "--pcap",
@@ -927,6 +939,11 @@ def main():
 								help=".ovpn config file involved to generate the currently analyzed traffic",
 								type=str)
 
+	parser.add_argument("-C", "--old_compression",
+								required=False,
+								help="decode with old-fashioned compression byte",
+								action="store_true")
+
 	args = parser.parse_args()
 
 	pcap_path = args.pcap
@@ -938,6 +955,9 @@ def main():
 	k_auth_server = args.k_auth_server
 
 	tls13_dissector.keylogfile = args.keylogfile
+
+	if args.old_compression == True:
+		old_compression = True
 
 	# open the pcap
 	try:
