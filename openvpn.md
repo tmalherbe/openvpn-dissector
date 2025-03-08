@@ -83,7 +83,7 @@
   Par défaut SHA1 est utilisé, ce qui est pas ouf.
   Si un mode AEAD est utilisé (GCM par exemple), ce token est ignoré pour le canal de données (mais reste utilisé par le canal tls-auth).
   En mode static-key, la clé HMAC est incluse dans le fichier généré par --genkey.
-  En mode TLS, ce tte clé est générée dynamiquement et partagée via le canal TLS de contrôle.
+  En mode TLS, cette clé est générée dynamiquement et partagée via le canal TLS de contrôle.
 
 - cipher `<algo>` : Algorithme (et mode) de chiffrement utilisé pour le canal de données.
   Par défaut BF-CBC est utilisé.
@@ -105,7 +105,7 @@ root@ankou:/home/thomas/perso/tryhackme# /usr/sbin/openvpn klook.ovpn
 - Client compilé des sources :
 
 ```
-root@ankou:/home/thomas/perso/tryhackme# /usr/localsbin/openvpn --data-ciphers AES-256-CBC --config klook.ovpn
+root@ankou:/home/thomas/perso/tryhackme# /usr/local/sbin/openvpn --data-ciphers AES-256-CBC --config klook.ovpn
 ```
 
 - On a rajouté l'option `--data-ciphers` pour autoriser l'utilisation de AES-256-CBC
@@ -207,3 +207,39 @@ client                                   serveur
 Cette PSK est juste découpée en morceau sans autre mécanisme de dérivation : Les clés utilisées sont donc fixe d'une session à l'autre.
 
 # Handshake TLS
+
+# TODO
+
+P_CONTROL_V1
+	AVEC:
+	type					1
+	sessionID			8
+	hmac					hmac_len	!
+	packet_id			4			!
+	time					4			!
+	msg-packet_id_len	1
+	msg-packet_id		4
+
+	SANS:
+	type					1
+	sessionID			8
+	msg-packet_id_len	1
+	msg-packet_id		4
+
+P_ACK_V1
+	AVEC:
+	type					1
+	sessionID			8
+	hmac					hmac_len	!
+	packet_id			4			!
+	time					4			!
+	msg-packet_id_len	1
+	msg-packet_id		4
+	remote_sessID		8
+
+	SANS:
+	type					1
+	sessionID			8
+	msg-packet_id_len	1
+	msg-packet_id		4
+	remote_sessID		8

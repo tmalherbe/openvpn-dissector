@@ -1,5 +1,6 @@
 auth uses SHA256 !
 tls-auth is used with SHA256 !
+tls-auth is used with SHA256 !
 PSK HMAC client : '2e32583b29f493e42b334f3ace5c67377153e80850d40d3b4bfbe0a784099a6a'
 PSK HMAC server : '50b73fdf93d26b08fc56685cb96fcc7384f3a124e1c1b3cc217ddbe728ce8344'
 

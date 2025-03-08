@@ -657,7 +657,7 @@ def derivate_openvpn_crypto_material():
 
 	# Get hmac keys and IVs. They cannot be used simultaneously,
 	# but when this function is called, server hasn't told yet
-	# whether it want to used GCM or not.
+	# whether it want to use GCM or not.
 	client_data_cipher_key = openvpn_keys[ : 32]
 	server_data_cipher_key = openvpn_keys[128 : 160]
 	client_data_hmac_key = openvpn_keys[64 : 128]
@@ -675,7 +675,7 @@ def derivate_openvpn_crypto_material():
 
 	# Dump hmac keys and IVs. They cannot be used simultaneously,
 	# but when this function is called, server hasn't told yet
-	# whether it want to used GCM or not.
+	# whether it want to use GCM or not.
 	print("client_data_cipher_key : %r" % binascii.hexlify(client_data_cipher_key))
 	print("client_data_hmac_key : %r" % binascii.hexlify(client_data_hmac_key))
 	print("server_data_cipher_key : %r" % binascii.hexlify(server_data_cipher_key))
